@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroupDirective, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import {RequestService} from '../../services/request.service';
@@ -12,6 +13,7 @@ import {RequestService} from '../../services/request.service';
 export class ProductFormComponent implements OnInit {
   @Input() allCategories:any;
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
     private RequestService: RequestService,
     private snack:MatSnackBar,
@@ -42,6 +44,7 @@ export class ProductFormComponent implements OnInit {
     {value:"Docena",name:"Docena"},
     ]
   ngOnInit(): void {
+    this.allCategories=this.data.allCategories;
   }
 
   

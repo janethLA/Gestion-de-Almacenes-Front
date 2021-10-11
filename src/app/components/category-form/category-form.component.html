@@ -10,7 +10,7 @@
                     <mat-form-field  appearance="outline" style="width: 100%;">
                     <mat-label>Nombre de la Categoria</mat-label>
                     <input matInput placeholder="ingres nombre de la categoria" required type="text" formControlName="categoryName">
-                    <mat-error >este campo es requerido</mat-error>
+                    <mat-error *ngIf="isValidField('categoryName')" >{{getErrorMessage('categoryName','register')}}</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="field">

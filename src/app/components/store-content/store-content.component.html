@@ -1,41 +1,79 @@
 <div class="content">
-    <div class="categories">
+    
+    <div class="info">
+        <div class="header">
+            <h1>{{warehouseActual?.warehouseName}}</h1>
+            <mat-divider></mat-divider>
+            <div class="second">
+                <h3><mat-icon>store</mat-icon> Descripcion</h3>
+            <h3><mat-icon>place</mat-icon> Informacion</h3>
+            <div class="add"><b>Dirección:</b><p>{{warehouseActual?.address}}</p></div>
+            <div class="add"><b>Latitud:</b><p>{{warehouseActual?.latitude}}</p></div>
+            <div class="add"><b>Longitud:</b><p>{{warehouseActual?.longitude}}</p></div>
+            </div>
+            
+            
+        </div>
+        
+        <!-- <div class="content">
+            <button mat-stroked-button color="primary" (click)="addCategory()"><mat-icon>add</mat-icon>Añadir Categoría </button>
+            <button mat-stroked-button color="primary"(click)="addProduct()"><mat-icon>add</mat-icon>Añadir Producto </button>
+        
+        </div> -->
+    </div>
+    
+   <!--  <div class="categories">
         <h1>CATEGORIAS</h1>
         <mat-divider></mat-divider>
         <a mat-button class="menu-button" >
             <mat-icon>list</mat-icon>
             <span>Todas las categorias</span>
             <mat-icon>arrow_forward_ios</mat-icon>
+            
         </a>
         <a mat-button class="menu-button"*ngFor="let category of allCategories">
             <mat-icon>category</mat-icon>
             <span>{{category.categoryName}}</span>
-            <mat-icon style="align-self: flex-end;">arrow_forward_ios</mat-icon>
+            <mat-icon>arrow_forward_ios</mat-icon>
         </a>
     
-    </div>
-    <div class="info">
-        <div class="header">
-            <h1>{{warehouseActual?.warehouseName}}</h1>
-            <mat-divider></mat-divider>
-            <h3><mat-icon>store</mat-icon> Descripcion</h3>
-            <h3><mat-icon>place</mat-icon> Informacion</h3>
-            <div><b>Dirección:</b><p>{{warehouseActual?.address}}</p></div>
-            <div><b>Latitud:</b><p>{{warehouseActual?.latitude}}</p></div>
-            <div><b>Longitud:</b><p>{{warehouseActual?.longitude}}</p></div>
-            
-        </div>
-        <div class="content">
-            <button mat-stroked-button color="primary" (click)="addCategory()"><mat-icon>add</mat-icon>Añadir Categoría </button>
-            <button mat-stroked-button color="primary"(click)="addProduct()"><mat-icon>add</mat-icon>Añadir Producto </button>
-        
-        </div>
-    </div>
-    
-
+    </div> -->
 
 </div>
+<div class="all-category">
+    <h3 class="h3">Categorias de nuestro almacen</h3>
+    <div style="display: flex;">
+        <a mat-button class="btn-category" (click)="addAllCategory()">
+            <mat-icon >list</mat-icon>
+            <span>Todos los productos</span>
+             
+        </a>
+        <a mat-button class="btn-category" *ngFor="let category of allCategories"(click)="viewProducts(category)">
+            <mat-icon style="text-align: center;">lunch_dining</mat-icon>
+            <span>{{category.categoryName}}</span>
+        </a>
+        <a mat-button class="btn-category" (click)="addNewCategory()">
+            <mat-icon >add</mat-icon>
+            <span>Nueva Categoria</span>
+             
+        </a>
+    </div>
+</div>
+<h1>{{categorySelected?.categoryName}}</h1>
+<a mat-button class="btn-category" (click)="addNewProduct()">
+    <mat-icon >add</mat-icon>
+    <span>Añadir Producto</span>
+     
+</a>
 <mat-divider></mat-divider>
+<mat-grid-list [cols]="5" rowHeight="300px" gutterSize="10px">
+        
+    <mat-grid-tile *ngFor="let product of productsReceived" >
+        <app-product-card [idProduct]="product.idProduct" [productName]="product.productName"[description]="product.description" [image]="product.image" 
+        [measurement]="product.measurement" [price]="product.price" ></app-product-card>
+    </mat-grid-tile>
+
+</mat-grid-list>
 <div style="display: flex; min-height: 300px">
     <div class="createCategory" *ngIf="pressedCategory==true">
         <app-category-form [pressedCategory]="true" [idStore]="idStore"></app-category-form>
