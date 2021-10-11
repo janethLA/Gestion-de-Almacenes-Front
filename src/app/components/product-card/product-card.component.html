@@ -1,0 +1,18 @@
+<mat-card class="main">
+    <div class="image">
+        <img mat-card-image [src]="image" alt="Photo of a Product">
+ 
+    </div>
+    
+    <mat-card-title class="productName">{{productName}}</mat-card-title>
+    <mat-card-subtitle>{{expirationDate}}</mat-card-subtitle>
+    <mat-card-content>
+      
+      <p class="price">{{price}} Bs.</p>
+      <p class="measurement">C/{{measurement}}</p>
+      
+    </mat-card-content>
+    <mat-card-actions style="padding: 15px;">
+      <button mat-button class="button">Añadir al Carrito</button>
+    </mat-card-actions>
+  </mat-card>

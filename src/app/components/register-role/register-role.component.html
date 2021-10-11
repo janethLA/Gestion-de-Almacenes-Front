@@ -1,0 +1,76 @@
+<div class="card"> 
+    <form  [formGroup]="registerRole" #formDirective="ngForm" (ngSubmit)="saveRole(registerRole.value,formDirective)">
+
+    <div style="text-align: center; margin-top: 5px; margin-bottom: 10px;"> 
+        <h2>Registrar Rol</h2>
+    </div> 
+
+        <div style="width: 100%; margin-top: 20px;" >
+            <div class="field">
+                <mat-form-field  appearance="outline" style="width: 100%;">
+                <mat-label>Nombre de Rol</mat-label>
+                <input matInput placeholder="ingres nombre de rol" required type="text" formControlName="roleName">
+                <mat-error *ngIf="isValidField('roleName')" >{{getErrorMessage('roleName','register')}}</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="field">
+                <mat-form-field  appearance="outline" style="width: 100%;">
+                <mat-label>Descripción</mat-label>
+                <input matInput placeholder="ingrese una description" required type="text" formControlName="description">
+                <mat-error>este campo es requerido</mat-error>
+                </mat-form-field>
+            </div>
+            
+            <div class="field">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Privilegios</mat-label>
+                    <mat-select  multiple (valueChange)="print($event)" formControlName="privileges">
+                        <ng-container >
+                            <mat-option  *ngFor="let priv of privilegesList" [value]="priv">{{priv.privilege}}</mat-option>
+
+                        </ng-container>
+                      
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+            <div style="text-align: center; width: 100%;">
+                <button mat-raised-button type="submit" class="btn-login" [disabled]="registerRole.invalid">
+                    REGISTRAR
+                </button>
+            </div>
+        </div>
+</form>
+</div>
+
+
+<style>
+    .card{
+        width:330px;
+        height: 500px;
+        background-color: white;
+        padding-left: 10px; padding-right: 10px;
+    }
+    .field{
+        width: 100%;
+        padding-bottom: 15px;
+
+    }
+    
+    .btn-login{
+        background-color:#0460ca;
+        width: 100%;
+        color: white;
+        height: 40px;
+    }
+    .example-radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+    }
+
+    .example-radio-button {
+    margin: 5px;
+    margin-left: 20px;
+    }
+</style>
+

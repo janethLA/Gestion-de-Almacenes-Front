@@ -1,0 +1,59 @@
+<div style="min-height: calc(100vh - 98px); ">
+    <div style="text-align: start;margin-left: 20px;">
+        <mat-icon style="color: #002b5c; font-size: 50px;">store</mat-icon>
+    </div>
+    <div class="navigation-bar">
+        <a mat-button class="btn-catalog"[matMenuTriggerFor]="menu">
+            <mat-icon>list</mat-icon>
+            <span>Catálogo de Productos</span>
+        </a>
+        
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+                <mat-icon>list</mat-icon>
+                <span>Todas las categorias</span>
+              </button>
+            <button mat-menu-item>
+              <mat-icon>lunch_dining</mat-icon>
+              <span>Verduras</span>
+            </button>
+            <button mat-menu-item >
+              <mat-icon>brunch_dining</mat-icon>
+              <span>Lacteos</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>meal</mat-icon>
+              <span>Carnes</span>
+            </button>
+          </mat-menu>
+        <form class="search-bar">
+            <mat-icon>search</mat-icon>
+            
+                <p  placeholder="Buscar productos" style="font-family:Montserrat;font-size:14px;margin:7px 0px ;width: 100%;">Buscar productos</p>
+               
+        </form> 
+        <!-- <div class="search-bar"  >
+            <mat-form-field appearance="outline" >
+                <input matInput placeholder="buscar productos"
+                >
+               <mat-icon matSuffix>search</mat-icon>
+               
+             </mat-form-field>
+    </div> -->
+        <a mat-button class="btn-catalog">
+            
+            <span>0,00 Bs.</span>
+            <mat-icon>local_grocery_store</mat-icon>
+            <mat-icon>visibility</mat-icon>
+        </a>
+    </div>
+    <h2 style="text-align: start;">Lista de productos registrados. </h2>
+    <mat-grid-list [cols]="5" rowHeight="300px" gutterSize="10px">
+        
+        <mat-grid-tile *ngFor="let product of productsReceived" >
+            <app-product-card [idProduct]="product.idProduct" [productName]="product.productName"[description]="product.description" [image]="product.image" 
+            [measurement]="product.measurement" [price]="product.price" ></app-product-card>
+        </mat-grid-tile>
+
+    </mat-grid-list>
+</div>

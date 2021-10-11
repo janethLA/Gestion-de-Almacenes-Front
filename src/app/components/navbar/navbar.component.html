@@ -1,0 +1,24 @@
+
+    <div>
+    <mat-toolbar>
+        <button mat-icon-button (click)="inputSideNav.toggle()">
+            <mat-icon>menu</mat-icon>
+          </button>
+        <span></span>
+        <div class="example-spacer"></div>
+        <a mat-button routerLink="/login" ><mat-icon>login</mat-icon> Iniciar sesion</a>
+        <a mat-raised-button class="btn-raised " [matMenuTriggerFor]="menu"><mat-icon>account_circle</mat-icon> Name <mat-icon>expand_more</mat-icon></a>
+            <mat-menu #menu="matMenu" class="menu-without-scroll">
+              <ng-container>
+                <div class="menu-info" >
+                 <div> <mat-icon style="color: #555555;"></mat-icon></div>
+                  
+                </div>
+              </ng-container>
+                <button mat-menu-item class="btn-logout">
+                    <a mat-raised-button color="accent" style="width: 100%;"><mat-icon>logout</mat-icon> Cerrar sesion</a>
+                </button>
+            </mat-menu>
+    </mat-toolbar>
+        
+</div>

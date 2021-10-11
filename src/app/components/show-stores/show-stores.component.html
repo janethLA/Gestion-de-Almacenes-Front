@@ -1,0 +1,16 @@
+<div class="search-bar" style="height: 50px;">
+
+</div>
+<div style="min-height: calc(100vh - 98px); ">
+    <h2 style="text-align: start;">Lista de almacenes registrados. </h2>
+    <mat-grid-list [cols]="2" rowHeight="300px" gutterSize="10px">
+        
+        <mat-grid-tile *ngFor="let warehouse of warehousesReceived" >
+            <app-store-card [id]="warehouse.idMarket" [name]="warehouse.warehouseName" [address]="warehouse.address" 
+            [latitude]="warehouse.latitude" [longitude]="warehouse.longitude" ></app-store-card>
+        </mat-grid-tile>
+
+    </mat-grid-list>
+</div>
+  
+                

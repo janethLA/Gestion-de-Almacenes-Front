@@ -1,0 +1,32 @@
+<div class="category"> 
+    <form  [formGroup]="categoryForm" #formDirective="ngForm" (ngSubmit)="saveCategory(categoryForm.value,formDirective)">
+
+        <div style="text-align: center; margin-top: 5px; margin-bottom: 10px;"> 
+            <h2>Crear Nueva Categoria</h2>
+        </div> 
+
+            <div style="width: 100%; margin-top: 20px;" >
+                <div class="field">
+                    <mat-form-field  appearance="outline" style="width: 100%;">
+                    <mat-label>Nombre de la Categoria</mat-label>
+                    <input matInput placeholder="ingres nombre de la categoria" required type="text" formControlName="categoryName">
+                    <mat-error >este campo es requerido</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="field">
+                    <mat-form-field  appearance="outline" style="width: 100%;">
+                    <mat-label>Descripción</mat-label>
+                    <input matInput placeholder="ingrese una description" required type="text" formControlName="description">
+                    <mat-error>este campo es requerido</mat-error>
+                    </mat-form-field>
+                </div>
+                
+                <div style="text-align: center; width: 100%;">
+                    <button mat-raised-button type="submit" class="btn-login" [disabled]="categoryForm.invalid">
+                        CREAR
+                    </button>
+                </div>
+            </div>
+        
+    </form>
+</div>

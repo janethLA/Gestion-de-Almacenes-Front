@@ -1,0 +1,49 @@
+<div class="content">
+    <div class="categories">
+        <h1>CATEGORIAS</h1>
+        <mat-divider></mat-divider>
+        <a mat-button class="menu-button" >
+            <mat-icon>list</mat-icon>
+            <span>Todas las categorias</span>
+            <mat-icon>arrow_forward_ios</mat-icon>
+        </a>
+        <a mat-button class="menu-button"*ngFor="let category of allCategories">
+            <mat-icon>category</mat-icon>
+            <span>{{category.categoryName}}</span>
+            <mat-icon style="align-self: flex-end;">arrow_forward_ios</mat-icon>
+        </a>
+    
+    </div>
+    <div class="info">
+        <div class="header">
+            <h1>{{warehouseActual?.warehouseName}}</h1>
+            <mat-divider></mat-divider>
+            <h3><mat-icon>store</mat-icon> Descripcion</h3>
+            <h3><mat-icon>place</mat-icon> Informacion</h3>
+            <div><b>Dirección:</b><p>{{warehouseActual?.address}}</p></div>
+            <div><b>Latitud:</b><p>{{warehouseActual?.latitude}}</p></div>
+            <div><b>Longitud:</b><p>{{warehouseActual?.longitude}}</p></div>
+            
+        </div>
+        <div class="content">
+            <button mat-stroked-button color="primary" (click)="addCategory()"><mat-icon>add</mat-icon>Añadir Categoría </button>
+            <button mat-stroked-button color="primary"(click)="addProduct()"><mat-icon>add</mat-icon>Añadir Producto </button>
+        
+        </div>
+    </div>
+    
+
+
+</div>
+<mat-divider></mat-divider>
+<div style="display: flex; min-height: 300px">
+    <div class="createCategory" *ngIf="pressedCategory==true">
+        <app-category-form [pressedCategory]="true" [idStore]="idStore"></app-category-form>
+    </div>
+    <div class="createProduct"*ngIf="pressedProduct==true">
+        <app-product-form [allCategories]="allCategories" [idStore]="idStore"></app-product-form>
+    </div>
+</div>
+
+
+

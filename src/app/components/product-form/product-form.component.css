@@ -1,0 +1,14 @@
+.fields{
+    width: 50%;
+    font-size: 14px;
+}
+button{
+    background-color:#0460ca ;
+    color: white;
+}
+.field{
+    font-size: 14px;
+}
+::ng-deep .snackSuccess {
+    background-color: #41a812;
+  }

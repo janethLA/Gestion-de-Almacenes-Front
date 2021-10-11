@@ -1,0 +1,80 @@
+<div class="product"> 
+    <form  [formGroup]="productForm" #formDirective="ngForm" (ngSubmit)="saveProduct(productForm.value,formDirective)">
+
+        <div style="text-align: center; margin-top: 5px; margin-bottom: 10px;"> 
+            <h2>CREAR NUEVO PRODUCTO</h2>
+        </div> 
+
+            <div style="width: 100%; margin-top: 20px;" >
+                <div class="field">
+                    <mat-form-field  appearance="outline" style="width: 100%;">
+                    <mat-label>Nombre del Producto</mat-label>
+                    <input matInput placeholder="ingres nombre de la categoria" required type="text" formControlName="productName">
+                    <mat-error >este campo es requerido</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="field">
+                    <mat-form-field  appearance="outline" style="width: 100%;">
+                    <mat-label>Descripción</mat-label>
+                    <input matInput placeholder="ingrese una description" required type="text" formControlName="description">
+                    <mat-error>este campo es requerido</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="field" >
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-label>Asignar Categoria</mat-label>
+                        <mat-select formControlName="idCategory" required  >
+                            <mat-option *ngFor="let category of allCategories" [value]="category.idCategory" >
+                                {{category.categoryName}}
+                              </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                </div>
+                <div style="display: flex;width: 100%;">
+
+                    <div class="fields">
+                        <mat-form-field  appearance="outline" style="width: 100%;">
+                        <mat-label>Precio</mat-label>
+                        <input matInput placeholder="ingrese el Precio" required type="number"
+                                formControlName="price" required>
+                        <mat-error>Este campo es requerido</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="fields">
+                        <mat-form-field appearance="outline" style="width: 100%; padding-left: 5px;">
+                            <mat-label>Medida</mat-label>
+                                <mat-select formControlName="measurement" required>
+                                    
+                                    <ng-container >
+                                        <mat-option  *ngFor="let measurement of measurements" [value]="measurement.value">{{measurement.name}}</mat-option>
+                                    </ng-container>
+                                      
+                                </mat-select>
+                          </mat-form-field>
+                    </div>
+                    
+                </div>
+                <div style="width: 100%;" >
+                    <p *ngIf="dataFile!=null && replace==false" >Ya se subio un archivo.</p>
+                        
+                    <mat-form-field class="container__field" style="width: 100%; font-size: 14px; height: 100px;" appearance="outline"  >
+                        
+                    <mat-label style="font-size: 16px;"><mat-icon style="font-size: 25px;">upload_file</mat-icon>Añadir imagen</mat-label>
+                        <ngx-mat-file-input [disabled]="disalbedInput()" [accept]="'.jpg'" (change)="onFileSelected($event)" 
+                        #removableInput  formControlName="removablefile" placeholder="ingrese una imagen">
+                        </ngx-mat-file-input>
+                        <button mat-icon-button  matSuffix *ngIf="!removableInput.empty " (click)="removableInput.clear($event)">
+                          <mat-icon >clear</mat-icon>
+                        </button>
+                        
+                      </mat-form-field>
+                </div>
+                <div style="text-align: center; width: 100%;">
+                    <button mat-raised-button type="submit" class="btn-login" [disabled]="productForm.invalid">
+                        CREAR
+                    </button>
+                </div>
+            </div>
+        
+    </form>
+</div>

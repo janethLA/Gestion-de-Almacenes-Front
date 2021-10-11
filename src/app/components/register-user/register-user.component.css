@@ -1,0 +1,10 @@
+::ng-deep .snackSuccess {
+    background-color: #41a812;
+  }
+  .btn-login{
+    background-color: #0460ca;
+}
+button{
+    background-color:#0460ca ;
+    color: white;
+}
