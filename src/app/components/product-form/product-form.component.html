@@ -41,16 +41,27 @@
                         </mat-form-field>
                     </div>
                     <div class="fields">
-                        <mat-form-field appearance="outline" style="width: 100%; padding-left: 5px;">
+            
+                        <mat-form-field appearance="outline" >
+                            <mat-label>Cantidad</mat-label>
+                            <input matInput placeholder="ingrese la cantidad" required type="number"
+                            formControlName="quantity">
+                            <mat-error>Este campo es requerido</mat-error>
+                         </mat-form-field>
+                    </div>
+                    <div class="fields">
+            
+                        <mat-form-field appearance="outline" >
                             <mat-label>Medida</mat-label>
-                                <mat-select formControlName="measurement" required>
-                                    
-                                    <ng-container >
-                                        <mat-option  *ngFor="let measurement of measurements" [value]="measurement.value">{{measurement.name}}</mat-option>
-                                    </ng-container>
-                                      
-                                </mat-select>
-                          </mat-form-field>
+                            <input matInput placeholder="ingrese una medida" required type="text"
+                            formControlName="measurement"
+                            [matAutocomplete]="auto">
+                           <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let measurement of measurements " [value]="measurement">
+                              {{measurement}}
+                            </mat-option>
+                          </mat-autocomplete>
+                         </mat-form-field>
                     </div>
                     
                 </div>

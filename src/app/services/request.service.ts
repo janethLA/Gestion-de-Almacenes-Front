@@ -18,6 +18,7 @@ export class RequestService {
   public get2(url:string,body){
     return this.http.get(url,body);
   }
+  
   public put(url:string, body){
     return this.http.put(url,body);
   }

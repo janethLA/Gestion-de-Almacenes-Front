@@ -40,6 +40,7 @@ import { CategoryFormComponent } from './components/category-form/category-form.
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { CookieService } from 'ngx-cookie-service';
 import { interceptorProvider, } from './security/jwt-interceptor.interceptor';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 import { LoginComponent } from './components/login/login.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
@@ -87,6 +88,7 @@ import { HomePageComponent } from './components/home-page/home-page.component';
     MatInputModule,
     AgmCoreModule.forRoot({apiKey:"AIzaSyAlZsuin6kTiBDLiELbZhUpgAeZ6UiYgWo"}),
     MaterialFileInputModule,
+    MatAutocompleteModule,
     
   ],
   providers: [RequestService,CookieService,interceptorProvider],

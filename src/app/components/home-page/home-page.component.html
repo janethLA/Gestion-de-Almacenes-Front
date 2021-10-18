@@ -26,28 +26,31 @@
               <span>Carnes</span>
             </button>
           </mat-menu>
-        <form class="search-bar">
+        <!-- <form class="search-bar">
             <mat-icon>search</mat-icon>
             
                 <p  placeholder="Buscar productos" style="font-family:Montserrat;font-size:14px;margin:7px 0px ;width: 100%;">Buscar productos</p>
                
-        </form> 
-        <!-- <div class="search-bar"  >
-            <mat-form-field appearance="outline" >
-                <input matInput placeholder="buscar productos"
-                >
+        </form> --> 
+         <div class="search-bar">
+            <mat-form-field appearance="outline" style="width: 100%;">
+                <input matInput placeholder="buscar productos" 
+                [formControl]="searchInput">
                <mat-icon matSuffix>search</mat-icon>
                
              </mat-form-field>
-    </div> -->
+             <button color="primary" mat-raised-button (click)="getProducts()">BUSCAR</button>
+          </div> 
         <a mat-button class="btn-catalog">
-            
             <span>0,00 Bs.</span>
             <mat-icon>local_grocery_store</mat-icon>
             <mat-icon>visibility</mat-icon>
         </a>
     </div>
-    <h2 style="text-align: start;">Lista de productos registrados. </h2>
+    <div *ngIf="onMap==true"class="draw-map" id="map">
+
+    </div>
+    <h2 style="text-align: start;padding-top: 15px;">Lista de productos  </h2>
     <mat-grid-list [cols]="5" rowHeight="300px" gutterSize="10px">
         
         <mat-grid-tile *ngFor="let product of productsReceived" >

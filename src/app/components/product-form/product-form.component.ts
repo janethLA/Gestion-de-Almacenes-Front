@@ -3,6 +3,8 @@ import { FormBuilder, FormGroupDirective, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import {RequestService} from '../../services/request.service';
 
 @Component({
@@ -22,19 +24,20 @@ export class ProductFormComponent implements OnInit {
   dataFile:any;
   fileName = '';
   formData = new FormData();
-  
+  filteredOptions: Observable<string[]>;
 
   productForm= this.formBuilder.group({
     productName:['',[Validators.required]],
     description:['',[Validators.required]],
     price:['',[Validators.required]],
     measurement:['',[Validators.required]],
+    quantity:['',[Validators.required]],
     idCategory:['',[Validators.required]],
     file:['',[Validators.required]],
     expirationDate:['',[]],
     
   });
-  measurements:any=[
+  measurements:any/* =[
     {value:"Kilogramo",name:"Kilogramo(Kg)"},
     {value:"Gramo",name:"Gramo(g)"},
     {value:"Metro",name:"Metro(m)"},
@@ -42,12 +45,29 @@ export class ProductFormComponent implements OnInit {
     {value:"Mililitro",name:"Mililitro(ml)"},
     {value:"Unidad",name:"Unidad(u)"},
     {value:"Docena",name:"Docena"},
-    ]
+    ] */
   ngOnInit(): void {
     this.allCategories=this.data.allCategories;
+    this.loadMeasurements();
   }
 
-  
+  loadMeasurements(){
+    this.RequestService.get('http://localhost:8080/api/product/allMeasurement/')
+    .subscribe(r=>{
+      console.log(r);
+      this.measurements = r;
+      this.filteredOptions = this.productForm.get("measurement").valueChanges
+    .pipe(
+      startWith(''),
+      map(value => this.filter(value))
+    );
+    })
+  }
+  filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.measurements.filter(measurement => measurement.toLowerCase().includes(filterValue));
+  }
 
   saveProduct(product,formDirective: FormGroupDirective){
     this.RequestService.post('http://localhost:8080/api/product/createProduct/'+this.productForm.get('idCategory').value,this.formData).subscribe({
