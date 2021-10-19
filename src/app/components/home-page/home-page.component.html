@@ -1,4 +1,4 @@
-<div style="min-height: calc(100vh - 98px); ">
+<div style="min-height: calc(100vh - 98px); position: relative;">
     <div style="text-align: start;margin-left: 20px;">
         <mat-icon style="color: #002b5c; font-size: 50px;">store</mat-icon>
     </div>
@@ -42,20 +42,53 @@
              <button color="primary" mat-raised-button (click)="getProducts()">BUSCAR</button>
           </div> 
         <a mat-button class="btn-catalog">
-            <span>0,00 Bs.</span>
+            <span>{{getTotalPrice()}} Bs.</span>
             <mat-icon>local_grocery_store</mat-icon>
-            <mat-icon>visibility</mat-icon>
+            <mat-icon [matBadge]="quantityBadgeRequest()" matBadgeColor="warn" [matBadgeHidden]="hidden" (click)="toggleBadgeVisibility()" >visibility</mat-icon>
         </a>
     </div>
-    <div *ngIf="onMap==true"class="draw-map" id="map">
+    <div class="popup" *ngIf="showPedido"><button mat-icon-button style="top: 0;right: 0;"(click)="showPedido=false"><mat-icon>cancel</mat-icon></button>
+      <mat-grid-list [cols]="1" rowHeight="100px" gutterSize="10px">
+        
+        <mat-grid-tile *ngFor="let product of productsCart" >
+            <app-item-card [idProduct]="product.idProduct" [productName]="product.productName"[description]="product.description" [image]="product.image" 
+            [measurement]="product.measurement" [price]="product.price"[index]="positionItem" (deleteProductEvent)="deleteProduct($event)"
+            (sendSubtotalEvent)="receiveSubtotal($event)"></app-item-card>
+        </mat-grid-tile>
 
+    </mat-grid-list>
+    <div class="total">
+      <p>Monto Total:</p>
+      <span class="priceTotal">{{getTotalPrice()}} Bs.</span>
     </div>
+    <div class="links">
+      <a mat-button class="btn-confirm" (click)="openDialogConfirm()">
+        <span>Confirmar Pedido</span>
+        <mat-icon>local_grocery_store</mat-icon>
+     </a>
+    </div>
+    </div>
+    <div style="margin: 20px;text-align: start;box-shadow:#000000 0px 2px 4px 0px;
+    border-radius: 10px;padding: 15px;background-color: #002b5c;"*ngIf="onMap==true">
+      <h3>Sugerencia de lugares mas cercanos</h3>
+      <div style="display: flex;margin: 20px;">
+        <div style="width: 20%;margin-right:  15px; " *ngIf="loadProducSelected">
+          <app-product-card [idProduct]="product.idProduct" [productName]="product.productName"[description]="product.description" [image]="product.image" 
+          [measurement]="product.measurement" [price]="product.price" (addProductEvent)="addProduct($event)"></app-product-card>
+        </div>
+        <div class="draw-map" id="map">
+  
+        </div>
+      </div>
+      
+    </div>
+    
     <h2 style="text-align: start;padding-top: 15px;">Lista de productos  </h2>
-    <mat-grid-list [cols]="5" rowHeight="300px" gutterSize="10px">
+    <mat-grid-list [cols]="5" rowHeight="300px" gutterSize="10px" style="position: relative;">
         
         <mat-grid-tile *ngFor="let product of productsReceived" >
             <app-product-card [idProduct]="product.idProduct" [productName]="product.productName"[description]="product.description" [image]="product.image" 
-            [measurement]="product.measurement" [price]="product.price" ></app-product-card>
+            [measurement]="product.measurement" [price]="product.price" (addProductEvent)="addProduct($event)"></app-product-card>
         </mat-grid-tile>
 
     </mat-grid-list>

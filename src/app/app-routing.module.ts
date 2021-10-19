@@ -14,7 +14,8 @@ const routes: Routes = [
   {path:'showStores',component: ShowStoresComponent},
   {path:'showStores/:id',component: StoreContentComponent},
   {path:'login',component:LoginComponent},
-  {path:'home',component:HomePageComponent}
+  {path:'home',component:HomePageComponent},
+  {path: '', pathMatch: 'full', redirectTo: 'home'},
   
 ];
 

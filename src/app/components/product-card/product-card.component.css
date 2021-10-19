@@ -1,5 +1,7 @@
 .main{
     height: 300px;
+    position: relative;
+    max-width: 100%;
 }
 .price{
     color: #424242;
@@ -63,3 +65,5 @@ img{
 mat-button {
     height: auto;
 }
+button:hover { color: #0460ca;border-style: solid;border-color:#002b5c ; cursor: pointer; }
+

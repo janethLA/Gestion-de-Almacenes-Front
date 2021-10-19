@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit,Output } from '@angular/core';
 
 @Component({
   selector: 'app-product-card',
@@ -6,7 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./product-card.component.css']
 })
 export class ProductCardComponent implements OnInit {
-  @Input() id:number;
+  @Input() idProduct:number;
   @Input() productName:string;
   @Input() description:string;
   @Input() image:any;
@@ -15,17 +15,21 @@ export class ProductCardComponent implements OnInit {
   @Input() expirationDate:any;
   @Input() categoryName:any;
   @Input() warehouseName:any;
-
-
+  @Output() addProductEvent=new EventEmitter<any>();
+  product:any;
 
   constructor() { }
 
   ngOnInit(): void {
     this.image="data:image/jpg;base64,"+this.image;
     
+    
   }
   
-
+makeProduct(){
+  this.product={idProduct:this.idProduct,productName:this.productName,description:this.description,
+  image:this.image,measurement:this.measurement,price:this.price,expirationDate: this.expirationDate,categoryName:this.categoryName,warehouseName:this.warehouseName}
+}
 
 dataURItoBlob(dataURI) {
    const byteString = window.atob(dataURI);
@@ -37,7 +41,9 @@ dataURItoBlob(dataURI) {
    const blob = new Blob([int8Array], { type: 'image/png' });    
    return blob;
 }
-addCart(id){
+addCart(){
+  this.makeProduct();
+  this.addProductEvent.emit(this.product)
   
 }
 

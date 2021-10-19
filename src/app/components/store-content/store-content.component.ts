@@ -19,6 +19,7 @@ export class StoreContentComponent implements OnInit {
   warehouseActual:any;
   categorySelected:any={categoryName:"Todos los productos"}
   productsReceived:any;
+  copyProductsReceived:any;
   constructor(
     private RequestService:RequestService,
     private rutaActiva: ActivatedRoute,
@@ -39,6 +40,7 @@ export class StoreContentComponent implements OnInit {
     .subscribe(r=>{
       console.log(r);
       this.productsReceived = r;
+      this.copyProductsReceived=this.productsReceived;
     })
   }
   loadCategories(){
@@ -68,12 +70,17 @@ export class StoreContentComponent implements OnInit {
     this.pressedProduct=true;
   }
   viewProducts(category:any){
-    this.categorySelected=category
+    
+      this.categorySelected=category
+      this.productsReceived=this.categorySelected.product
+    
+    
     console.log(this.categorySelected)
     
   }
   addAllCategory(){
     this.categorySelected={categoryName:"Todos los productos"}
+    this.productsReceived=this.copyProductsReceived;
   }
   addNewCategory(){
     

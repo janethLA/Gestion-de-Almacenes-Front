@@ -1,0 +1,40 @@
+<div class="content">
+    <div class="firstBox">
+        <h3>¿Ya eres usuario de Mi almacen?</h3>
+        <p class="text">Si ya eres usuario de la pagina inicia sesión con tu cuenta</p>
+        <div class="links">
+            <a mat-button class="btn-login" (click)="redirect()" >
+              <mat-icon>person</mat-icon>
+              <span>Accede a tu cuenta</span>
+           </a>
+          </div>
+    </div>
+    <div class="secondBox">
+        <h3>Registro de Datos</h3>
+        <p class="text">Introduce los siguientes datos para confirmar tu pedido</p>
+        <form class="form" [formGroup]="createUser" #formDirective="ngForm" (ngSubmit)="saveUserFinal(createUser.value,formDirective)">
+            <div class="field">
+                <mat-form-field  appearance="outline" style="width: 100%;">
+                <mat-label>Username</mat-label>
+                <input matInput placeholder="Nombre de usuario" required type="text" formControlName='finalUserName'>
+                <mat-error >este campo es requerido</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="field">
+                <mat-form-field  appearance="outline" style="width: 100%;">
+                <mat-label>Numero de celular</mat-label>
+                <input matInput placeholder="Ingrese su número" 
+                        required  formControlName='telephone'>
+                
+                <mat-error>este campo es requerido</mat-error>
+                </mat-form-field>
+            </div>
+            <div style="text-align: center; width: 100%; " >
+                <button mat-raised-button style="background-color:#424242; width: 100%; color: white;" type="submit" [disabled]="createUser.invalid"> 
+                    Crear Usuario
+                    <mat-icon>person_outline</mat-icon>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

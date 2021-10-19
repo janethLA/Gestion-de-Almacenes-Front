@@ -1,0 +1,33 @@
+<mat-card class="main" [formGroup]="orderDetail" #formDirectiveNew="ngForm">
+  <button mat-icon-button (click)="deleteItem()"><mat-icon>close</mat-icon></button>
+    <div class="image">
+        <img mat-card-image [src]="image" alt="Photo of a Product">
+ 
+    </div>
+    
+    <!-- <mat-card-title class="productName">{{productName}}</mat-card-title> -->
+    <!-- <mat-card-subtitle>{{description}}</mat-card-subtitle> -->
+    <mat-card-content>
+      <div class="description">
+        <p class="productName">{{productName}} </p><span class="detail">{{ description + " por " + measurement}}</span>
+        
+        <div class="priceAndQuantity">
+          <mat-form-field appearance="outline" class="quantity">
+            <mat-label>1 ud</mat-label>
+            <mat-select  required formControlName="units" >
+                <mat-option *ngFor="let unit of unities"[value]="unit.value" >
+                    {{unit.name}}
+                  </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <p class="price">
+            {{getSubtotal(price)}} Bs.
+          </p>
+        </div>
+      </div>
+      
+    </mat-card-content>
+    <!-- <mat-card-actions style="padding: 15px;">
+      <button mat-button class="button" >Añadir al Carrito</button>
+    </mat-card-actions> -->
+  </mat-card>

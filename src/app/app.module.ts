@@ -45,6 +45,9 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { LoginComponent } from './components/login/login.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
+import {MatBadgeModule} from '@angular/material/badge';
+import { ItemCardComponent } from './components/cards/item-card/item-card.component';
+import { DgNewUserComponent } from './components/dialogs/dg-new-user/dg-new-user.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,6 +67,8 @@ import { HomePageComponent } from './components/home-page/home-page.component';
     LoginComponent,
     ProductCardComponent,
     HomePageComponent,
+    ItemCardComponent,
+    DgNewUserComponent,
   ],
   imports: [
     BrowserModule,
@@ -89,6 +94,7 @@ import { HomePageComponent } from './components/home-page/home-page.component';
     AgmCoreModule.forRoot({apiKey:"AIzaSyAlZsuin6kTiBDLiELbZhUpgAeZ6UiYgWo"}),
     MaterialFileInputModule,
     MatAutocompleteModule,
+    MatBadgeModule,
     
   ],
   providers: [RequestService,CookieService,interceptorProvider],

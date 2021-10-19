@@ -1,0 +1,89 @@
+.main{
+    align-items:center;
+    color:#424242;
+    display:flex;
+    font-family:Montserrat;
+    font-size:12.0012px;
+    line-height:18.0018px;
+    padding:15px 21px;
+    text-align:left;
+    margin-left: 40px;
+    width: 90%;
+    max-width: 90%;
+}
+mat-icon{
+    align-items: center;
+    text-align: center;
+    display: inline-block;
+    margin-left: 5px;
+}
+.image{
+    align-items:center;
+    color:#424242;
+    display:block;
+    font-size:12.0012px;
+    justify-content:center;
+    line-height:18.0018px;
+    width: 120px;
+    height: 120px;
+}
+img{
+    font-size:12.0012px;
+    line-height:18.0018px;
+    width: 100%;
+    min-height: 120px;
+    max-height: 120px;
+    margin-left: 5px;
+    
+}
+.description{
+    color:#424242;
+    flex-basis:0%;
+    font-size:14px;
+    line-height:21px;
+    padding:0px 0px 0px 5px;
+    text-align:left;
+    margin-left: 10px;
+}
+.productName{
+    color:#444444;
+    display:-webkit-box;
+    font-family:Montserrat;
+    font-size:14px;
+    font-weight:600;
+    line-height:16.8px;
+    margin:3px 0px 0px 0px;
+    text-align:left;
+}
+.detail{
+    color:#7f6060;
+    font-family:Montserrat;
+    font-size:11px;
+    font-weight:300;
+    justify-content:center;
+    line-height:14px;
+    text-align:center;
+}
+.priceAndQuantity{
+    align-items:center;
+    color:#424242;
+    display:flex;
+    font-size:14px;
+    line-height:21px;
+    text-align:right;
+}
+.quantity{
+    align-items:center;
+    border-radius:5px;
+    font-size:12.6px;
+    font-weight:700;
+    padding:0px 15px 0px 13px;
+    width: 30%;
+}
+.price{
+    color:#424242;
+    font-family:Montserrat;
+    font-weight:800;
+    line-height:24px;
+    text-align:left;
+}
