@@ -21,6 +21,19 @@
     margin-right:20px;
     max-width: 100%;
 }
+.btn-type{
+    
+    font-family:Montserrat;
+    font-size:12px;
+    font-weight:500;
+    line-height:14.5px;
+    margin-left:20px;
+    margin-right:20px;
+    max-width: 100%;
+}
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #c2c0c0;
+  }
 .search-bar{
     
     color:#424242;

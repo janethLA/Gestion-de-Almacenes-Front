@@ -3,29 +3,22 @@
         <mat-icon style="color: #002b5c; font-size: 50px;">store</mat-icon>
     </div>
     <div class="navigation-bar">
-        <a mat-button class="btn-catalog"[matMenuTriggerFor]="menu">
+        <!-- <a mat-button class="btn-catalog"[matMenuTriggerFor]="menu">
             <mat-icon>list</mat-icon>
-            <span>Catálogo de Productos</span>
-        </a>
+            <span>Buscar por</span>
+        </a> -->
+         <mat-form-field appearance="outline" class="btn-type">
+          <mat-label>Tipo de busqueda</mat-label>
+          <mat-select (selectionChange)="changeSearch($event.value)" >
+              <mat-option value="zona" >
+                <mat-icon>map</mat-icon> Buscar por zonas
+                </mat-option>
+                <mat-option value="ubicacion" >
+                  <mat-icon>my_location</mat-icon> Almacenes mas cercanos
+                </mat-option>
+          </mat-select>
+        </mat-form-field> 
         
-        <mat-menu #menu="matMenu">
-            <button mat-menu-item>
-                <mat-icon>list</mat-icon>
-                <span>Todas las categorias</span>
-              </button>
-            <button mat-menu-item>
-              <mat-icon>lunch_dining</mat-icon>
-              <span>Verduras</span>
-            </button>
-            <button mat-menu-item >
-              <mat-icon>brunch_dining</mat-icon>
-              <span>Lacteos</span>
-            </button>
-            <button mat-menu-item>
-              <mat-icon>meal</mat-icon>
-              <span>Carnes</span>
-            </button>
-          </mat-menu>
         <!-- <form class="search-bar">
             <mat-icon>search</mat-icon>
             
@@ -34,12 +27,12 @@
         </form> --> 
          <div class="search-bar">
             <mat-form-field appearance="outline" style="width: 100%;">
-                <input matInput placeholder="buscar productos" 
+                <input matInput placeholder="buscar por zona" 
                 [formControl]="searchInput">
                <mat-icon matSuffix>search</mat-icon>
                
              </mat-form-field>
-             <button color="primary" mat-raised-button (click)="getProducts()">BUSCAR</button>
+             <button color="primary" mat-raised-button (click)="getMarketsByZone()">BUSCAR</button>
           </div> 
         <a mat-button class="btn-catalog">
             <span>{{getTotalPrice()}} Bs.</span>

@@ -17,7 +17,7 @@ export class HomePageComponent implements OnInit {
  
   orderDetails:any[]=[];
   productsReceived:any
-  warehousesReceived:any[];
+  warehousesReceived:any;
   searchInput = new FormControl();
   public nameProduct:string;
   public latitudeUser:any;
@@ -63,17 +63,22 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadDataProduct();
-    this.geolocation();
+    this.geolocation()
   }
   geolocation(){
+    console.log(navigator.geolocation)
     if(!navigator.geolocation){
       console.log("location is not supported")
+      this.searchInput.setValue("");
+    }else{
+      navigator.geolocation.getCurrentPosition((position)=>{
+        this.latitudeUser=position.coords.latitude;
+        this.longitudeUser=position.coords.longitude;
+        console.log(this.latitudeUser)
+        
+      })
     }
-    navigator.geolocation.getCurrentPosition((position)=>{
-      this.latitudeUser=position.coords.latitude;
-      this.longitudeUser=position.coords.longitude;
-      
-    })
+     
   }
   loadDataProduct(){
     this.RequestService.get('http://localhost:8080/api/product/allProducts/')
@@ -222,5 +227,48 @@ export class HomePageComponent implements OnInit {
   viewProduct(products){
     this.loadProducSelected=true;
     this.product=products[0]
+  }
+  changeSearch(option){
+    if(option=="ubicacion"){
+      this.geolocation();
+      this.getMarkets();
+    }else{
+      //this.searchInput.markAsTouched();
+      this.searchInput.markAsPending()
+    }
+  }
+  getMarkets(){
+    
+    const formD = new FormData();
+    formD.append('latitude', this.latitudeUser);
+       formD.append('longitude',this.longitudeUser)
+      
+      this.formDataSearch=formD;
+  
+      console.log(this.formDataSearch.get("latitude"))
+      console.log(this.formDataSearch.get("longitude"))
+      
+      this.RequestService.get2('http://localhost:8080/api/market/warehouseSearch/',this.formDataSearch).subscribe(r=>{
+      this.onMap=true;
+     this.warehousesReceived=r;
+      this.loadMap();
+      //this.sortBusiness();
+      //if(this.Companies.length==0){
+        //this.notCompanies=true;
+      //} 
+      }) 
+    
+    
+  }
+  getMarketsByZone(){
+    if(this.searchInput.value!=""){
+      this.RequestService.get('http://localhost:8080/api/market/warehouseSearch/'+this.searchInput.value).subscribe(r=>{
+        this.onMap=true;
+       this.warehousesReceived=r;
+        this.loadMap();
+        
+        }) 
+    }
+    
   }
 }
