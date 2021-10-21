@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Loader } from '@googlemaps/js-api-loader';
 import { fromEvent, Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, startWith } from 'rxjs/operators';
 import { RequestService } from 'src/app/services/request.service';
 import { DgNewUserComponent } from '../dialogs/dg-new-user/dg-new-user.component';
 
@@ -32,6 +32,11 @@ export class HomePageComponent implements OnInit {
   total:number=0;
   loadProducSelected=false;
   product:any;
+  options: any;
+  filteredOptions: Observable<string[]>;
+  areasReceived:any;
+  categorySelected:any;
+  copyProductsReceived:any;
 
   orderForm = this.formBuilder.group({
     quantityProducts: ['',],
@@ -63,7 +68,8 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadDataProduct();
-    this.geolocation()
+    this.geolocation();
+    this.getAllSectors();
   }
   geolocation(){
     console.log(navigator.geolocation)
@@ -153,7 +159,7 @@ export class HomePageComponent implements OnInit {
           label: `${w.idMarket}`,
         });
         this.marker.addListener("click", () => {
-          this.viewProduct(w.products);
+          this.viewAllOfMarkets(w.idMarket);
           infoWindow.close();
           infoWindow.setContent(this.marker.getTitle());
           infoWindow.open(this.marker.getMap(), this.marker);
@@ -224,10 +230,18 @@ export class HomePageComponent implements OnInit {
     });
   }
 
-  viewProduct(products){
+  viewAllOfMarkets(id){
     this.loadProducSelected=true;
-    this.product=products[0]
+    this.RequestService.get('http://localhost:8080/api/category/allCategories/'+id).subscribe(r=>{
+      this.onMap=true;
+     this.areasReceived=r;
+     this.productsReceived=this.areasReceived.product;
+      this.loadMap();
+      }) 
+    //this.product=products[0]
+
   }
+  
   changeSearch(option){
     if(option=="ubicacion"){
       this.geolocation();
@@ -264,5 +278,24 @@ export class HomePageComponent implements OnInit {
         }) 
     }
     
+  }
+  addAllCategory(){
+    this.categorySelected={categoryName:"Todos los productos"}
+    this.productsReceived=this.copyProductsReceived;
+  }
+  getAllSectors(){
+    this.RequestService.get('http://localhost:8080/api/sector/allSector').subscribe(r=>{
+      this.options=r;
+      this.filteredOptions = this.searchInput.valueChanges
+    .pipe(
+      startWith(''),
+      map(value => this.filter(value))
+    );
+    })
+  }
+  filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
 }

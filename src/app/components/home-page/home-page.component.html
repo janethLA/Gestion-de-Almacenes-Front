@@ -28,9 +28,13 @@
          <div class="search-bar">
             <mat-form-field appearance="outline" style="width: 100%;">
                 <input matInput placeholder="buscar por zona" 
-                [formControl]="searchInput">
+                [formControl]="searchInput"  [matAutocomplete]="auto">
                <mat-icon matSuffix>search</mat-icon>
-               
+               <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-autocomplete>
              </mat-form-field>
              <button color="primary" mat-raised-button (click)="getMarketsByZone()">BUSCAR</button>
           </div> 
@@ -75,6 +79,23 @@
       </div>
       
     </div>
+    <div class="all-category">
+      <h3 class="h3">Categorias de nuestro almacen</h3>
+      <div style="display: flex;  flex-wrap: wrap">
+          <a mat-button class="btn-category" (click)="addAllCategory()">
+              <mat-icon >list</mat-icon>
+              <span>Todos los productos</span>
+               
+          </a>
+          <a mat-button class="btn-category" *ngFor="let category of areasReceived"(click)="viewProducts(category)">
+              <mat-icon style="text-align: center;">lunch_dining</mat-icon>
+              <span>{{category.categoryName}}</span>
+          </a>
+          
+      </div>
+  </div>
+  <mat-divider></mat-divider>
+
     
     <h2 style="text-align: start;padding-top: 15px;">Lista de productos  </h2>
     <mat-grid-list [cols]="5" rowHeight="300px" gutterSize="10px" style="position: relative;">
