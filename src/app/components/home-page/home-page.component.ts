@@ -143,7 +143,7 @@ export class HomePageComponent implements OnInit {
         animation: google.maps.Animation.DROP,
         position: { lat: this.latitudeUser, lng: this.longitudeUser },
       });
-      this.WarehousesReceived.map((w)=>{
+      this.warehousesReceived.map((w)=>{
         this.marker = new google.maps.Marker({
           map,
           draggable: false,
@@ -239,16 +239,10 @@ export class HomePageComponent implements OnInit {
   }
   getMarkets(){
     
-    const formD = new FormData();
-    formD.append('latitude', this.latitudeUser);
-       formD.append('longitude',this.longitudeUser)
-      
-      this.formDataSearch=formD;
-  
-      console.log(this.formDataSearch.get("latitude"))
-      console.log(this.formDataSearch.get("longitude"))
-      
-      this.RequestService.get2('http://localhost:8080/api/market/warehouseSearch/',this.formDataSearch).subscribe(r=>{
+    var coords = {};
+      coords={latitude:this.latitudeUser,longitude:this.longitudeUser}
+      console.log(coords)
+      this.RequestService.get2('http://localhost:8080/api/market/warehouseSearch/',coords).subscribe(r=>{
       this.onMap=true;
      this.warehousesReceived=r;
       this.loadMap();

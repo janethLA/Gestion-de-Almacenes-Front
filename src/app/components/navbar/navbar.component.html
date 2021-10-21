@@ -7,7 +7,7 @@
         <span></span>
         <div class="example-spacer"></div>
         <a mat-button routerLink="/login" ><mat-icon>login</mat-icon> Iniciar sesion</a>
-        <a mat-raised-button class="btn-raised " [matMenuTriggerFor]="menu"><mat-icon>account_circle</mat-icon> {{user.userName}}<mat-icon>expand_more</mat-icon></a>
+        <a mat-raised-button class="btn-raised " [matMenuTriggerFor]="menu"><mat-icon>account_circle</mat-icon> {{user?.userName}}<mat-icon>expand_more</mat-icon></a>
             <mat-menu #menu="matMenu" class="menu-without-scroll">
               <ng-container>
                 <div class="menu-info" >
