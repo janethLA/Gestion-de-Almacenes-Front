@@ -18,7 +18,7 @@ export class StoreContentComponent implements OnInit {
   allWarehouses:any;
   warehouseActual:any;
   categorySelected:any={categoryName:"Todos los productos"}
-  productsReceived:any;
+  productsReceived:any[]=[];
   copyProductsReceived:any;
   constructor(
     private RequestService:RequestService,
@@ -30,7 +30,7 @@ export class StoreContentComponent implements OnInit {
     this.idStore= this.rutaActiva.snapshot.params.id
     this.loadDataStore();
     this.loadCategories();
-    this.loadDataProduct();
+    //this.loadDataProduct();
 
   }
  
@@ -39,7 +39,7 @@ export class StoreContentComponent implements OnInit {
     this.RequestService.get('http://localhost:8080/api/product/allProducts/')
     .subscribe(r=>{
       console.log(r);
-      this.productsReceived = r;
+      //this.productsReceived = r;
       this.copyProductsReceived=this.productsReceived;
     })
   }
@@ -47,7 +47,14 @@ export class StoreContentComponent implements OnInit {
     this.RequestService.get('http://localhost:8080/api/category/allCategories/'+this.idStore)
     .subscribe(r=>{
       this.allCategories = r;
+      this.allCategories.map(category=>{
+          category.product.map(product=>{
+            this.productsReceived.push(product)
+          })
+       
+      })
       console.log(this.allCategories)
+      console.log(this.productsReceived)
     })
   }
   loadDataStore(){

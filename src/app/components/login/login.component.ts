@@ -50,7 +50,8 @@ public errorLogin:boolean;
         this.user={idUser:this.idUser,userName:this.userName,spendingUnit:respuesta.spendingUnit,faculty:respuesta.faculty}
         this.saveDataUser(respuesta.roles);
         //this.sendRoute(respuesta.identifier)
-        this.router.navigate(['/home'])
+        this.router.navigate(['/'])
+        
        },
       error:()=>{
         formDirective.resetForm();

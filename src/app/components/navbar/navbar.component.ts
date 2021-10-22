@@ -11,6 +11,7 @@ export class NavbarComponent implements OnInit {
   @Input()
   inputSideNav!: MatSidenav; 
   user:any;
+  notLogedUser:boolean;
   constructor(
     public cookieService:CookieService
   ) { }
@@ -25,5 +26,17 @@ export class NavbarComponent implements OnInit {
   }
   getDataUser(){
     this.user=JSON.parse(localStorage.getItem("user"))
+    if(this.user==undefined || this.user==null){
+      this.notLogedUser=true;
+    }
+  }
+  verifyUser():any{
+    if(this.notLogedUser){
+      return this.inputSideNav.close();
+      
+    }else{
+      return this.inputSideNav.toggle()
+    }
+    
   }
 }

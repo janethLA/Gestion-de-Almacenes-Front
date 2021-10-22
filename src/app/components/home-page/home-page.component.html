@@ -11,10 +11,10 @@
           <mat-label>Tipo de busqueda</mat-label>
           <mat-select (selectionChange)="changeSearch($event.value)" >
               <mat-option value="zona" >
-                <mat-icon>map</mat-icon> Buscar por zonas
+                 Buscar por zonas
                 </mat-option>
                 <mat-option value="ubicacion" >
-                  <mat-icon>my_location</mat-icon> Almacenes mas cercanos
+                  Almacenes mas cercanos
                 </mat-option>
           </mat-select>
         </mat-form-field> 
@@ -27,12 +27,12 @@
         </form> --> 
          <div class="search-bar">
             <mat-form-field appearance="outline" style="width: 100%;">
-                <input matInput placeholder="buscar por zona" 
+                <input matInput placeholder="Ingrese la zona a buscar" 
                 [formControl]="searchInput"  [matAutocomplete]="auto">
                <mat-icon matSuffix>search</mat-icon>
                <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                  {{option}}
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option.sectorName">
+                  {{option.sectorName}}
                 </mat-option>
               </mat-autocomplete>
              </mat-form-field>
@@ -67,25 +67,38 @@
     </div>
     <div style="margin: 20px;text-align: start;box-shadow:#000000 0px 2px 4px 0px;
     border-radius: 10px;padding: 15px;background-color: #002b5c;"*ngIf="onMap==true">
-      <h3>Sugerencia de lugares mas cercanos</h3>
+      <h3 style="color: white;">Sugerencia de lugares mas cercanos</h3>
+      <p style="text-align: start; margin-top: 10px;"> Presione el marcador del mapa para ver mas información</p>
       <div style="display: flex;margin: 20px;">
-        <div style="width: 20%;margin-right:  15px; " *ngIf="loadProducSelected">
-          <app-product-card [idProduct]="product.idProduct" [productName]="product.productName"[description]="product.description" [image]="product.image" 
-          [measurement]="product.measurement" [price]="product.price" (addProductEvent)="addProduct($event)"></app-product-card>
-        </div>
+        <div style="width: 40%;margin-right:  15px; " *ngIf="loadMarketSelected">
+          <div class="info">
+            <div class="header">
+                <h1>{{warehouseSelected?.warehouseName}}</h1>
+                <mat-divider></mat-divider>
+                <div class="second">
+                    <h3><mat-icon>store</mat-icon> Descripcion</h3>
+                    <h3><mat-icon>place</mat-icon> Informacion</h3>
+                    <div class="add"><b>Dirección:</b><p>{{warehouseSelected?.address}}</p></div>
+                    <div class="add"><b>Latitud:</b><p>{{warehouseSelected?.latitude}}</p></div>
+                    <div class="add"><b>Longitud:</b><p>{{warehouseSelected?.longitude}}</p></div>
+                </div>
+                
+                
+            </div>
+          </div>
+          </div>
         <div class="draw-map" id="map">
   
         </div>
       </div>
       
     </div>
-    <div class="all-category">
+    <div class="all-category" *ngIf="loadMarketSelected">
       <h3 class="h3">Categorias de nuestro almacen</h3>
       <div style="display: flex;  flex-wrap: wrap">
           <a mat-button class="btn-category" (click)="addAllCategory()">
               <mat-icon >list</mat-icon>
-              <span>Todos los productos</span>
-               
+              <span>Todos los productos</span>   
           </a>
           <a mat-button class="btn-category" *ngFor="let category of areasReceived"(click)="viewProducts(category)">
               <mat-icon style="text-align: center;">lunch_dining</mat-icon>
@@ -96,9 +109,9 @@
   </div>
   <mat-divider></mat-divider>
 
-    
-    <h2 style="text-align: start;padding-top: 15px;">Lista de productos  </h2>
-    <mat-grid-list [cols]="5" rowHeight="300px" gutterSize="10px" style="position: relative;">
+    <h3 style="text-align: start;padding-top: 15px;">Lista de productos  </h3>
+    <h1>{{categorySelected?.categoryName}}</h1>
+    <mat-grid-list [cols]="5" rowHeight="300px" gutterSize="10px">
         
         <mat-grid-tile *ngFor="let product of productsReceived" >
             <app-product-card [idProduct]="product.idProduct" [productName]="product.productName"[description]="product.description" [image]="product.image" 
