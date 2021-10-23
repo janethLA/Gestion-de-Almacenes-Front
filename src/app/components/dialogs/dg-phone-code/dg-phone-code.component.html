@@ -1,14 +1,15 @@
 <div class="content">
     <h3>Verificación del número</h3>
-        <p class="text">Se ha enviado un codigo de verificacion al número <b>65454848</b></p>
+        <p class="text">Se ha enviado un codigo de verificacion al número <b>{{data.telephone}}</b></p>
         <p class="text">Ingresa el código a continuación:</p>
     <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Ingrese el código de verificación</mat-label>
         <span matPrefix>GT- &nbsp;</span>
-        <input type="tel" matInput placeholder="555-555">
+        <input type="tel" matInput placeholder="555-555" [formControl]="code">
     </mat-form-field>
+    <mat-error>{{getMessageErrors()}}</mat-error>
       <div style="text-align: center; width: 100%; " >
-        <button mat-raised-button style="background-color:#58a042; width: 100%; color: white;" type="submit" > 
+        <button mat-raised-button style="background-color:#58a042; width: 100%; color: white;" (click)="verifyCode(code)"> 
             <mat-icon>confirmation_number</mat-icon>
             Verificar codigo
             

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroupDirective, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { RequestService } from 'src/app/services/request.service';
@@ -15,6 +15,7 @@ import { DgPhoneCodeComponent} from '../dg-phone-code/dg-phone-code.component';
 export class DgNewUserComponent implements OnInit {
 
   constructor(
+    private dialogRef: MatDialogRef<DgNewUserComponent>,
     private formBuilder:FormBuilder,
     private router: Router,
     private RequestService:RequestService,
@@ -35,14 +36,15 @@ export class DgNewUserComponent implements OnInit {
   }
   saveUserFinal(user,formDirective: FormGroupDirective){
     user.userName=this.generateUserName(user.finalUserName)
-    console.log(user)
+    //console.log(user)
     
     this.RequestService.post('http://localhost:8080/api/finalUser/createFinalUser',user).subscribe({
       
        next:(respuesta:any)=>{
         console.log(respuesta)
-        this.snack.open('Usuario creado exitosamente.','CERRAR',{duration:5000,panelClass:'snackSuccess',})
-        this.openDialogCodeValidate()
+        //this.snack.open('Usuario creado exitosamente.','CERRAR',{duration:5000,panelClass:'snackSuccess',})
+        this.openDialogCodeValidate(respuesta.idFinalUser,respuesta.code,user.telephone)
+        this.dialogRef.close();
        //window.location.reload();
       
       },
@@ -104,10 +106,10 @@ export class DgNewUserComponent implements OnInit {
        !this.createUser.get(field).valid
     )  }
 
-    openDialogCodeValidate() {
+    openDialogCodeValidate(idFinalUser,code,telephone) {
       this.dialog.open(DgPhoneCodeComponent,{
       width: '50%',
-      data: { nro:"this.nro" }
+      data: { idFinalUser:idFinalUser,code:code,telephone:telephone }
       });
     }
 }

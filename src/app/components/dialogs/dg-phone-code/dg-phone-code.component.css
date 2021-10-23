@@ -33,3 +33,7 @@ h3{
     color: #fff;
     background-color:#002b5c ;
   }
+  mat-error{
+      font-size: 12px;
+      margin-bottom: 5px;
+  }
