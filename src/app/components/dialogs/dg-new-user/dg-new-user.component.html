@@ -15,8 +15,8 @@
         <form class="form" [formGroup]="createUser" #formDirective="ngForm" (ngSubmit)="saveUserFinal(createUser.value,formDirective)">
             <div class="field">
                 <mat-form-field  appearance="outline" style="width: 100%;">
-                <mat-label>Username</mat-label>
-                <input matInput placeholder="Nombre de usuario" required type="text" formControlName='finalUserName'>
+                <mat-label>Nombre</mat-label>
+                <input matInput placeholder="Ingrese su nombre" required type="text" formControlName='finalUserName'>
                 <mat-error >este campo es requerido</mat-error>
                 </mat-form-field>
             </div>
@@ -26,7 +26,7 @@
                 <input matInput placeholder="Ingrese su número" 
                         required  formControlName='telephone'>
                 
-                <mat-error>este campo es requerido</mat-error>
+                        <mat-error *ngIf="isValidField('telephone')" >{{getErrorMessageNumber('telephone','register')}}</mat-error>
                 </mat-form-field>
             </div>
             <div style="text-align: center; width: 100%; " >

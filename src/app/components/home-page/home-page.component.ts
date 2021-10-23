@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 import { Loader } from '@googlemaps/js-api-loader';
 import { fromEvent, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith } from 'rxjs/operators';
@@ -50,12 +51,24 @@ export class HomePageComponent implements OnInit {
     private RequestService:RequestService,
     private formBuilder:FormBuilder,
     public dialog: MatDialog,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
+    this.loadChanges();
     this.loadDataProduct();
     this.geolocation();
     this.getAllSectors();
+  }
+  loadChanges() {
+    this.route.queryParams
+      .subscribe((params: any) => {
+        console.log(params)
+        params == true?this.loadNav():"";
+    });
+  }
+  loadNav(){
+    window.location.reload()
   }
   geolocation(){
     console.log(navigator.geolocation)

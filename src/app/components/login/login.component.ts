@@ -4,6 +4,7 @@ import { FormBuilder, FormGroupDirective, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import {RequestService} from '../../services/request.service';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,7 @@ public errorLogin:boolean;
     private formBuilder: FormBuilder,
     private RequestService: RequestService,
     private cookieService: CookieService,
-    private router: Router
+    private router: Router,
   ) { }
   hide=true;
   ngOnInit(): void {
@@ -50,6 +51,7 @@ public errorLogin:boolean;
         this.user={idUser:this.idUser,userName:this.userName,spendingUnit:respuesta.spendingUnit,faculty:respuesta.faculty}
         this.saveDataUser(respuesta.roles);
         //this.sendRoute(respuesta.identifier)
+        
         this.router.navigate(['/'])
         
        },

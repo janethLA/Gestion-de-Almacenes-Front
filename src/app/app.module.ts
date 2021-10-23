@@ -48,6 +48,7 @@ import { HomePageComponent } from './components/home-page/home-page.component';
 import {MatBadgeModule} from '@angular/material/badge';
 import { ItemCardComponent } from './components/cards/item-card/item-card.component';
 import { DgNewUserComponent } from './components/dialogs/dg-new-user/dg-new-user.component';
+import { DgPhoneCodeComponent } from './components/dialogs/dg-phone-code/dg-phone-code.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,6 +70,7 @@ import { DgNewUserComponent } from './components/dialogs/dg-new-user/dg-new-user
     HomePageComponent,
     ItemCardComponent,
     DgNewUserComponent,
+    DgPhoneCodeComponent,
   ],
   imports: [
     BrowserModule,
