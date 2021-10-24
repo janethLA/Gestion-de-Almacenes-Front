@@ -53,17 +53,17 @@
             (sendSubtotalEvent)="receiveSubtotal($event)"></app-item-card>
         </mat-grid-tile>
 
-    </mat-grid-list>
-    <div class="total">
-      <p>Monto Total:</p>
-      <span class="priceTotal">{{getTotalPrice()}} Bs.</span>
-    </div>
-    <div class="links">
-      <a mat-button class="btn-confirm" (click)="openDialogConfirm()">
-        <span>Confirmar Pedido</span>
-        <mat-icon>local_grocery_store</mat-icon>
-     </a>
-    </div>
+      </mat-grid-list>
+      <div class="total">
+        <p>Monto Total:</p>
+        <span class="priceTotal">{{getTotalPrice()}} Bs.</span>
+      </div>
+      <div class="links">
+        <a mat-button class="btn-confirm" (click)="openDialogConfirm()">
+          <span>Confirmar Pedido</span>
+          <mat-icon>local_grocery_store</mat-icon>
+        </a>
+      </div>
     </div>
     <div style="margin: 20px;text-align: start;box-shadow:#000000 0px 2px 4px 0px;
     border-radius: 10px;padding: 15px;background-color: #002b5c;"*ngIf="onMap==true">
@@ -115,7 +115,7 @@
         
         <mat-grid-tile *ngFor="let product of productsReceived" >
             <app-product-card [idProduct]="product.idProduct" [productName]="product.productName"[description]="product.description" [image]="product.image" 
-            [measurement]="product.measurement" [price]="product.price" (addProductEvent)="addProduct($event)"></app-product-card>
+            [measurement]="product.measurement" [price]="product.price[0].price" (addProductEvent)="addProduct($event)"></app-product-card>
         </mat-grid-tile>
 
     </mat-grid-list>

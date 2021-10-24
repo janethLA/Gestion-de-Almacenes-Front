@@ -1,5 +1,5 @@
 <mat-card class="main" [formGroup]="orderDetail" #formDirectiveNew="ngForm">
-  <button mat-icon-button (click)="deleteItem()"><mat-icon>close</mat-icon></button>
+  <button mat-icon-button (click)="deleteItem()"[disabled]="disabledQuantity"><mat-icon>close</mat-icon></button>
     <div class="image">
         <img mat-card-image [src]="image" alt="Photo of a Product">
  
@@ -12,9 +12,9 @@
         <p class="productName">{{productName}} </p><span class="detail">{{ description + " por " + measurement}}</span>
         
         <div class="priceAndQuantity">
-          <mat-form-field appearance="outline" class="quantity">
-            <mat-label>1 ud</mat-label>
-            <mat-select  required formControlName="units" >
+          <mat-form-field appearance="outline" class="quantity" >
+            
+            <mat-select  required formControlName="units" [disabled]="disabledQuantity">
                 <mat-option *ngFor="let unit of unities"[value]="unit.value" >
                     {{unit.name}}
                   </mat-option>

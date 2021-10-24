@@ -6,6 +6,7 @@ import { Loader } from '@googlemaps/js-api-loader';
 import { fromEvent, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith } from 'rxjs/operators';
 import { RequestService } from 'src/app/services/request.service';
+import { DgConfirmPedidoComponent } from '../dialogs/dg-confirm-pedido/dg-confirm-pedido.component';
 import { DgNewUserComponent } from '../dialogs/dg-new-user/dg-new-user.component';
 
 @Component({
@@ -15,7 +16,10 @@ import { DgNewUserComponent } from '../dialogs/dg-new-user/dg-new-user.component
 })
 export class HomePageComponent implements OnInit {
 
- 
+ user:any;
+ order:any;
+ cart:any;
+ notLogedUser:boolean;
   orderDetails:any[]=[];
   public productsReceived:any
   warehousesReceived:any;
@@ -43,7 +47,7 @@ export class HomePageComponent implements OnInit {
 
   orderForm = this.formBuilder.group({
     quantityProducts: ['',],
-    totalPrice:['',],
+    totalPrice:[this.getTotalPrice(),],
     orderDetails: [this.orderDetails,],
   });
   
@@ -59,6 +63,8 @@ export class HomePageComponent implements OnInit {
     this.loadDataProduct();
     this.geolocation();
     this.getAllSectors();
+    this.getDataUser();
+    this.verifyOrdersPending();
   }
   loadChanges() {
     this.route.queryParams
@@ -157,6 +163,7 @@ export class HomePageComponent implements OnInit {
     });
   }
   addProduct(newProduct:any){
+    console.log(newProduct)
     this.productsCart?.push(newProduct);
     this.hidden=false;
     
@@ -185,6 +192,7 @@ export class HomePageComponent implements OnInit {
     
   }
   receiveSubtotal(orderDetail){
+    //console.log(orderDetail)
     if(this.orderDetails.length==0){
       this.orderDetails.push(orderDetail)
     }else{
@@ -202,6 +210,8 @@ export class HomePageComponent implements OnInit {
         }
       })
     }
+    this.orderForm.get('quantityProducts').setValue(this.orderDetails.length)
+    this.orderForm.get('totalPrice').setValue(this.total)
     
   }
   getTotalPrice():number{
@@ -212,10 +222,20 @@ export class HomePageComponent implements OnInit {
     return this.total;
   }
   openDialogConfirm() {
-    this.dialog.open(DgNewUserComponent,{
-    width: '70%',
-    data: { nro:"this.nro" }
-    });
+    localStorage.setItem("order",JSON.stringify(this.orderForm.value));
+    localStorage.setItem("productsCart",JSON.stringify(this.productsCart));
+    if(this.notLogedUser){
+      this.dialog.open(DgNewUserComponent,{
+        width: '70%',
+        data: { nro:"this.nro" }
+        });
+    }else{
+      this.dialog.open(DgConfirmPedidoComponent,{
+        width: '60%',
+        data: {products:this.productsCart,total:this.total,order:this.orderForm.value,user:this.user }
+        });
+    }
+    
   }
 
   viewAllOfMarkets(warehouse){
@@ -312,5 +332,24 @@ export class HomePageComponent implements OnInit {
     const filterValue = value.toLowerCase();
 
     return this.options.filter(option => option.sectorName.toLowerCase().includes(filterValue));
+  }
+  getDataUser(){
+    this.order=JSON.parse(localStorage.getItem("order"))
+    this.cart=JSON.parse(localStorage.getItem("productsCart"))
+    this.user=JSON.parse(localStorage.getItem("user"))
+    if(this.user==undefined || this.user==null){
+      this.notLogedUser=true;
+    }else{
+      this.notLogedUser=false;
+    }
+  }
+  verifyOrdersPending(){
+    if(this.order!=null||this.order!=undefined){
+
+      this.dialog.open(DgConfirmPedidoComponent,{
+        width: '60%',
+        data: {products:this.cart,total:this.total,order:this.order,user:this.user }
+        });
+    }
   }
 }

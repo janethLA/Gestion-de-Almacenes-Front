@@ -43,7 +43,7 @@ export class DgNewUserComponent implements OnInit {
        next:(respuesta:any)=>{
         console.log(respuesta)
         //this.snack.open('Usuario creado exitosamente.','CERRAR',{duration:5000,panelClass:'snackSuccess',})
-        this.openDialogCodeValidate(respuesta.idFinalUser,respuesta.code,user.telephone)
+        this.openDialogCodeValidate(respuesta.idFinalUser,respuesta.code,user.telephone,user)
         this.dialogRef.close();
        //window.location.reload();
       
@@ -106,10 +106,10 @@ export class DgNewUserComponent implements OnInit {
        !this.createUser.get(field).valid
     )  }
 
-    openDialogCodeValidate(idFinalUser,code,telephone) {
+    openDialogCodeValidate(idFinalUser,code,telephone,user) {
       this.dialog.open(DgPhoneCodeComponent,{
       width: '50%',
-      data: { idFinalUser:idFinalUser,code:code,telephone:telephone }
+      data: { idFinalUser:idFinalUser,code:code,telephone:telephone,user:user }
       });
     }
 }

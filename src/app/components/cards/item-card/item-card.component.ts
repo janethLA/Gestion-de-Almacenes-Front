@@ -17,6 +17,8 @@ export class ItemCardComponent implements OnInit {
   @Input() categoryName:any;
   @Input() warehouseName:any;
   @Input() index:number;
+  @Input() disabledQuantity:boolean;
+  @Input() units:number;
   @Output() deleteProductEvent=new EventEmitter<any>();
   @Output() sendSubtotalEvent=new EventEmitter<any>();
 
@@ -43,7 +45,12 @@ export class ItemCardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.orderDetail.get('units').setValue(1)
+    if(this.disabledQuantity){
+      this.orderDetail.get('units').setValue(this.units)
+    }else{
+      this.orderDetail.get('units').setValue(1)
+    }
+    
     this.orderDetail.get('idProduct').setValue(this.idProduct)
   }
   deleteItem(){
