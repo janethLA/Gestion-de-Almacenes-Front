@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "~11.2.7",
     "@angular/router": "~11.2.7",
     "@googlemaps/js-api-loader": "^1.12.4",
+    "@types/twilio": "^3.19.3",
     "ngx-cookie-service": "^12.0.3",
     "ngx-material-file-input": "^2.1.1",
     "rxjs": "~6.6.0",

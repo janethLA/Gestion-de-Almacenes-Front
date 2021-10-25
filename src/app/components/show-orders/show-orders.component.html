@@ -1,13 +1,13 @@
 <div class="header">
-    <button class="back">
+    <!-- <button class="back">
         <mat-icon>arrow_back_ios</mat-icon>Volver 
-    </button>
-    <h2 class="title">Mis Pedidos</h2>
+    </button> -->
+    <h2 class="title">Lista de todos los pedidos</h2>
 </div>
 <div class="totalOrders">
     <h4><mat-icon>shopping_cart</mat-icon>{{ordersReceived?.length}} Pedidos</h4>
 </div>
 <div class="order" *ngFor="let order of ordersReceived">
     <app-order-card [idOrder]="order.idOrder" [orderDate]="order.orderDate" [orderDetail]=order.orderDetail
-    [quantityProducts]="order.quantityProducts" [status]="order.status" [totalPrice]="order.totalPrice" ></app-order-card>
+    [quantityProducts]="order.quantityProducts" [status]="order.status" [totalPrice]="order.totalPrice" [disabled]="true"></app-order-card>
 </div>

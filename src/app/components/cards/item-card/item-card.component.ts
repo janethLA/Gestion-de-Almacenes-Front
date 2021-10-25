@@ -52,6 +52,7 @@ export class ItemCardComponent implements OnInit {
     }
     
     this.orderDetail.get('idProduct').setValue(this.idProduct)
+    //console.log(this.image)
   }
   deleteItem(){
     console.log(this.idProduct)

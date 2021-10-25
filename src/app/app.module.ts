@@ -53,6 +53,8 @@ import { DgConfirmPedidoComponent } from './components/dialogs/dg-confirm-pedido
 import { OrdersListComponent } from './components/orders-list/orders-list.component';
 import { OrderCardComponent } from './components/cards/order-card/order-card.component';
 import { UpdateUserComponent } from './components/update-user/update-user.component';
+import { ShowOrdersComponent } from './components/show-orders/show-orders.component';
+import { DgUpdateUserComponent } from './components/dialogs/dg-update-user/dg-update-user.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -79,6 +81,8 @@ import { UpdateUserComponent } from './components/update-user/update-user.compon
     OrdersListComponent,
     OrderCardComponent,
     UpdateUserComponent,
+    ShowOrdersComponent,
+    DgUpdateUserComponent,
   ],
   imports: [
     BrowserModule,

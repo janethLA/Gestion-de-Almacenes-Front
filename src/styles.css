@@ -2,3 +2,23 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:500,700");
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+:root {
+    --txt-color-subt: #666666;
+    --txt-color-error: #ff4848;
+    --txt-color-title2: #700aff;
+  
+    --btn-color-pri: #0a6cff;
+    --btn-color-error: #ff4848;
+    --btn-color-scss: #28a745;
+  
+    /*colores para los estados de una solicitud:
+    Pendiente, Autorizado, Cotizando, Rechazado, Aprobado*/
+    --state-color-1: #979797;
+    --state-color-2: #1975ff;
+    --state-color-3: #ffc400;
+    --state-color-4: #ff4848;
+    --state-color-5: #28a745;
+  
+    --color-back: #ecececf6;
+    --color-gray: #f5f5f5;
+  }

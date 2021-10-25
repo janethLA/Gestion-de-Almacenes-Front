@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {RequestService} from '../../services/request.service'
 
 @Component({
-  selector: 'app-orders-list',
-  templateUrl: './orders-list.component.html',
-  styleUrls: ['./orders-list.component.css']
+  selector: 'app-show-orders',
+  templateUrl: './show-orders.component.html',
+  styleUrls: ['./show-orders.component.css']
 })
-export class OrdersListComponent implements OnInit {
+export class ShowOrdersComponent implements OnInit {
 
   ordersReceived:any
   user:any;
@@ -22,11 +22,10 @@ export class OrdersListComponent implements OnInit {
     this.user=JSON.parse(localStorage.getItem("user"))
   }
   loadOrders(){
-    this.RequestService.get('http://localhost:8080/api/order/allOrder/'+this.user.idUser)
+    this.RequestService.get('http://localhost:8080/api/order/allOrders')
      .subscribe(r=>{
        console.log(r);
        this.ordersReceived = r;
      })
   }
-
 }

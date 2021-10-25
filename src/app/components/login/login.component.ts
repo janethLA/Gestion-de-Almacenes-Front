@@ -46,13 +46,20 @@ public errorLogin:boolean;
         dateNow.setMinutes(dateNow.getMinutes() + 60);
         this.cookieService.set('token',respuesta.jwt,dateNow)
         this.cookieService.set('identifier',respuesta.identifier,dateNow)
-        this.idUser=respuesta.id;
+        if(respuesta.id!=undefined){
+          this.idUser=respuesta.id 
+        }else{
+          this.idUser=respuesta.idFinalUser;
+        }
+        
+  
         this.userName=respuesta.userName;
-        this.user={idUser:this.idUser,userName:this.userName,spendingUnit:respuesta.spendingUnit,faculty:respuesta.faculty}
+        console.log(this.user)
+        this.user={idUser:this.idUser,userName:this.userName,}
         this.saveDataUser(respuesta.roles);
         //this.sendRoute(respuesta.identifier)
         
-        this.router.navigate(['/'])
+        this.router.navigate(['/home'])
         
        },
       error:()=>{

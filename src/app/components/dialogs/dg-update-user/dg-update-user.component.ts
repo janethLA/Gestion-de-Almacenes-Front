@@ -47,8 +47,8 @@ export class DgUpdateUserComponent implements OnInit {
 
   saveEdit(update,formDirective: FormGroupDirective){
 
-    
-    this.RequestService.put('http://localhost:8080/api/user/updateDataUser/'+this.user?.idUser, update)
+    //console.log(this.user)
+    this.RequestService.put('http://localhost:8080/api/finalUser/updateDataUser/'+this.user?.idFinalUser, update)
     .subscribe({
       next:()=>{
         this.snack.open('Usuario actualizado exitosamente.','CERRAR',{duration:5000,panelClass:'snackSuccess',})
