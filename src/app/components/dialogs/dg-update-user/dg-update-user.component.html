@@ -1,0 +1,49 @@
+<div >
+    <form  [formGroup]="editUser" #formDirective="ngForm" (ngSubmit)="saveEdit(editUser.value,formDirective)">
+
+        <div class="card" style="height: 560px;"> 
+            <div style="text-align: center; margin-top: 10px; margin-bottom: 15px;"> 
+                <h2>Actualizar datos</h2>
+            </div> 
+        
+                <div style="width: 100%;">
+                    <div class="field">
+                        <mat-form-field  appearance="outline" style="width: 100%;">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput placeholder="ingres nombre de usuario" formControlName="finalUserName"
+                                 type="text">
+                        
+                        <mat-error >este campo es requerido</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="field">
+                        <mat-form-field  appearance="outline" style="width: 100%;">
+                        <mat-label>Nombre de usuario</mat-label>
+                        <input matInput placeholder="ingrese un nick"  type="text"
+                                formControlName="userName" >
+                        <mat-error *ngIf="isValidFieldEdit('userName')" >{{getErrorMessage('userName','edit')}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="field">
+                        <mat-form-field  appearance="outline" style="width: 100%;">
+                        <mat-label>Telefono</mat-label>
+                        <input matInput [type]="hide ? 'telephone' : 'text'" placeholder="ingrese el telefono" 
+                                 formControlName="telephone" >
+                        <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                        
+                        <mat-error>este campo es requerido</mat-error>
+                        </mat-form-field>
+                    </div>
+                    
+                    <div style="text-align: center; width: 100%;">
+                        <button mat-raised-button class="button"[disabled]="editUser.invalid" >
+                            ACTUALIZAR
+                        </button>
+                    </div>
+                </div>
+        </div>
+        
+    </form>
+</div>

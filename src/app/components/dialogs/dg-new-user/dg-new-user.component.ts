@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { RequestService } from 'src/app/services/request.service';
 
 import { DgPhoneCodeComponent} from '../dg-phone-code/dg-phone-code.component';
+/* import { Injectable } from "@angular/core";
+    import { Twilio } from "twilio"; */
 
 @Component({
   selector: 'app-dg-new-user',
@@ -28,7 +30,7 @@ export class DgNewUserComponent implements OnInit {
     userName:['',],
     telephone:['',[Validators.required,Validators.pattern(this.isValidNumber)]],
   })
-  
+  code:any;
   ngOnInit(): void {
   }
   redirect(){
@@ -42,7 +44,9 @@ export class DgNewUserComponent implements OnInit {
       
        next:(respuesta:any)=>{
         console.log(respuesta)
+        this.code=respuesta.code;
         //this.snack.open('Usuario creado exitosamente.','CERRAR',{duration:5000,panelClass:'snackSuccess',})
+        //this.sendSMS()
         this.openDialogCodeValidate(respuesta.idFinalUser,respuesta.code,user.telephone,user)
         this.dialogRef.close();
        //window.location.reload();
@@ -112,4 +116,32 @@ export class DgNewUserComponent implements OnInit {
       data: { idFinalUser:idFinalUser,code:code,telephone:telephone,user:user }
       });
     }
-}
+
+    /* sendSMS(){
+      // getting ready
+      const twilioNumber = '+16627676661';
+      const accountSid = 'ACa89c84148e594b27b0e35f07303a843f';
+      const authToken = '97c6bfe39c2434be989cf90a3eb999cd';
+
+      const client = new Twilio(accountSid, authToken);
+
+      
+          const phoneNumbers = [ '+59165735953']    
+
+          phoneNumbers.map(phoneNumber => {
+              console.log(phoneNumber);
+              
+              
+              const textContent = {
+                  body: `Tu codigo de verificacion es `+this.code+` username es`,
+                  to: phoneNumber,
+                  from: twilioNumber
+              }
+          
+              client.messages.create(textContent)
+              .then((message) => console.log(message.to))
+          })
+      
+
+  }
+ */}
