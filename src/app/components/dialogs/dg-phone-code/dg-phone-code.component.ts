@@ -36,7 +36,7 @@ export class DgPhoneCodeComponent implements OnInit {
       this.dialogRef.close()
       this.restartFinalUser();
       this.loginFinalUSer();
-      this.openDialogConfirmPedido();
+     // this.openDialogConfirmPedido();
       console.log("logeado")
     }else{
       if(this.intents>0){
@@ -91,6 +91,7 @@ export class DgPhoneCodeComponent implements OnInit {
         this.userName=respuesta.finalUserName;
         this.user={idUser:this.idUser,userName:this.userName,nick:respuesta.userName}
         this.saveDataUser(respuesta.roles);
+        window.location.reload();
         
        },
       error:()=>{

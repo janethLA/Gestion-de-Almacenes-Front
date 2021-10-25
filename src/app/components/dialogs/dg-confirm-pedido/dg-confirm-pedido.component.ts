@@ -45,6 +45,7 @@ export class DgConfirmPedidoComponent implements OnInit {
     console.log(this.productsCart)
   }
   saveOrder(){
+    console.log(this.user)
     this.RequestService.post('http://localhost:8080/api/order/createOrder/'+this.user.idUser,this.order).subscribe({
       
       next:(respuesta:any)=>{

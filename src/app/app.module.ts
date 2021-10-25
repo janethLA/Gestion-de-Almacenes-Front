@@ -49,6 +49,10 @@ import {MatBadgeModule} from '@angular/material/badge';
 import { ItemCardComponent } from './components/cards/item-card/item-card.component';
 import { DgNewUserComponent } from './components/dialogs/dg-new-user/dg-new-user.component';
 import { DgPhoneCodeComponent } from './components/dialogs/dg-phone-code/dg-phone-code.component';
+import { DgConfirmPedidoComponent } from './components/dialogs/dg-confirm-pedido/dg-confirm-pedido.component';
+import { OrdersListComponent } from './components/orders-list/orders-list.component';
+import { OrderCardComponent } from './components/cards/order-card/order-card.component';
+import { UpdateUserComponent } from './components/update-user/update-user.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -71,6 +75,10 @@ import { DgPhoneCodeComponent } from './components/dialogs/dg-phone-code/dg-phon
     ItemCardComponent,
     DgNewUserComponent,
     DgPhoneCodeComponent,
+    DgConfirmPedidoComponent,
+    OrdersListComponent,
+    OrderCardComponent,
+    UpdateUserComponent,
   ],
   imports: [
     BrowserModule,
