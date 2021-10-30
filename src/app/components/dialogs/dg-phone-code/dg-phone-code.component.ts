@@ -5,6 +5,7 @@ import { DgConfirmPedidoComponent } from '../dg-confirm-pedido/dg-confirm-pedido
 import { RequestService } from 'src/app/services/request.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CookieService } from 'ngx-cookie-service';
+import { DgRestartPasswordComponent } from '../dg-restart-password/dg-restart-password.component';
 
 @Component({
   selector: 'app-dg-phone-code',
@@ -28,6 +29,7 @@ export class DgPhoneCodeComponent implements OnInit {
   close:boolean=false;
   idUser:any;
   userName:any
+  identifier=this.data.identifier
   ngOnInit(): void {
    
   }
@@ -38,6 +40,23 @@ export class DgPhoneCodeComponent implements OnInit {
       this.loginFinalUSer();
      // this.openDialogConfirmPedido();
       console.log("logeado")
+    }else{
+      if(this.intents>0){
+        this.intents--;
+        this.errors="Codigo ingresado incorrecto tiene"+this.intents+ " intentos"
+        this.code.reset();
+      }else{
+       this.dialogRef.close()
+       window.location.reload()
+        console.log("no entra")
+      }
+      
+    }
+  }
+  verifyEmailCode(code){
+    if(code.value==this.data.code){
+      this.dialogRef.close()
+      this.openRestartPassword();
     }else{
       if(this.intents>0){
         this.intents--;
@@ -70,10 +89,17 @@ export class DgPhoneCodeComponent implements OnInit {
       } 
     })
   }
+ 
   openDialogConfirmPedido(){
     this.dialog.open(DgConfirmPedidoComponent,{
       width: '60%',
       data: { }
+      });
+  }
+  openRestartPassword(){
+    this.dialog.open(DgRestartPasswordComponent,{
+      width: '60%',
+      data: { idFinalUser:this.data.idFinalUSer,identifier:this.identifier}
       });
   }
   loginFinalUSer(){

@@ -1,0 +1,42 @@
+<div class="search">
+    <div style="text-align:end; margin-top: -20px; margin-right: -20px;" >
+        <button mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
+    </div>
+    <h1 mat-card-title>Elija un delivery para asignar el pedido</h1>
+    <div>
+        <div class="search__bar"  >
+                <mat-form-field appearance="outline" >
+                    <input matInput placeholder="buscar delivery"
+                    >
+                   <mat-icon matSuffix>search</mat-icon>
+                 </mat-form-field>
+                 <button color="primary" mat-raised-button >BUSCAR</button>
+        </div>
+
+        <div class="search__list">
+        <mat-dialog-content style="padding-bottom: 5px; max-height: 400px;">
+            <mat-selection-list #deliveries (selectionChange)="getDelivery(deliveries.selectedOptions.selected)"[multiple]="false">
+                <div class="company-card" *ngFor="let delivery of allDeliveries" >
+                    <mat-list-option style="height: 75px; " class="mat-primary" [value]="delivery" >
+                        <div>
+                            <h2>{{delivery?.name}}</h2>
+                            <p>{{delivery?.sector}}</p>
+                            <p>{{delivery?.telephone}}</p>
+                            <p>{{delivery?.email}}</p>
+                        </div>
+                    </mat-list-option>
+                </div>
+            </mat-selection-list>
+        </mat-dialog-content>
+        
+        </div>
+        
+        
+    </div>
+        <mat-dialog-actions align="end" class="btn__search" style="margin-top:10px; ">
+            <button class="btn__search--omit" mat-button mat-dialog-close  >CANCELAR</button>
+            <button class="btn__search--choice" mat-raised-button [mat-dialog-close]="true" (click)="assignDelivery()" [disabled]="noDeliverySelected">ASIGNAR</button>
+        </mat-dialog-actions>
+        
+</div>
+

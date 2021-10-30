@@ -22,6 +22,13 @@
             </div>
             <div class="field">
                 <mat-form-field  appearance="outline" style="width: 100%;">
+                <mat-label>E-mail</mat-label>
+                <input matInput placeholder="Ingrese su email" required type="text" formControlName='email'>
+                <mat-error >este campo es requerido</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="field">
+                <mat-form-field  appearance="outline" style="width: 100%;">
                 <mat-label>Numero de celular</mat-label>
                 <input matInput placeholder="Ingrese su número" 
                         required  formControlName='telephone'>
@@ -31,8 +38,13 @@
             </div>
             <div style="text-align: center; width: 100%; " >
                 <button mat-raised-button style="background-color:#424242; width: 100%; color: white;" type="submit" [disabled]="createUser.invalid"> 
-                    Crear Usuario
-                    <mat-icon>person_outline</mat-icon>
+                    
+                    <span *ngIf="activateSpinner==undefined"> Crear Usuario</span>
+                    <mat-icon *ngIf="activateSpinner==undefined">person_outline</mat-icon>
+                    <span *ngIf="activateSpinner"> Enviando e-mail</span>
+                    <span *ngIf="activateSpinner==false"> Email enviado</span>
+                    <mat-icon><mat-spinner *ngIf="activateSpinner" [diameter]="30"></mat-spinner></mat-icon>
+                    <mat-icon *ngIf="activateSpinner==false">done</mat-icon>
                 </button>
             </div>
         </form>

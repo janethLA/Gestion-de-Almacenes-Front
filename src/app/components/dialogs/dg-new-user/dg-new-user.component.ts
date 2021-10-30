@@ -25,12 +25,15 @@ export class DgNewUserComponent implements OnInit {
     public dialog: MatDialog,
   ) { }
   private isValidNumber="([6-7]{1})([0-9]{7})"
+  private isValidEmail:any=/\S+@\S+\.\S/;
   createUser=this.formBuilder.group({
     finalUserName:['',Validators.required],
     userName:['',],
+    email:['',[Validators.required,Validators.pattern(this.isValidEmail)]],
     telephone:['',[Validators.required,Validators.pattern(this.isValidNumber)]],
   })
   code:any;
+  activateSpinner:boolean;
   ngOnInit(): void {
   }
   redirect(){
@@ -39,11 +42,12 @@ export class DgNewUserComponent implements OnInit {
   saveUserFinal(user,formDirective: FormGroupDirective){
     user.userName=this.generateUserName(user.finalUserName)
     //console.log(user)
-    
+    this.activateSpinner=true
     this.RequestService.post('http://localhost:8080/api/finalUser/createFinalUser',user).subscribe({
       
        next:(respuesta:any)=>{
         console.log(respuesta)
+        this.activateSpinner=false;
         this.code=respuesta.code;
         //this.snack.open('Usuario creado exitosamente.','CERRAR',{duration:5000,panelClass:'snackSuccess',})
         //this.sendSMS()

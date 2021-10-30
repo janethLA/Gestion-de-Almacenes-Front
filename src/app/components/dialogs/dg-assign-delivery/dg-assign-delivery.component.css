@@ -1,0 +1,110 @@
+
+.search{
+    width: 500px;
+    align-items: center;
+}
+mat-icon{
+    color: #3948ab;
+    font-size: 25px;
+}
+.search__bar{
+    text-align: center;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    
+}
+.search__bar button{
+    height: fit-content;
+    align-self: center;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    height: 40px;
+}
+.search__bar mat-form-field{
+    width: 75%; 
+}
+.search__list{
+
+ background-color: #d2b4fc54;        border-radius: 7px; 
+ padding: 5px;
+}
+mat-list-option[aria-selected="true"] {
+background: #3b4bb1;
+color: white;
+}
+
+.company-card{
+
+    background-color:#fcfcfc;
+    border-radius:7px;
+    box-shadow: 0 5px 5px rgba(34, 34, 34, 0.247);
+    overflow: hidden;
+    margin-top: 10px;
+    height: 75px;
+    width: 90%;
+    margin-left: 30px;
+}
+.company-card h2{
+    font-size: 15px;
+    line-height: 7px;
+
+    font-weight: 500;
+    margin-top: 10px;
+    text-transform: uppercase;
+
+
+}
+.company-card p{
+    font-size: 13px;
+    line-height: 5px;
+    font-style: italic;
+}
+.snackSuccess{
+    background-color: var(--state-color-5);
+    
+}
+
+.btn__search--omit{
+    color: var(--btn-color-pri);
+
+    font-size: 17px;
+}
+.btn__search--choice{
+    color: white;
+    background-color: var(--btn-color-pri);
+    font-size: 17px;
+}
+.container {
+    padding: 15px;
+    padding-bottom: 30px;
+    min-width: 500px;
+    min-height: max-content;  margin-bottom: 100px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.not__business h1{
+font-size: 40px;
+font-weight: 600;
+letter-spacing: 0.60em;
+text-align: center;
+margin-bottom: 35px;
+color: rgb(48, 48, 48);
+margin-left: 10px;
+
+}
+.not__business p{
+font-size: 17px;
+text-align: center;
+color: rgb(48, 48, 48);
+}
+p a{
+font-weight: bold;
+}
+.btn-delined{
+font-size: 17px;
+color: var(--btn-color-pri);
+border-color: var(--btn-color-pri);
+text-align: center;
+}
