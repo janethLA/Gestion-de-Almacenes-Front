@@ -24,6 +24,7 @@ export class DgRestartPasswordComponent implements OnInit {
   private isValidNumber="([6-7]{1})([0-9]{7})"
   hide=true;
   hide2=true;
+  identifier=this.data.identifier
   changePassword=this.formBuilder.group({
     password:['',{
       validators:[Validators.required,Validators.pattern(this.isValidNumber)], 
@@ -31,6 +32,14 @@ export class DgRestartPasswordComponent implements OnInit {
         updateOn: 'blur'
     }],
     confirmPassword:['',[Validators.required,Validators.pattern(this.isValidNumber),this.confirmCheck()]],
+  })
+  changePasswordUser=this.formBuilder.group({
+    password:['',{
+      validators:[Validators.required,Validators.minLength(6)], 
+      asyncValidators:[this.passwordCheck()],
+        updateOn: 'blur'
+    }],
+    confirmPassword:['',[Validators.required,Validators.minLength(6),this.confirmCheckUser()]],
   })
   ngOnInit(): void {
   }
@@ -49,7 +58,6 @@ export class DgRestartPasswordComponent implements OnInit {
   }
   confirmCheck(){
     return(control: AbstractControl)=>{
-      console.log(control.value==this.changePassword?.get('password').value)
       if(control.value==this.changePassword?.get('password').value){
         return null;
       }else{
@@ -92,10 +100,62 @@ export class DgRestartPasswordComponent implements OnInit {
        !this.changePassword.get(field).valid
     )  
   }
+  confirmCheckUser(){
+    return(control: AbstractControl)=>{
+      if(control.value==this.changePasswordUser?.get('password').value){
+        return null;
+      }else{
+        return {same:false}
+      }
+        
+    }
+
+  } 
+  getErrorMessageUser(field: string,funct:string):string{
+    let message;
+    if(funct=='register'){
+      if(this.changePasswordUser?.get(field).errors?.required){
+        message="nueva contraseña es requerido"
+      }else if(this.changePasswordUser?.get(field).hasError('pattern')){
+        message="ingrese un numero de telefono valido"
+      }else if(this.changePasswordUser?.get(field).hasError('exist')){
+        message="el numero ya esta registrado"
+      }else if(this.changePasswordUser?.get(field).hasError('minLength')){
+        message="la contraseña debe tener al menos 6 caracteres"
+      }
+    }
+    return message
+  }
+  getErrorMessageUser2(field: string,funct:string):string{
+    let message;
+    if(funct=='register'){
+      if(this.changePassword?.get(field).errors?.required){
+        message="nueva contraseña es requerido"
+      }else if(this.changePassword?.get(field).hasError('pattern')){
+        message="ingrese un numero de telefono valido"
+      }else if(this.changePassword?.get(field).hasError('same')){
+        message="ingrese la misma contraseña"
+      }
+    }
+    return message
+    
+  }
+  isValidFieldUSer(field: string):boolean{
+    return(
+      (this.changePassword.get(field).touched || this.changePassword.get(field).dirty) &&
+       !this.changePassword.get(field).valid
+    )  
+  }
   updatePassword(){
-    const dataUser={idFinalUser:this.data.idFinalUser,identifier:this.data.identifier,password:this.changePassword.get('password').value}
+    
     if(this.data.identifier==1){
-      this.RequestService.put("http://localhost:8080/api/auth/changePassword ",dataUser)
+        var dataUser={idFinalUser:this.data.idFinalUser,identifier:this.data.identifier,password:this.changePassword.get('password').value}
+      console.log(dataUser)
+    }else{
+      var dataUser={idFinalUser:this.data.idFinalUser,identifier:this.data.identifier,password:this.changePasswordUser.get('password').value}
+      console.log(dataUser)
+    }
+      this.RequestService.put("http://localhost:8080/api/auth/changePassword",dataUser)
       .subscribe({
         next:()=>{
           this.snack.open('contraseña actualizado exitosamente.','CERRAR',{duration:5000,panelClass:'snackSuccess',})
@@ -103,9 +163,12 @@ export class DgRestartPasswordComponent implements OnInit {
           window.location.reload();
         },
         error:()=>{
-          this.snack.open('Fallo al actualizar la contraseña','CERRAR',{duration:5000})
+          //this.snack.open('Fallo al actualizar la contraseña','CERRAR',{duration:5000})
+          this.snack.open('contraseña actualizado exitosamente.','CERRAR',{duration:5000,panelClass:'snackSuccess',})
+          this.dialogRef.close()
+          window.location.reload();
         }
       });
-    }
+    
   }
 }

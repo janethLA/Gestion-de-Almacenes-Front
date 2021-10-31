@@ -93,6 +93,18 @@
       </div>
       
     </div>
+    <div style="text-align: center; display:block;">
+      <div class="search-bar" *ngIf="loadMarketSelected">
+        <mat-form-field appearance="outline" style="width: 100%;">
+            <input matInput placeholder="Busqueda por producto" 
+            [formControl]="searchInput"  >
+           <mat-icon matSuffix>search</mat-icon>
+           
+         </mat-form-field>
+         <button color="primary" mat-raised-button (click)="getProductsSearch()">BUSCAR</button>
+      </div>
+    </div>
+     
     <div class="all-category" *ngIf="loadMarketSelected">
       <h3 class="h3">Categorias de nuestro almacen</h3>
       <div style="display: flex;  flex-wrap: wrap">

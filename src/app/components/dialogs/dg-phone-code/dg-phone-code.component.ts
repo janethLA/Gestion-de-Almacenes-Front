@@ -99,7 +99,7 @@ export class DgPhoneCodeComponent implements OnInit {
   openRestartPassword(){
     this.dialog.open(DgRestartPasswordComponent,{
       width: '60%',
-      data: { idFinalUser:this.data.idFinalUSer,identifier:this.identifier}
+      data: { idFinalUser:this.data.idFinalUser,identifier:this.identifier}
       });
   }
   loginFinalUSer(){

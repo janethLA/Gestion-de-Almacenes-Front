@@ -20,16 +20,27 @@
         <mat-icon>store</mat-icon>
         <span>Almacenes</span>
     </a>
-    <a mat-button class="menu-button" routerLink="/home/show-orders">
+    <a mat-button class="menu-button" (click)="open =!open">
         <mat-icon>list_alt</mat-icon>
         <span>Pedidos</span>
     </a>
+    <div *ngIf="open" style="margin-left: 10px;">
+        <a mat-button class="sub-menu-button" routerLink="/home/reports">
+            <mat-icon>summarize</mat-icon>
+            <span>Reportes</span>
+        </a>
+        <a mat-button class="sub-menu-button" routerLink="/home/show-orders">
+            <mat-icon>fact_check</mat-icon>
+            <span>Pedidos por producto</span>
+        </a>
+    </div>
+    
 <mat-divider></mat-divider>
     <a mat-button class="menu-button">
         <mat-icon>help</mat-icon>
         <span>Help</span>
     </a>
-    <a mat-button class="menu-button">
+    <a mat-button class="menu-button" (click)="logout()">
         <mat-icon>logout</mat-icon>
         <span>Logout</span>
     </a>

@@ -1,7 +1,7 @@
 
     <div>
     <mat-toolbar>
-        <button mat-icon-button (click)="inputSideNav.toggle()" >
+        <button mat-icon-button (click)="inputSideNav.toggle()" *ngIf="disabledButton">
             <mat-icon>menu</mat-icon>
           </button>
         <span></span>

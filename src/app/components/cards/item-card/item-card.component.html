@@ -1,7 +1,7 @@
 <mat-card class="main" [formGroup]="orderDetail" #formDirectiveNew="ngForm">
   <button mat-icon-button (click)="deleteItem()"[disabled]="disabledQuantity"><mat-icon>close</mat-icon></button>
     <div class="image">
-        <img mat-card-image [src]="image" alt="Photo of a Product">
+        <img mat-card-image [src]="domSanitizer.bypassSecurityTrustUrl(image)" alt="Photo of a Product">
  
     </div>
     

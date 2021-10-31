@@ -39,6 +39,7 @@ export class DgForgetPasswordComponent implements OnInit {
 
   }
   openDialogCodeValidate(respuesta) {
+   // console.log(respuesta.idFinalUser)
     this.dialog.open(DgPhoneCodeComponent,{
     width: '50%',
     data: { idFinalUser:respuesta.idFinalUser,code:respuesta.code,identifier:respuesta.identifier }

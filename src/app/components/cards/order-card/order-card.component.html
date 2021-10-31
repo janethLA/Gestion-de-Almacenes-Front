@@ -6,14 +6,15 @@
         
         <div style="display: flex;">
             <div style=" margin-top: 5px; text-align: center; width: 100px;"><p id="nroPedido">Nro {{idOrder}}</p></div>
-            <button mat-icon-button style="margin-top: -4px; margin-right: -10px;" *ngIf="disabled"><mat-icon>person_add_alt</mat-icon></button>
+            <button mat-icon-button style="margin-top: -4px; margin-right: -10px;" *ngIf="disabled && status=='Pendiente'" (click)="openAssign()"><mat-icon>person_add_alt</mat-icon></button>
+            <button mat-icon-button style="margin-top: -4px; margin-right: -10px;" *ngIf="status=='En curso'" ><mat-icon>how_to_reg</mat-icon></button>
         </div>
 
     </div>
 
     <mat-card-header style="margin-left: -17px; ">
         
-            <mat-card-title >Pedido</mat-card-title>
+            <mat-card-title ><h3 style="color: #0460ca;">Pedido del: {{warehouseName}}</h3></mat-card-title>
             
     </mat-card-header>
     
@@ -28,14 +29,27 @@
                 <mat-grid-list [cols]="1" rowHeight="100px" gutterSize="10px">
       
                     <mat-grid-tile *ngFor="let product of productsCart" >
-                        <app-item-card [disabledQuantity]="true" [units]="product.units"[idProduct]="product.idProduct" [productName]="product.productName"[description]="product.description" [image]='image' 
+                        <app-item-card [disabledQuantity]="true" [units]="product.units"[idProduct]="product.idProduct" [productName]="product.productName"[description]="product.description" [image]='"data:image/jpg;base64,"+product.image' 
                         [measurement]="product.measurement" [price]="product.subtotal/product.units"[index]="positionItem" (deleteProductEvent)="deleteProduct($event)"
                         ></app-item-card>
                     </mat-grid-tile>
               
                 </mat-grid-list>
 
-            
+
+                <div class="user">
+                    <h3>Detalle del Usuario</h3>
+                <li>Nombre:
+                    <span class="subtotal">{{userName}}</span>
+                </li>
+                <li>telefono:
+                    <span class="subtotal">{{telephone}} </span>
+                </li>
+                <li>Email:
+                    <span class="subtotal">{{email}} </span>
+                </li>
+                
+            </div>
         </div>
         <mat-divider vertical></mat-divider>
         <div class="details">

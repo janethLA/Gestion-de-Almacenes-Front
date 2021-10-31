@@ -37,3 +37,12 @@
     float: center;
     height: auto;
   }
+  a{
+    color:#444444;
+    display:inline;
+    font-family:Montserrat;
+    font-size:13px;
+    line-height:19.5px;
+    padding:6.5px 0px 0px;
+  }
+  a:hover { color: #0460ca; cursor: pointer; }

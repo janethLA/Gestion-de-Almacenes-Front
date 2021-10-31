@@ -1,9 +1,11 @@
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroupDirective, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import {RequestService} from '../../services/request.service';
+import { DgForgetPasswordComponent } from '../dialogs/dg-forget-password/dg-forget-password.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
@@ -27,6 +29,7 @@ public errorLogin:boolean;
     private RequestService: RequestService,
     private cookieService: CookieService,
     private router: Router,
+    public dialog: MatDialog,
   ) { }
   hide=true;
   ngOnInit(): void {
@@ -60,6 +63,7 @@ public errorLogin:boolean;
         //this.sendRoute(respuesta.identifier)
         
         this.router.navigate(['/home'])
+        window.location.reload()
         
        },
       error:()=>{
@@ -83,5 +87,12 @@ public errorLogin:boolean;
     localStorage.setItem("user",JSON.stringify(this.user));
     //localStorage.setItem("permisos",JSON.stringify(roles=[{authority:"ROLE_CREAR_PEDIDO"},{authority:"ROLE_VER_PEDIDO"}]))
     localStorage.setItem("permits",JSON.stringify(roles));
+  }
+  openForgetPassword(){
+      this.dialog.open(DgForgetPasswordComponent,{
+        width: '60%',
+        data: { }
+        });
+    
   }
 }

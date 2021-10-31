@@ -55,6 +55,14 @@ import { OrderCardComponent } from './components/cards/order-card/order-card.com
 import { UpdateUserComponent } from './components/update-user/update-user.component';
 import { ShowOrdersComponent } from './components/show-orders/show-orders.component';
 import { DgUpdateUserComponent } from './components/dialogs/dg-update-user/dg-update-user.component';
+import { DgAssignDeliveryComponent } from './components/dialogs/dg-assign-delivery/dg-assign-delivery.component';
+import { MatListModule } from '@angular/material/list';
+import { ReportOfOrdersComponent } from './components/report-of-orders/report-of-orders.component'; 
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { DgForgetPasswordComponent } from './components/dialogs/dg-forget-password/dg-forget-password.component'; 
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { DgRestartPasswordComponent } from './components/dialogs/dg-restart-password/dg-restart-password.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -83,6 +91,10 @@ import { DgUpdateUserComponent } from './components/dialogs/dg-update-user/dg-up
     UpdateUserComponent,
     ShowOrdersComponent,
     DgUpdateUserComponent,
+    DgAssignDeliveryComponent,
+    ReportOfOrdersComponent,
+    DgForgetPasswordComponent,
+    DgRestartPasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -109,6 +121,10 @@ import { DgUpdateUserComponent } from './components/dialogs/dg-update-user/dg-up
     MaterialFileInputModule,
     MatAutocompleteModule,
     MatBadgeModule,
+    MatListModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressSpinnerModule
     
   ],
   providers: [RequestService,CookieService,interceptorProvider],

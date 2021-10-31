@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-item-card',
@@ -42,9 +43,11 @@ export class ItemCardComponent implements OnInit {
     })
   constructor(
     private formBuilder:FormBuilder,
+    public domSanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
+    
     if(this.disabledQuantity){
       this.orderDetail.get('units').setValue(this.units)
     }else{

@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { DgAssignDeliveryComponent } from '../../dialogs/dg-assign-delivery/dg-assign-delivery.component';
 
 @Component({
   selector: 'app-order-card',
@@ -13,9 +15,15 @@ export class OrderCardComponent implements OnInit {
   @Input() status:string;
   @Input() totalPrice:number;
   @Input() disabled:boolean;
+  @Input() warehouseName:string;
+  @Input() userName:string;
+  @Input() telephone:number;
+  @Input() email:string;
   productsCart:any[]=[];
   image:any;
-  constructor() { }
+  constructor(
+    private dialog:MatDialog
+  ) { }
 
   ngOnInit(): void {
     this.getProducts();
@@ -29,7 +37,7 @@ export class OrderCardComponent implements OnInit {
       color = '#979797';
     } else if (status=='Autorizado') {
         color = '#1975ff';
-      }else if(status=='Cotizando'){
+      }else if(status=='En curso'){
         color= '#ffc400';
       }else if(status=='Rechazado'){
         color= '#ff4848';
@@ -45,5 +53,11 @@ export class OrderCardComponent implements OnInit {
       this.productsCart.push(prod)
     })
     console.log(this.productsCart)
+  }
+  openAssign(){
+    this.dialog.open(DgAssignDeliveryComponent,{
+      width: '60%',
+      data: {idOrder:this.idOrder}
+      });
   }
 }
