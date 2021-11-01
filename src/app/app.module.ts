@@ -63,6 +63,11 @@ import { MatSortModule } from '@angular/material/sort';
 import { DgForgetPasswordComponent } from './components/dialogs/dg-forget-password/dg-forget-password.component'; 
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { DgRestartPasswordComponent } from './components/dialogs/dg-restart-password/dg-restart-password.component';
+import { DeliveryPageComponent } from './components/delivery-page/delivery-page.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { DgOrdersRejectedComponent } from './components/dialogs/dg-orders-rejected/dg-orders-rejected.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -95,6 +100,8 @@ import { DgRestartPasswordComponent } from './components/dialogs/dg-restart-pass
     ReportOfOrdersComponent,
     DgForgetPasswordComponent,
     DgRestartPasswordComponent,
+    DeliveryPageComponent,
+    DgOrdersRejectedComponent,
   ],
   imports: [
     BrowserModule,
@@ -124,7 +131,10 @@ import { DgRestartPasswordComponent } from './components/dialogs/dg-restart-pass
     MatListModule,
     MatPaginatorModule,
     MatSortModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTabsModule,
+    MatExpansionModule,
+    MatTooltipModule
     
   ],
   providers: [RequestService,CookieService,interceptorProvider],

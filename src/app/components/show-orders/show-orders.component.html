@@ -4,8 +4,22 @@
     </button> -->
     <h2 class="title">Lista de todos los pedidos</h2>
 </div>
-<div class="totalOrders">
-    <h4><mat-icon>shopping_cart</mat-icon>{{ordersReceived?.length}} Pedidos</h4>
+
+<div style="width: 100%; font-size: 15px;padding-left: 15px; display: flex; height: 45px;text-align: center;">
+    <mat-form-field appearance="outline" class="btn-type">
+        <mat-label>Filtrar por estado</mat-label>
+        <mat-select disableRipple (selectionChange)="filterBy($event.value)">
+            <mat-option value="Todos">Todos</mat-option>
+            <mat-option value="Pendiente">Pendiente</mat-option>
+            <mat-option value="En curso">En curso</mat-option>
+            <mat-option value="Finalizado">Finalizado</mat-option>
+          </mat-select>
+      </mat-form-field>
+      <h4><mat-icon>shopping_cart</mat-icon>{{ordersReceived?.length}} Pedidos</h4>
+      <a mat-button class="btn-catalog" (click)="openOrdersRejected()">
+        <span>Pedidos rechazados</span>
+        <mat-icon [matBadge]="quantityBadgeRequest()" matBadgeColor="warn"  >notifications</mat-icon>
+    </a>
 </div>
 <div class="order" *ngFor="let order of ordersReceived">
     <app-order-card [idOrder]="order.idOrder" [orderDate]="order.orderDate" [orderDetail]=order.orderDetail

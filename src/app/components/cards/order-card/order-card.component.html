@@ -8,6 +8,10 @@
             <div style=" margin-top: 5px; text-align: center; width: 100px;"><p id="nroPedido">Nro {{idOrder}}</p></div>
             <button mat-icon-button style="margin-top: -4px; margin-right: -10px;" *ngIf="disabled && status=='Pendiente'" (click)="openAssign()"><mat-icon>person_add_alt</mat-icon></button>
             <button mat-icon-button style="margin-top: -4px; margin-right: -10px;" *ngIf="status=='En curso'" ><mat-icon>how_to_reg</mat-icon></button>
+            <button mat-icon-button style="margin-top: -4px; margin-right: -10px;color: green; " *ngIf="buttons"matTooltip="Aceptar" (click)="acceptOrder()"><mat-icon style="font-size: 30px;">check_circle_outline</mat-icon></button>
+            <button mat-icon-button style="margin-top: -4px; margin-right: -10px; color: red;" *ngIf="buttons"matTooltip="Rechazar" (click)="rejectOrder()"><mat-icon style="font-size: 30px;">highlight_off</mat-icon></button>
+            <button mat-icon-button style="margin-top: -4px; margin-right: -10px; color: green;" *ngIf="complete"matTooltip="Finalizar" (click)="completeOrder()"><mat-icon style="font-size: 30px;">task</mat-icon></button>
+            <button mat-icon-button style="margin-top: -4px; margin-right: -10px; color: rgb(0, 41, 128);" *ngIf="orderCompleted"matTooltip="Pedido Finalizado"><mat-icon style="font-size: 30px;">done_outline</mat-icon></button>
         </div>
 
     </div>
@@ -37,7 +41,7 @@
                 </mat-grid-list>
 
 
-                <div class="user">
+                <div class="user" *ngIf="disabled||buttons">
                     <h3>Detalle del Usuario</h3>
                 <li>Nombre:
                     <span class="subtotal">{{userName}}</span>

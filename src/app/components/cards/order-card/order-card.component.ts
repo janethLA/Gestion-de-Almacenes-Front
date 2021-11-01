@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { RequestService } from 'src/app/services/request.service';
 import { DgAssignDeliveryComponent } from '../../dialogs/dg-assign-delivery/dg-assign-delivery.component';
 
 @Component({
@@ -19,10 +20,15 @@ export class OrderCardComponent implements OnInit {
   @Input() userName:string;
   @Input() telephone:number;
   @Input() email:string;
+  @Input() buttons:boolean;
+  @Input() idOrderAssigned:any;
+  @Input() complete:boolean;
   productsCart:any[]=[];
   image:any;
+  orderCompleted:boolean;
   constructor(
-    private dialog:MatDialog
+    private dialog:MatDialog,
+    private RequestService:RequestService
   ) { }
 
   ngOnInit(): void {
@@ -35,13 +41,13 @@ export class OrderCardComponent implements OnInit {
     let color:string;
     if (status=='Pendiente') {
       color = '#979797';
-    } else if (status=='Autorizado') {
+    } else if (status=='Aceptado') {
         color = '#1975ff';
       }else if(status=='En curso'){
         color= '#ffc400';
       }else if(status=='Rechazado'){
         color= '#ff4848';
-      }else if(status=='Aprobado'){
+      }else if(status=='Finalizado'){
         color = '#28a745'
       }
     return color;
@@ -52,12 +58,41 @@ export class OrderCardComponent implements OnInit {
     
       this.productsCart.push(prod)
     })
-    console.log(this.productsCart)
+    //console.log(this.productsCart)
   }
   openAssign(){
     this.dialog.open(DgAssignDeliveryComponent,{
-      width: '60%',
+      width: '45%',
       data: {idOrder:this.idOrder}
       });
+  }
+  acceptOrder(){
+    this.RequestService.put("http://localhost:8080/api/orderAssigned/assignedOrderAccepted/"+this.idOrderAssigned,"").subscribe({
+      next:()=>{
+        console.log("aceptado con exito")
+      },error:()=>{
+        window.location.reload()
+      }
+    })
+  }
+  rejectOrder(){
+    this.RequestService.put("http://localhost:8080/api/orderAssigned/assignedOrderRejected/"+this.idOrderAssigned,"").subscribe({
+      next:()=>{
+        console.log("rechazado con exito")
+      },error:()=>{
+        window.location.reload()
+      }
+    })
+  }
+  completeOrder(){
+    this.RequestService.put("http://localhost:8080/api/orderAssigned/orderCompleted/"+this.idOrderAssigned,"").subscribe({
+      next:()=>{
+        console.log("rechazado con exito")
+      },error:()=>{
+        this.complete=false
+        this.orderCompleted=true;
+        window.location.reload()
+      }
+    })
   }
 }

@@ -28,8 +28,9 @@ export class NavbarComponent implements OnInit {
   logout(){
     this.cookieService.delete('token','/','localhost',false,'Lax')
     localStorage.clear()
+    this.router.navigate(['/'])
     window.location.reload();
-    this.router.navigate(['/home'])
+    
     
    
     
@@ -37,17 +38,21 @@ export class NavbarComponent implements OnInit {
   getDataUser(){
     this.user=JSON.parse(localStorage.getItem("user"))
     this.permits=JSON.parse(localStorage.getItem("permits"))
-    if(this.user==undefined || this.user==null||this.permits[0]?.authority=="ROLE_FINAL_USER"){
+    if(this.user==undefined || this.user==null){
       this.notLogedUser=true;
       
     }else{
-      this.notLogedUser=false;
-      this.disabledButton=true;
+      if(this.permits[0]?.authority=="ROLE_FINAL_USER"){
+        this.notLogedUser=false;
+      }else{
+        this.notLogedUser=false;
+        this.disabledButton=true;
+      }
      
     }
   }
   verifyUser():any{
-    if(this.notLogedUser){
+    if(this.notLogedUser || this.permits[0]?.authority=="ROLE_FINAL_USER"){
       return this.inputSideNav.close();
       
     }else{

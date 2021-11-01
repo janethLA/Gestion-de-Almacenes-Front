@@ -21,12 +21,12 @@ export class DgAssignDeliveryComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //this.loadDeliveries();
-    this.allDeliveries=[
+    this.loadDeliveries();
+    /* this.allDeliveries=[
       {idUser:1,name:"marco",email:"marc@gmail.com",telephone:78787878,sector:"Zona SUD"},
       {idUser:2,name:"marco",email:"marc@gmail.com",telephone:78787878,sector:"Zona SUD"},
       {idUser:3,name:"marco",email:"marc@gmail.com",telephone:78787878,sector:"Zona SUD"},
-    ]
+    ] */
   }
   loadDeliveries(){
     this.RequestService.get('http://localhost:8080/api/order/allDeliveries')
@@ -47,6 +47,7 @@ assignDelivery(){
   this.RequestService.post('http://localhost:8080/api/orderAssigned/assignOrder',assign)
   .subscribe(r=>{
     console.log(r)
+    window.location.reload()
   }
     
     

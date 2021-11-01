@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DeliveryPageComponent } from './components/delivery-page/delivery-page.component';
 import { HomeAdminComponent } from './components/home-admin/home-admin.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { LoginComponent } from './components/login/login.component';
@@ -11,6 +12,7 @@ import { ShowOrdersComponent } from './components/show-orders/show-orders.compon
 import { ShowStoresComponent } from './components/show-stores/show-stores.component';
 import { StoreContentComponent } from './components/store-content/store-content.component';
 import { UpdateUserComponent } from './components/update-user/update-user.component';
+import { UserGuard } from './security/user.guard';
 
 const routes: Routes = [
   {path:'manageAccounts',component: HomeAdminComponent},
@@ -23,7 +25,8 @@ const routes: Routes = [
   {path:'home/orders-list',component:OrdersListComponent},
   {path:'home/user/update-user',component:UpdateUserComponent},
   {path:'home/show-orders',component:ShowOrdersComponent},
-  {path:'home/reports',component:ReportOfOrdersComponent}
+  {path:'home/reports',component:ReportOfOrdersComponent},
+  {path:'home/delivery',component:DeliveryPageComponent,canActivate:[UserGuard]}
   
 ];
 

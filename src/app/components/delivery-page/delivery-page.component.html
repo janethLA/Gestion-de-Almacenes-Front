@@ -1,0 +1,103 @@
+<h2>Pedidos delivery</h2>
+<mat-tab-group >
+    <mat-tab label="Pedidos Pendientes"> 
+        <div class="orders-pending" style="margin-top: 15px;">
+            
+            <mat-accordion class="example-headers-align" multi *ngFor="let order of ordersPending"mat-elevation-z2>
+                <mat-expansion-panel >
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <div style=" margin-top: -5px; display: flex;">
+       
+                            <div style="display: flex;">
+                                <div style=" margin-top: 5px; text-align: center; width: 100px;"><p id="nroPedido">Nro {{order.order.idOrder}}</p></div>
+                                <p id="status" >Hora Asignado:{{order.hour}}</p>
+                             </div>
+                    
+                        </div>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      Pedido de: {{order.warehouseNameOfOrder }}
+                      <button mat-icon-button style="margin-top: -4px; margin-right: -10px;"  ><mat-icon>pending_actions</mat-icon></button>
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+              
+                  <app-order-card [idOrder]="order.order.idOrder" [orderDate]="order.date" [orderDetail]=order.order.orderDetail
+                     [quantityProducts]="order.order.quantityProducts" [status]="order.status" [totalPrice]="order.order.totalPrice" [disabled]="false"[buttons]="true"[userName]="order.userName"
+                        [warehouseName]="order.warehouseNameOfOrder" [telephone]="order.userTelephone" [email]="order.userEmail"
+                        [idOrderAssigned]="order.idOrderAssigned"></app-order-card>
+                        
+                </mat-expansion-panel>
+                
+            </mat-accordion>
+        </div>
+    </mat-tab>
+
+    <!-- tab pedidos Asignados -->
+    <mat-tab label="Pedidos Aceptados"> 
+        <div class="orders-assign" style="margin-top: 15px;">
+            
+            <mat-accordion class="example-headers-align" multi *ngFor="let order of ordersAccepted"mat-elevation-z2>
+                <mat-expansion-panel >
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <div style=" margin-top: -5px; display: flex;">
+       
+                            <div style="display: flex;">
+                                <div style=" margin-top: 5px; text-align: center; width: 100px;"><p id="nroPedido">Nro {{order.order.idOrder}}</p></div>
+                                <p id="status" >Hora Asignado:{{order.hour}}</p>
+                             </div>
+                    
+                        </div>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      Pedido de: {{order.warehouseNameOfOrder }}
+                      <button mat-icon-button style="margin-top: -4px; margin-right: -10px;"  ><mat-icon>assignment_turned_in</mat-icon></button>
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+              
+                  <app-order-card [idOrder]="order.order.idOrder" [orderDate]="order.date" [orderDetail]=order.order.orderDetail
+                     [quantityProducts]="order.order.quantityProducts" [status]="order.status" [totalPrice]="order.order.totalPrice" [disabled]="false"[buttons]="false"[complete]="true"
+                     [userName]="order.userName"
+                        [warehouseName]="order.warehouseNameOfOrder" [telephone]="order.userTelephone" [email]="order.userEmail"
+                        [idOrderAssigned]="order.idOrderAssigned"></app-order-card>
+                        
+                </mat-expansion-panel>
+                
+            </mat-accordion>
+        </div>
+    </mat-tab>
+    <!-- tab pedidos Rechazados -->
+    <mat-tab label="Pedidos Rechazados"> 
+        <div class="orders-reject" style="margin-top: 15px;">
+            
+            <mat-accordion class="example-headers-align" multi *ngFor="let order of ordersReject"mat-elevation-z2>
+                <mat-expansion-panel >
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <div style=" margin-top: -5px; display: flex;">
+       
+                            <div style="display: flex;">
+                                <div style=" margin-top: 5px; text-align: center; width: 100px;"><p id="nroPedido">Nro {{order.order.idOrder}}</p></div>
+                                <p id="status" >Hora Asignado:{{order.hour}}</p>
+                             </div>
+                    
+                        </div>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      Pedido de: {{order.warehouseNameOfOrder }}
+                      <button mat-icon-button style="margin-top: -4px; margin-right: -10px;"  ><mat-icon>event_busy</mat-icon></button>
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+              
+                  <app-order-card [idOrder]="order.order.idOrder" [orderDate]="order.date" [orderDetail]=order.order.orderDetail
+                     [quantityProducts]="order.order.quantityProducts" [status]="order.status" [totalPrice]="order.order.totalPrice" [disabled]="false"[buttons]="false"[userName]="order.userName"
+                        [warehouseName]="order.warehouseNameOfOrder" [telephone]="order.userTelephone" [email]="order.userEmail"></app-order-card>
+                        
+                </mat-expansion-panel>
+                
+            </mat-accordion>
+        </div>
+    </mat-tab>
+
+</mat-tab-group>

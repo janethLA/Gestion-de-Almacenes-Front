@@ -24,6 +24,33 @@
     line-height:43.2px;
     margin:0px 355.609px;
 }
+.btn-catalog{
+    border-color:#c2c0c0;
+    border-radius:5px;
+    border-style:solid;
+    border-width:1px;
+    color:#424242;
+    display:flex;
+    font-family:Montserrat;
+    font-size:13px;
+    font-weight:500;
+    line-height:19.5px;
+    padding:6px 14px;
+    margin-left:20px;
+    margin-right:20px;
+    max-width: 30%;
+}
+.btn-type{
+    
+    font-family:Montserrat;
+    font-size:12px;
+    font-weight:500;
+    line-height:14.5px;
+    margin-left:20px;
+    margin-right:20px;
+    width: 30%;
+    max-width: 30%;
+}
 .totalOrders{
     color:#424242;
     display:flex;
@@ -40,6 +67,9 @@ h4{
     font-weight:800;
     line-height:19.2px;
     margin:0px 0px 20px;
+    width: 30%;
+    max-width: 30%;
+    padding-left: 10%;
 }
 .order{
     display: flex;

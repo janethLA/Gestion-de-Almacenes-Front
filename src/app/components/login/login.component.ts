@@ -62,8 +62,8 @@ public errorLogin:boolean;
         this.saveDataUser(respuesta.roles);
         //this.sendRoute(respuesta.identifier)
         
-        this.router.navigate(['/home'])
-        window.location.reload()
+        this.router.navigate(['/'])
+       // window.location.reload()
         
        },
       error:()=>{
@@ -87,6 +87,7 @@ public errorLogin:boolean;
     localStorage.setItem("user",JSON.stringify(this.user));
     //localStorage.setItem("permisos",JSON.stringify(roles=[{authority:"ROLE_CREAR_PEDIDO"},{authority:"ROLE_VER_PEDIDO"}]))
     localStorage.setItem("permits",JSON.stringify(roles));
+    localStorage.setItem('logged',JSON.stringify({logged:true}))
   }
   openForgetPassword(){
       this.dialog.open(DgForgetPasswordComponent,{
