@@ -1,6 +1,7 @@
 .name{
     margin-top: 8px;
     font-weight: normal;
+    text-transform: uppercase;
 }
 .designation{
     margin-top: 2px;

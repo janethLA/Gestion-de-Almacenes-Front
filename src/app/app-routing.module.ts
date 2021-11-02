@@ -15,10 +15,10 @@ import { UpdateUserComponent } from './components/update-user/update-user.compon
 import { UserGuard } from './security/user.guard';
 
 const routes: Routes = [
-  {path:'manageAccounts',component: HomeAdminComponent},
-  {path:'registerStores',component: RegisterStoreComponent},
-  {path:'showStores',component: ShowStoresComponent},
-  {path:'showStores/:id',component: StoreContentComponent},
+  {path:'manageAccounts',component: HomeAdminComponent,canActivate:[UserGuard]},
+  {path:'registerStores',component: RegisterStoreComponent,canActivate:[UserGuard]},
+  {path:'showStores',component: ShowStoresComponent,canActivate:[UserGuard]},
+  {path:'showStores/:id',component: StoreContentComponent,canActivate:[UserGuard]},
   {path:'login',component:LoginComponent},
   {path:'home',component:HomePageComponent},
   {path: '', pathMatch: 'full', redirectTo: 'home'},

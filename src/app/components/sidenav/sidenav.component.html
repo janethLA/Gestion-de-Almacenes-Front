@@ -1,5 +1,5 @@
 <img src=""  class="avatar mat-elevation-z8">
-<h4 class="name">NAME USER</h4>
+<h4 class="name">{{user.userName}}</h4>
 <p class="designation">Admin</p>
 
 <mat-divider></mat-divider>
@@ -8,19 +8,19 @@
         <mat-icon>home</mat-icon>
         <span>Home</span>
     </a>
-    <a mat-button class="menu-button" routerLink="/manageAccounts">
+    <a mat-button class="menu-button" routerLink="/manageAccounts" *ngIf="ROLE_ADMINISTRAR_USUARIOS">
         <mat-icon>person</mat-icon>
         <span>Administrar cuentas</span>
     </a>
-    <a mat-button class="menu-button" routerLink="/registerStores">
+    <a mat-button class="menu-button" routerLink="/registerStores" *ngIf="ROLE_ADMINISTRAR_ALMACENES">
         <mat-icon>add_business</mat-icon>
         <span>Registrar Almacenes</span>
     </a>
-    <a mat-button class="menu-button" routerLink="/showStores">
+    <a mat-button class="menu-button" routerLink="/showStores" *ngIf="ROLE_ADMINISTRAR_ALMACENES">
         <mat-icon>store</mat-icon>
         <span>Almacenes</span>
     </a>
-    <a mat-button class="menu-button" (click)="open =!open">
+    <a mat-button class="menu-button" (click)="open =!open"*ngIf="ROLE_ADMINISTRAR_PEDIDOS">
         <mat-icon>list_alt</mat-icon>
         <span>Pedidos</span>
     </a>
@@ -34,7 +34,7 @@
             <span>Pedidos por producto</span>
         </a>
     </div>
-    <a mat-button class="menu-button" routerLink="/home/delivery">
+    <a mat-button class="menu-button" routerLink="/home/delivery" *ngIf="ROLE_ADMINISTRAR_PEDIDOS || ROLE_VER_PEDIDOS">
         <mat-icon>delivery_dining</mat-icon>
         <span>Delivery</span>
     </a>

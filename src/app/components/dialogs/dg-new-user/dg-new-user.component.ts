@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroupDirective, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroupDirective, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { map } from 'rxjs/operators';
 import { RequestService } from 'src/app/services/request.service';
 
 import { DgPhoneCodeComponent} from '../dg-phone-code/dg-phone-code.component';
@@ -29,9 +30,18 @@ export class DgNewUserComponent implements OnInit {
   createUser=this.formBuilder.group({
     finalUserName:['',Validators.required],
     userName:['',],
-    email:['',[Validators.required,Validators.pattern(this.isValidEmail)]],
-    telephone:['',[Validators.required,Validators.pattern(this.isValidNumber)]],
+    email:['',{
+      validators:[Validators.required,Validators.pattern(this.isValidEmail)],
+      asyncValidators:[this.emailCheck()],
+      updateOn: 'blur'
+    }],
+    telephone:['',{
+      validators:[Validators.required,Validators.pattern(this.isValidNumber)],
+      asyncValidators:[this.telephoneCheck()],
+      updateOn: 'blur'
+    }],
   })
+  
   code:any;
   activateSpinner:boolean;
   ngOnInit(): void {
@@ -96,18 +106,54 @@ export class DgNewUserComponent implements OnInit {
   getErrorMessageNumber(field: string,funct:string):string{
     let message;
     if(funct=='register'){
-      if(this.createUser.get(field).errors.required){
+      if(this.createUser?.get(field).errors.required){
         message="Campo celular es requerido"
-      }else if(this.createUser.get(field).hasError('pattern')){
+      }else if(this.createUser?.get(field).hasError('pattern')){
         message="El numero de celular no es valido"
-      }
-    }else if(funct=='edit'){
-      if(this.createUser.get(field).hasError('pattern')){
-        message="El numero de celular no es valido"
+      }else if(this.createUser?.get(field).hasError('exist')){
+        message="este numero ya esta registrado"
       }
     }
     return message
   }
+  emailCheck(): AsyncValidatorFn{
+
+    return (control: AbstractControl) => {
+      console.log(control.value)
+      return this.RequestService.get('http://localhost:8080/api/finalUser/uniqueEmail/'+control.value)
+        .pipe(
+          map((result) => (result==true) ?  null : {exist:!result})
+        );
+      
+    };
+  }
+  telephoneCheck(): AsyncValidatorFn{
+
+    return (control: AbstractControl) => {
+      console.log(control.value)
+      return this.RequestService.get('http://localhost:8080/api/auth/uniqueTelephoneAll/'+control.value)
+        .pipe(
+          map((result) => (result==true) ?  null : {exist:!result})
+        );
+      
+    };
+  }
+   
+  getErrorMessage(field: string,funct:string):string{
+    let message;
+    if(funct=='register'){
+      if(this.createUser?.get(field).errors?.required){
+        message="el campo email es requerido"
+      }else if(this.createUser?.get(field).hasError('pattern')){
+        message="ingrese un email valido"
+      }else if(this.createUser?.get(field).hasError('exist')){
+        message="el email ya esta registrado"
+      }
+    }
+    return message
+  }
+  
+  
   isValidField(field: string):boolean{
     return(
       (this.createUser.get(field).touched || this.createUser.get(field).dirty) &&
