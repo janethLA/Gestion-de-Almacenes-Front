@@ -22,10 +22,10 @@ const routes: Routes = [
   {path:'login',component:LoginComponent},
   {path:'home',component:HomePageComponent},
   {path: '', pathMatch: 'full', redirectTo: 'home'},
-  {path:'home/orders-list',component:OrdersListComponent},
-  {path:'home/user/update-user',component:UpdateUserComponent},
-  {path:'home/show-orders',component:ShowOrdersComponent},
-  {path:'home/reports',component:ReportOfOrdersComponent},
+  {path:'home/orders-list',component:OrdersListComponent,canActivate:[UserGuard]},
+  {path:'home/user/update-user',component:UpdateUserComponent,canActivate:[UserGuard]},
+  {path:'home/show-orders',component:ShowOrdersComponent,canActivate:[UserGuard]},
+  {path:'home/reports',component:ReportOfOrdersComponent,canActivate:[UserGuard]},
   {path:'home/delivery',component:DeliveryPageComponent,canActivate:[UserGuard]}
   
 ];

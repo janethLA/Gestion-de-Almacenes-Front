@@ -20,7 +20,9 @@ export class SidenavComponent implements OnInit {
     this.cookieService.delete('token','/','localhost',false,'Lax')
     localStorage.clear()
     window.location.reload();
-    this.router.navigate(['/home'])
+    this.router.navigate(['/home']).then(() => {
+      window.location.reload();
+    });
     
    
     

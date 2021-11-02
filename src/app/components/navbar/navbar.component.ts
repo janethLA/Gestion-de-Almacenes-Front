@@ -1,7 +1,7 @@
 import { not } from '@angular/compiler/src/output/output_ast';
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 
 @Component({
@@ -18,18 +18,24 @@ export class NavbarComponent implements OnInit {
   disabledButton:boolean=false;
   constructor(
     public cookieService:CookieService,
-    private router:Router
+    private router:Router,
   ) { }
 
   ngOnInit(): void {
-    this.getDataUser();
+    
+      this.getDataUser();
     this.verifyUser()
+    
+    
   }
+  
   logout(){
     this.cookieService.delete('token','/','localhost',false,'Lax')
     localStorage.clear()
-    this.router.navigate(['/'])
-    window.location.reload();
+    this.router.navigate(['/']).then(() => {
+      window.location.reload();
+    });
+    
     
     
    

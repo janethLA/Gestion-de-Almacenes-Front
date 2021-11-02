@@ -62,7 +62,9 @@ public errorLogin:boolean;
         this.saveDataUser(respuesta.roles);
         //this.sendRoute(respuesta.identifier)
         
-        this.router.navigate(['/'])
+        this.router.navigate(['/']).then(() => {
+          window.location.reload();
+        });
        // window.location.reload()
         
        },
