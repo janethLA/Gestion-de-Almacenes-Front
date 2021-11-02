@@ -26,6 +26,8 @@
     "@types/twilio": "^3.19.3",
     "ngx-cookie-service": "^12.0.3",
     "ngx-material-file-input": "^2.1.1",
+    "pdfmake": "^0.2.2",
+    "pdfmake-wrapper": "^2.1.2",
     "rxjs": "~6.6.0",
     "swiper": "^7.0.8",
     "tslib": "^2.0.0",

@@ -3,8 +3,12 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { RequestService } from 'src/app/services/request.service';
+import { Canvas, ITable, Item, PdfMakeWrapper, Rect, Table, Txt } from 'pdfmake-wrapper';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-
+type TableRow=[any,any,any,any,any,any,any,any]
 
 @Component({
   selector: 'app-report-of-orders',
@@ -51,5 +55,60 @@ export class ReportOfOrdersComponent implements AfterViewInit {
     this.dataSource.sort = this.sort;
     })
   }
+  async printReport(){
+        const pdf=new PdfMakeWrapper();
+        pdf.pageMargins([0,20,0,0])
+        pdf.pageSize('A4')
+        pdf.defaultStyle({
+          fontSize:11,
+          //font:'roboto'
+        })
+       
+          pdf.add(new Txt('SISTEMA DE GESTION DE ALMACENES').margin([20,0]).bold().fontSize(13).end);
+          pdf.add(new Txt('HELPSYSTEM').margin([20,0]).bold().fontSize(13).end);
+          pdf.add(new Txt('Teléfono: 4444444 ; 444444').margin([20,0]).fontSize(10).end);
+          pdf.add(new Txt('Cochabamba - Bolivia').margin([20,0]).fontSize(10).end);
+
+          pdf.add(new Txt('REPORTE DE PEDIDOS').bold().alignment('center').fontSize(13).end);
+          pdf.add(new Txt('Moneda (Bs)').bold().alignment('center').fontSize(12).end);
+          pdf.add(pdf.ln(1));
+          pdf.add(new Txt('Busqueda por filtro: '+"-----"+this.dataSource.filter+"-----"+'............................................\
+          Fecha: ............./............./............./').margin([20,10]).end);
+          pdf.add(new Txt('los pedidos que se detallan a continuacion son de proposito informativo')
+            .margin([30,0]).fontSize(9).end);
+          if(this.dataSource.filteredData==[]){
+            pdf.add(this.createTable(this.dataSource.data))
+          }else{
+            pdf.add(this.createTable(this.dataSource.filteredData))
+          }
+           pdf.create().open();
+        
+    }
+
+    //   
+
+
+    createTable(data: Item[]):ITable{
+      [{}]
+        return new Table([
+        [ 'ID', 'ESTADO','NOMBRE','TELEFONO','N° DE PRODUCTOS','TOTAL','HORA','FECHA'],
+        ...this.extractData(data),
+      ]).margin([20,10]).alignment('center').fontSize(10).layout({hLineColor:(rowIndex:number,node:any,columnIndex:number)=>{
+              return  '#c2c2c2';
+      },vLineColor:((rowIndex:number,node:any,columnIndex:number)=>{
+          return  '#c2c2c2';
+      }),fillColor:((rowIndex:number,node:any,columnIndex:number)=>{
+          return  rowIndex===0?'#c2c2c2':'';
+      })
+      }).end;
+    }
+  
+    extractData(data:any[]):TableRow[]{
+        var index=1
+        return data.map(row=>[row.idOrder,row.status,row.userName,row.telephone,row.quantityProducts,row.totalPrice,row.hourOfOrder,row.dateOfOrder])
+    } 
+
+    
+
 }
 

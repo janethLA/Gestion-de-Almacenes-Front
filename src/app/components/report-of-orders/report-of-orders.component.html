@@ -7,7 +7,7 @@
       <mat-label>Filtrar por: </mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Ingrese su busqueda" #input>
     </mat-form-field>
-    <a mat-button class="btn-catalog">
+    <a mat-button class="btn-catalog"(click)="printReport()">
       <span>Generar Reporte </span>
       <mat-icon>picture_as_pdf</mat-icon>
   </a>

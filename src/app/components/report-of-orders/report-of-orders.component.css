@@ -31,7 +31,7 @@ table {
   margin-left:20px;
   margin-right:20px;
   margin-bottom:20px;
-  max-width: 20%;
+  width: max-content;
 }
 h3{
   color:#575757;
