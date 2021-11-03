@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { RequestService } from 'src/app/services/request.service';
 
 @Component({
   selector: 'app-dg-orders-rejected',
@@ -6,10 +8,28 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dg-orders-rejected.component.css']
 })
 export class DgOrdersRejectedComponent implements OnInit {
-
-  constructor() { }
-
+  
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private RequestService:RequestService
+  ) { }
+    ordersReject:any=this.data.ordersRejected
   ngOnInit(): void {
+    
+    this.loadOrdersReject();
+  }
+  loadOrdersReject(){
+    console.log(this.ordersReject)
+
+  }
+  reassignOrder(order){
+    this.RequestService.put("http://localhost:8080/api/order/reassignOrder/"+order.idOrder,"").subscribe({
+      next:()=>{
+        console.log("reasignado")
+      },error:()=>{
+        window.location.reload()
+      }
+    })
   }
 
 }

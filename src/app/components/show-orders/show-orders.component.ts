@@ -65,6 +65,7 @@ export class ShowOrdersComponent implements OnInit {
       this.ordersAssigned=r;
       console.log(this.ordersAssigned)
       this.ordersReject=this.ordersAssigned.filter(o=>o.status=="Rechazado")
+      this.ordersReject=this.ordersReject.filter(o=>o.reassigned==0)
       
     })
   }
@@ -72,6 +73,7 @@ export class ShowOrdersComponent implements OnInit {
     return this.ordersReject?.length;
   }
   openOrdersRejected(){
+
     this.dialog.open(DgOrdersRejectedComponent,{
       width: '60%',
       data: {ordersRejected:this.ordersReject}

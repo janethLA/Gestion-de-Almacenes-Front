@@ -21,6 +21,7 @@ export class OrderCardComponent implements OnInit {
   @Input() userName:string;
   @Input() telephone:number;
   @Input() email:string;
+  @Input() sectorName:string;
   @Input() buttons:boolean;
   @Input() idOrderAssigned:any;
   @Input() complete:boolean;
@@ -49,7 +50,7 @@ export class OrderCardComponent implements OnInit {
         color= '#ffc400';
       }else if(status=='Rechazado'){
         color= '#ff4848';
-      }else if(status=='Finalizado'){
+      }else if(status=='Finalizado'|| status=='Enviado'){
         color = '#28a745'
       }
     return color;

@@ -24,5 +24,5 @@
 <div class="order" *ngFor="let order of ordersReceived">
     <app-order-card [idOrder]="order.idOrder" [orderDate]="order.orderDate" [orderDetail]=order.orderDetail
     [quantityProducts]="order.quantityProducts" [status]="order.status" [totalPrice]="order.totalPrice" [disabled]="true"[userName]="order.userName"
-    [warehouseName]="order.warehouseName" [telephone]="order.telephone" [email]="order.email"></app-order-card>
+    [warehouseName]="order.warehouseName" [sectorName]="order.sectorName"[telephone]="order.telephone" [email]="order.email"></app-order-card>
 </div>

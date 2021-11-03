@@ -84,7 +84,7 @@ export class DgUpdateUserComponent implements OnInit {
           
         this.activateSpinner=false;
         this.snack.open('Usuario actualizado exitosamente.','CERRAR',{duration:5000,panelClass:'snackSuccess',})
-        
+        window.location.reload()
         }
         //window.location.reload();
       },

@@ -14,6 +14,7 @@ import { RequestService } from 'src/app/services/request.service';
 })
 export class DgAssignDeliveryComponent implements OnInit {
   allDeliveries:any;
+  allDeliveriesCopy:any;
   noDeliverySelected:boolean=true;
   deliverySelected:any;
   searchInput = new FormControl();
@@ -40,6 +41,7 @@ export class DgAssignDeliveryComponent implements OnInit {
     this.RequestService.get('http://localhost:8080/api/order/allDeliveries')
     .subscribe(r=>{
       this.allDeliveries=r
+      this.allDeliveriesCopy=this.allDeliveries
       console.log(this.allDeliveries)
     })
   }
@@ -53,9 +55,12 @@ export class DgAssignDeliveryComponent implements OnInit {
 assignDelivery(){
   var assign={idUser:this.deliverySelected[0].idUser,idOrder:this.data.idOrder}
   this.RequestService.post('http://localhost:8080/api/orderAssigned/assignOrder',assign)
-  .subscribe(r=>{
-    console.log(r)
-    window.location.reload()
+  .subscribe({
+    next:()=>{
+
+    },error:()=>{
+      window.location.reload()
+    }
   })
   }
 
@@ -76,7 +81,7 @@ assignDelivery(){
     return this.options.filter(option => option.sectorName.toLowerCase().includes(filterValue));
   }
   filterDeliveries(){
-    this.allDeliveries=this.allDeliveries.filter(d=>{
+    this.allDeliveries=this.allDeliveriesCopy.filter(d=>{
       if(d.sector==this.searchInput.value){
         return d
       }

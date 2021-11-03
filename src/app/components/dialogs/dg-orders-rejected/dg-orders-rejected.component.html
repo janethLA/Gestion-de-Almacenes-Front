@@ -1,1 +1,33 @@
-<p>dg-orders-rejected works!</p>
+<div style="text-align: end;">
+    <button mat-icon-button mat-dialog-close style="top: 0;right: 0;"><mat-icon>cancel</mat-icon></button>
+</div>
+
+<div>
+    <h1>PEDIDOS RECHAZADOS</h1>
+    <p>Los siguentes pedidos fueron rechazados por los Delivery, en espera para ser reasignados</p>
+</div>
+<div style="overflow: auto; max-height: 80vh;">
+    <mat-card class="main" *ngFor="let order of ordersReject" >
+      
+        <!-- <mat-card-title class="productName">{{productName}}</mat-card-title> -->
+        <!-- <mat-card-subtitle>{{description}}</mat-card-subtitle> -->
+        <mat-card-content style="width: 100%;">
+            <div style="display: flex; width: 100%;">
+              <p id="nroPedido">Pedido Nro {{order?.idOrder}}</p>
+              <div style="width: 30%; text-align: end; align-self: flex-end;" (click)="reassignOrder(order)">
+                  <a mat-button class="btn-catalog">
+                      <span>Reasignar pedido </span>
+                  </a>
+              </div>
+            </div>
+          
+              <p id="status" >{{order?.status + ' por Delivery'}}</p>
+              <p style="font-weight: bold;" ><a style="font-weight: lighter;">Hora: {{order?.hour}}        Fecha: {{order?.date}}</a></p>
+              <p  >Comentario:  {{order?.commentary}}</p>
+              
+          
+          
+        </mat-card-content>
+        
+      </mat-card>
+</div>
