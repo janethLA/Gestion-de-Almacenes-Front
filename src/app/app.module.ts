@@ -68,6 +68,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { DgOrdersRejectedComponent } from './components/dialogs/dg-orders-rejected/dg-orders-rejected.component';
+import { DgFillEmergencyComponent } from './components/dialogs/dg-fill-emergency/dg-fill-emergency.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -102,6 +103,7 @@ import { DgOrdersRejectedComponent } from './components/dialogs/dg-orders-reject
     DgRestartPasswordComponent,
     DeliveryPageComponent,
     DgOrdersRejectedComponent,
+    DgFillEmergencyComponent,
   ],
   imports: [
     BrowserModule,

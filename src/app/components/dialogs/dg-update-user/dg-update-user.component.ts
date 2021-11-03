@@ -4,6 +4,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { map } from 'rxjs/operators';
 import {RequestService} from '../../../services/request.service'
+import { DgPhoneCodeComponent } from '../dg-phone-code/dg-phone-code.component';
 
 @Component({
   selector: 'app-dg-update-user',
@@ -22,10 +23,22 @@ export class DgUpdateUserComponent implements OnInit {
     private snack:MatSnackBar,
   ) { }
   hide = false;
+  activateSpinner:boolean
   private isValidUserName:any=/^[a-zA-Z0-9]+$/;
+  private isValidNumber="([6-7]{1})([0-9]{7})"
+  private isValidEmail:any=/\S+@\S+\.\S/;
   editUser = this.formBuilder.group({
-    finalUserName:['',[]],
-    telephone:['',[]],
+    finalUserName:['',],
+    email:['',{
+      validators:[Validators.required,Validators.pattern(this.isValidEmail)],
+      asyncValidators:[this.emailCheck()],
+      updateOn: 'blur'
+    }],
+    telephone:['',{
+      validators:[Validators.required,Validators.pattern(this.isValidNumber)],
+      asyncValidators:[this.telephoneCheck()],
+      updateOn: 'blur'
+    }],
     userName:['',{
       validators:[Validators.pattern(this.isValidUserName)], 
       asyncValidators:[this.usernameCheck()],
@@ -38,21 +51,42 @@ export class DgUpdateUserComponent implements OnInit {
   ngOnInit(): void {
     this.user=this.data.user;
       //this.fiterRoleType();
-      this.editUser.get('finalUserName').setValue(this.user?.finalUserName);
+      this.editUser.controls['finalUserName'].setValue(this.user?.finalUserName);
       //this.editUser.controls['password'].setValue(this.user?.password);
       this.editUser.controls['userName'].setValue(this.user?.userName);
       this.editUser.controls['telephone'].setValue(this.user?.telephone);
+      this.editUser.controls['email'].setValue(this.user?.email);
 
   }
 
   saveEdit(update,formDirective: FormGroupDirective){
-
-    //console.log(this.user)
+    this.activateSpinner=true;
+    if(update.userName==this.user.userName){
+      update.userName=""
+    }
+    if(update.email==this.user.email){
+      update.email=""
+    }
+    if(update.telephone==this.user.telephone){
+      update.telephone=""
+    }
+    if(update.finalUserName==this.user.finalUserName){
+      update.finalUserName=""
+    }
+    //console.log(update)
     this.RequestService.put('http://localhost:8080/api/finalUser/updateDataUser/'+this.user?.idFinalUser, update)
     .subscribe({
-      next:()=>{
+      next:(r:any)=>{
+        console.log(r.code)
+        if(r.code!=''){
+          this.openDialogCode(r)
+        }else{
+          
+        this.activateSpinner=false;
         this.snack.open('Usuario actualizado exitosamente.','CERRAR',{duration:5000,panelClass:'snackSuccess',})
-        window.location.reload();
+        
+        }
+        //window.location.reload();
       },
       error:()=>{
         this.snack.open('Fallo al actualizar el usuario','CERRAR',{duration:5000})
@@ -68,21 +102,53 @@ export class DgUpdateUserComponent implements OnInit {
       console.log(control.value)
       return this.RequestService.get('http://localhost:8080/api/finalUser/uniqueUserName/'+control.value)
         .pipe(
-          map((result) => (result==true) ?  null : {exist:!result})
+          map((result) => (result==true) ?  null : ((control.value==this.user.userName)?null:{exist:!result}))
         );
       
     };
   }
+  telephoneCheck(): AsyncValidatorFn{
 
+    return (control: AbstractControl) => {
+      console.log(control.value)
+      return this.RequestService.get('http://localhost:8080/api/auth/uniqueTelephoneAll/'+control.value)
+        .pipe(
+          map((result) => (result==true) ?  null : ((control.value==this.user.telephone)?null:{exist:!result}))
+        );
+      
+    };
+  }
+  emailCheck(): AsyncValidatorFn{
+
+    return (control: AbstractControl) => {
+      console.log(control.value)
+      if(control.value!=""){
+        return this.RequestService.get('http://localhost:8080/api/auth/uniqueEmailAll/'+control.value)
+        .pipe(
+          map((result) => (result==true) ?  null :((control.value==this.user.email)?null: {exist:!result}))
+        );
+      
+      }else{
+        return null;
+      }
+      
+    };
+  }
   
   getErrorMessage(field: string,funct:string):string{
-    let message;
-    //var valor=this.registerUser?.get(field)    console.log(valor)
-
+    let message;let name;
+    if(field=="email"){
+      name="email"
+    }else if(field=="telephone"){
+      name="el numero"
+    }else if(field=="userName"){
+      name="el nombre de usuario"
+    }
+    
       if(this.editUser?.get(field).hasError('pattern')){
-        message="nombre de usuario no es valido"
+        message= name+" no es valido"
       }else if(this.editUser?.get(field).hasError('exist')){
-        message="nombre de usuario ya esta en uso"
+        message=name+"  ya esta en uso"
       }
     
     return message
@@ -95,5 +161,12 @@ export class DgUpdateUserComponent implements OnInit {
         (this.editUser.get(field).touched || this.editUser.get(field).dirty) &&
          !this.editUser.get(field).valid
       )  }
+
+      openDialogCode(respuesta){
+        this.dialog.open(DgPhoneCodeComponent,{
+          width: '50%',
+          data: { idFinalUser:respuesta.idFinalUser,code:respuesta.code,email:respuesta.email,identifier:2}
+          });
+      }    
 
 }

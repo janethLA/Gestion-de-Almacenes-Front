@@ -15,6 +15,7 @@ export class DeliveryPageComponent implements OnInit {
   ordersPending:any;
   ordersAccepted:any;
   ordersReject:any;
+  ordersCompleted:any;
   constructor(
     private RequestService:RequestService,
   ) { 
@@ -37,6 +38,7 @@ export class DeliveryPageComponent implements OnInit {
         this.ordersAccepted=this.allOrders.filter(o=>o.status=="Aceptado")
         this.ordersPending=this.allOrders.filter(o=>o.status=="Pendiente")
         this.ordersReject=this.allOrders.filter(o=>o.status=="Rechazado")
+        this.ordersCompleted=this.allOrders.filter(o=>o.status=="Finalizado")
         
       }
     )

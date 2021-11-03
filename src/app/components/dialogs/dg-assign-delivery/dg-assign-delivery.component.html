@@ -5,12 +5,18 @@
     <h1 mat-card-title>Elija un delivery para asignar el pedido</h1>
     <div>
         <div class="search__bar"  >
-                <mat-form-field appearance="outline" >
-                    <input matInput placeholder="buscar delivery"
-                    >
-                   <mat-icon matSuffix>search</mat-icon>
-                 </mat-form-field>
-                 <button color="primary" mat-raised-button >BUSCAR</button>
+            <mat-form-field appearance="outline" >
+                <input matInput placeholder="buscar por rubro"
+                [formControl]="searchInput"
+                [matAutocomplete]="auto">
+               <mat-icon matSuffix>search</mat-icon>
+               <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option.sectorName">
+                  {{option.sectorName}}
+                </mat-option>
+              </mat-autocomplete>
+             </mat-form-field>
+                 <button color="primary" mat-raised-button (click)="filterDeliveries()" >BUSCAR</button>
         </div>
 
         <div class="search__list">

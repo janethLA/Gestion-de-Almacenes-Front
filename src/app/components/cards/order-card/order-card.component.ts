@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RequestService } from 'src/app/services/request.service';
 import { DgAssignDeliveryComponent } from '../../dialogs/dg-assign-delivery/dg-assign-delivery.component';
+import { DgFillEmergencyComponent } from '../../dialogs/dg-fill-emergency/dg-fill-emergency.component';
 
 @Component({
   selector: 'app-order-card',
@@ -23,6 +24,7 @@ export class OrderCardComponent implements OnInit {
   @Input() buttons:boolean;
   @Input() idOrderAssigned:any;
   @Input() complete:boolean;
+  @Input() completed:boolean;
   productsCart:any[]=[];
   image:any;
   orderCompleted:boolean;
@@ -94,5 +96,11 @@ export class OrderCardComponent implements OnInit {
         window.location.reload()
       }
     })
+  }
+  addEmergency(){
+    this.dialog.open(DgFillEmergencyComponent,{
+      width: '50%',
+      data: {idOrderAssigned:this.idOrderAssigned}
+      });
   }
 }

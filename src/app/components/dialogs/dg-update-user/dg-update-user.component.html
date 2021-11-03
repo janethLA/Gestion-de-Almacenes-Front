@@ -33,15 +33,29 @@
                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                         </button>
                         
-                        <mat-error>este campo es requerido</mat-error>
+                        <mat-error *ngIf="isValidFieldEdit('telephone')" >{{getErrorMessage('telephone','edit')}}</mat-error>
                         </mat-form-field>
                     </div>
-                    
+                    <div class="field">
+                        <mat-form-field  appearance="outline" style="width: 100%;">
+                        <mat-label>Email</mat-label>
+                        <input matInput placeholder="ingres su email" formControlName="email"
+                                 type="text">
+                        
+                        <mat-error *ngIf="isValidFieldEdit('email')" >{{getErrorMessage('email','edit')}}</mat-error>
+                        </mat-form-field>
+                    </div>
                     <div style="text-align: center; width: 100%;">
                         <button mat-raised-button class="button"[disabled]="editUser.invalid" >
-                            ACTUALIZAR
+                            <span *ngIf="activateSpinner==undefined"> ACTUALIZAR</span>
+                    <span *ngIf="activateSpinner">Actualizando datos</span>
+                    <span *ngIf="activateSpinner==false"> Datos actualizados</span>
+                    <mat-icon><mat-spinner *ngIf="activateSpinner" [diameter]="30"></mat-spinner></mat-icon>
+                    <mat-icon *ngIf="activateSpinner==false">done</mat-icon>
                         </button>
                     </div>
+                    <p>{{editUser.value|json}}</p>
+                    <p>{{editUser.valid|json}}</p>
                 </div>
         </div>
         

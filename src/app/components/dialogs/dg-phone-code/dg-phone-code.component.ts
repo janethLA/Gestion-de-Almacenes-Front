@@ -131,4 +131,29 @@ export class DgPhoneCodeComponent implements OnInit {
     localStorage.setItem("user",JSON.stringify(this.user));
     localStorage.setItem("permits",JSON.stringify(roles));
   }
+  restartEmail(code){
+    if(code.value==this.data.code){
+      var send={idFinalUser:this.data.idFinalUser,code:this.data.code,email:this.data.email}
+      
+      this.RequestService.put("http://localhost:8080/api/finalUser/updateEmail",send).subscribe({
+      next:()=>{
+        this.dialogRef.close()
+        window.location.reload()
+      },error:()=>{
+        console.log("error al actualizar")
+      }  
+      
+      })
+    }else{
+      if(this.intents>0){
+        this.intents--;
+        this.errors="Codigo ingresado incorrecto tiene"+this.intents+ " intentos"
+        this.code.reset();
+      }else{
+       this.dialogRef.close()
+       window.location.reload()
+      }
+      
+    }
+  }
 }

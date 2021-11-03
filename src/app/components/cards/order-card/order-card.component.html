@@ -10,6 +10,7 @@
             <button mat-icon-button style="margin-top: -4px; margin-right: -10px;" *ngIf="status=='En curso'" ><mat-icon>how_to_reg</mat-icon></button>
             <button mat-icon-button style="margin-top: -4px; margin-right: -10px;color: green; " *ngIf="buttons"matTooltip="Aceptar" (click)="acceptOrder()"><mat-icon style="font-size: 30px;">check_circle_outline</mat-icon></button>
             <button mat-icon-button style="margin-top: -4px; margin-right: -10px; color: red;" *ngIf="buttons"matTooltip="Rechazar" (click)="rejectOrder()"><mat-icon style="font-size: 30px;">highlight_off</mat-icon></button>
+            <button mat-icon-button style="margin-top: -4px; margin-right: -10px; color: rgb(247, 220, 72);" *ngIf="complete"matTooltip="Añadir Emergencia" (click)="addEmergency()"><mat-icon style="font-size: 30px;">feedback</mat-icon></button>
             <button mat-icon-button style="margin-top: -4px; margin-right: -10px; color: green;" *ngIf="complete"matTooltip="Finalizar" (click)="completeOrder()"><mat-icon style="font-size: 30px;">task</mat-icon></button>
             <button mat-icon-button style="margin-top: -4px; margin-right: -10px; color: rgb(0, 41, 128);" *ngIf="orderCompleted"matTooltip="Pedido Finalizado"><mat-icon style="font-size: 30px;">done_outline</mat-icon></button>
         </div>

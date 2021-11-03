@@ -24,6 +24,7 @@ export class HomePageComponent implements OnInit {
   public productsReceived:any
   warehousesReceived:any;
   searchInput = new FormControl();
+  searchInputProduct = new FormControl();
   public nameProduct:string;
   public latitudeUser:any;
   public longitudeUser:any;
@@ -65,6 +66,7 @@ export class HomePageComponent implements OnInit {
     this.getAllSectors();
     this.getDataUser();
     this.verifyOrdersPending();
+    this.loadDataWarehouse();
   }
   loadChanges() {
     this.route.queryParams
@@ -75,6 +77,14 @@ export class HomePageComponent implements OnInit {
   }
   loadNav(){
     window.location.reload()
+  }
+  loadDataWarehouse(){
+    this.RequestService.get('http://localhost:8080/api/market/allWarehouse/')
+    .subscribe(r=>{
+      console.log(r);
+      this.warehousesReceived = r;
+      this.loadMap()
+    })
   }
   geolocation(){
     console.log(navigator.geolocation)
@@ -132,8 +142,8 @@ export class HomePageComponent implements OnInit {
       apiKey:'AIzaSyAlZsuin6kTiBDLiELbZhUpgAeZ6UiYgWo'
     })
     loader.load().then(() => {
-      const infoWindow = new google.maps.InfoWindow();
-      const map=new google.maps.Map(document.getElementById("map"), {
+      var infoWindow = new google.maps.InfoWindow();
+      var map=new google.maps.Map(document.getElementById("map"), {
         center: { lat: this.latitudeUser, lng: this.longitudeUser},
         zoom: 12,
       });
@@ -258,8 +268,14 @@ export class HomePageComponent implements OnInit {
   }
   
   changeSearch(option){
+    if(option=="todos"){
+      this.searchInput.setValue("");
+      this.onMap=false;
+      this.loadDataWarehouse();
+      
+    }
     if(option=="ubicacion"){
-      this.geolocation();
+      //this.geolocation();
       this.getMarkets();
       this.activateSearch=false;
       this.loadMarketSelected=false
@@ -272,19 +288,16 @@ export class HomePageComponent implements OnInit {
   }
   getMarkets(){
     
+    this.searchInput.setValue("");
     var coords = {};
       coords={latitude:this.latitudeUser,longitude:this.longitudeUser}
-      //console.log(coords)
+      console.log(coords)
       this.RequestService.post('http://localhost:8080/api/market/warehouseSearch/',coords).subscribe(r=>{
+        this.onMap=true;
         this.warehousesReceived=r;
-        console.log(r)
-      this.onMap=true;
-     
-      this.loadMap();
-      //this.sortBusiness();
-      //if(this.Companies.length==0){
-        //this.notCompanies=true;
-      //} 
+        console.log(this.warehousesReceived)
+         this.loadMap();
+      
       }) 
     
     
@@ -312,6 +325,7 @@ export class HomePageComponent implements OnInit {
          
      })
      this.productsReceived=allProducts;
+     //console.log(this.productsReceived)
   
 }
   addAllCategory(){
@@ -350,6 +364,26 @@ export class HomePageComponent implements OnInit {
         width: '60%',
         data: {products:this.cart,total:this.total,order:this.order,user:this.user }
         });
+    }
+  }
+  getProductsSearch(){
+    this.nameProduct=this.searchInputProduct.value
+    const formD = new FormData();
+       formD.append("productName",this.nameProduct)
+     console.log("formData",formD.get("productName"));
+      this.formDataSearch=formD;
+    //console.log(this.formDataSearch)
+    if(this.nameProduct!=null|| this.nameProduct!=""){
+      this.RequestService.post('http://localhost:8080/api/product/productSearch/'+this.warehouseSelected.idMarket,this.formDataSearch).subscribe(r=>{
+      console.log(r)
+     this.viewProducts(r[0])
+      
+      //this.sortBusiness();
+      //if(this.Companies.length==0){
+        //this.notCompanies=true;
+      //} 
+      }) 
+    
     }
   }
 }

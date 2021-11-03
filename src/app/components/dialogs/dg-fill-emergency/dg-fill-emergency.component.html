@@ -1,0 +1,24 @@
+<div style="text-align: end;">
+    <button mat-icon-button mat-dialog-close style="top: 0;right: 0;"><mat-icon>cancel</mat-icon></button>
+</div>
+
+<div class="popup" [formGroup]="emergency">
+    <h1>Emergencia/Percance</h1>
+    <p>Por favor, indícanos en el comentario cual es tu percance o emergencia.</p>
+    <div class="field">
+        <mat-form-field  appearance="outline" style="width: 100%;">
+        <mat-label>Comentario de emergencia</mat-label>
+        <input matInput placeholder="Ingrese su emergencia o percance" required type="text" formControlName='commentary'>
+        <mat-error >este campo es requerido</mat-error>
+        </mat-form-field>
+    </div>
+    <div class="links">
+      <a mat-button class="btn-confirm" [disabled]="emergency.invalid" type="submit" (click)="sendEmergency(emergency.value)">
+        <span *ngIf="activateSpinner==undefined"> Enviar emergencia</span>
+        <span *ngIf="activateSpinner"> Enviando emergencia</span>
+        <span *ngIf="activateSpinner==false"> Emergencia enviada</span>
+        <mat-icon><mat-spinner *ngIf="activateSpinner" [diameter]="30"></mat-spinner></mat-icon>
+        <mat-icon *ngIf="activateSpinner==false">done</mat-icon>
+      </a>
+    </div>
+  </div>

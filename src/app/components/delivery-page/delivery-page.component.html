@@ -99,5 +99,39 @@
             </mat-accordion>
         </div>
     </mat-tab>
+     <!-- tab pedidos Completados -->
+     <mat-tab label="Pedidos Completados"> 
+        <div class="orders-reject" style="margin-top: 15px;">
+            
+            <mat-accordion class="example-headers-align" multi *ngFor="let order of ordersCompleted"mat-elevation-z2>
+                <mat-expansion-panel >
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <div style=" margin-top: -5px; display: flex;">
+       
+                            <div style="display: flex;">
+                                <div style=" margin-top: 5px; text-align: center; width: 100px;"><p id="nroPedido">Nro {{order.order.idOrder}}</p></div>
+                                <p id="status" >Hora Asignado:{{order.hour}}</p>
+                             </div>
+                    
+                        </div>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      Pedido de: {{order.warehouseNameOfOrder }}
+                      <button mat-icon-button style="margin-top: -4px; margin-right: -10px;"  ><mat-icon>done_outline</mat-icon></button>
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+              
+                  <app-order-card [idOrder]="order.order.idOrder" [orderDate]="order.date" [orderDetail]=order.order.orderDetail
+                     [quantityProducts]="order.order.quantityProducts" [status]="order.status" [totalPrice]="order.order.totalPrice" [disabled]="false"[buttons]="false"
+                     [userName]="order.userName" [completed]="true"
+                        [warehouseName]="order.warehouseNameOfOrder" [telephone]="order.userTelephone" [email]="order.userEmail"></app-order-card>
+                        
+                </mat-expansion-panel>
+                
+            </mat-accordion>
+        </div>
+    </mat-tab>
+
 
 </mat-tab-group>

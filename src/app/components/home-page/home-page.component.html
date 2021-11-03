@@ -16,6 +16,9 @@
                 <mat-option value="ubicacion" >
                   Almacenes mas cercanos
                 </mat-option>
+                <mat-option value="todos" >
+                  Todos los almacenes
+                </mat-option>
           </mat-select>
         </mat-form-field> 
         
@@ -66,6 +69,34 @@
       </div>
     </div>
     <div style="margin: 20px;text-align: start;box-shadow:#000000 0px 2px 4px 0px;
+    border-radius: 10px;padding: 15px;background-color: #002b5c;"*ngIf="onMap==false">
+      <h3 style="color: white;">Todos los almacenes disponibles</h3>
+      <p style="text-align: start; margin-top: 10px;"> Presione el marcador del mapa para ver mas información</p>
+      <div style="display: flex;margin: 20px;">
+        <div style="width: 40%;margin-right:  15px; " *ngIf="loadMarketSelected">
+          <div class="info">
+            <div class="header">
+                <h1>{{warehouseSelected?.warehouseName}}</h1>
+                <mat-divider></mat-divider>
+                <div class="second">
+                    <h3><mat-icon>store</mat-icon> Descripcion</h3>
+                    <h3><mat-icon>place</mat-icon> Informacion</h3>
+                    <div class="add"><b>Dirección:</b><p>{{warehouseSelected?.address}}</p></div>
+                    <div class="add"><b>Latitud:</b><p>{{warehouseSelected?.latitude}}</p></div>
+                    <div class="add"><b>Longitud:</b><p>{{warehouseSelected?.longitude}}</p></div>
+                </div>
+                
+                
+            </div>
+          </div>
+          </div>
+        <div class="draw-map" id="map">
+  
+        </div>
+      </div>
+      
+    </div>
+    <div style="margin: 20px;text-align: start;box-shadow:#000000 0px 2px 4px 0px;
     border-radius: 10px;padding: 15px;background-color: #002b5c;"*ngIf="onMap==true">
       <h3 style="color: white;">Sugerencia de lugares mas cercanos</h3>
       <p style="text-align: start; margin-top: 10px;"> Presione el marcador del mapa para ver mas información</p>
@@ -97,7 +128,7 @@
       <div class="search-bar" *ngIf="loadMarketSelected">
         <mat-form-field appearance="outline" style="width: 100%;">
             <input matInput placeholder="Busqueda por producto" 
-            [formControl]="searchInput"  >
+            [formControl]="searchInputProduct"  >
            <mat-icon matSuffix>search</mat-icon>
            
          </mat-form-field>
@@ -126,8 +157,8 @@
     <mat-grid-list [cols]="5" rowHeight="300px" gutterSize="10px">
         
         <mat-grid-tile *ngFor="let product of productsReceived" >
-            <app-product-card [idProduct]="product.idProduct" [productName]="product.productName"[description]="product.description" [image]="product.image" 
-            [measurement]="product.measurement" [price]="product.price[0].price" (addProductEvent)="addProduct($event)"></app-product-card>
+            <app-product-card [idProduct]="product?.idProduct" [productName]="product?.productName"[description]="product?.description" [image]="product?.image" 
+            [measurement]="product?.measurement" [price]="product?.price[0].price" (addProductEvent)="addProduct($event)"></app-product-card>
         </mat-grid-tile>
 
     </mat-grid-list>

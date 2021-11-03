@@ -1,7 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatListOption } from '@angular/material/list';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { RequestService } from 'src/app/services/request.service';
 
 @Component({
@@ -13,6 +16,10 @@ export class DgAssignDeliveryComponent implements OnInit {
   allDeliveries:any;
   noDeliverySelected:boolean=true;
   deliverySelected:any;
+  searchInput = new FormControl();
+  options: any;
+  filteredOptions: Observable<string[]>;
+  public notCompanies=false;
   constructor(
     private RequestService:RequestService,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -22,6 +29,7 @@ export class DgAssignDeliveryComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadDeliveries();
+    this.getAllSectors()
     /* this.allDeliveries=[
       {idUser:1,name:"marco",email:"marc@gmail.com",telephone:78787878,sector:"Zona SUD"},
       {idUser:2,name:"marco",email:"marc@gmail.com",telephone:78787878,sector:"Zona SUD"},
@@ -48,9 +56,31 @@ assignDelivery(){
   .subscribe(r=>{
     console.log(r)
     window.location.reload()
+  })
   }
-    
-    
-  )
-}
+
+  getAllSectors(){
+    this.RequestService.get('http://localhost:8080/api/sector/allSector').subscribe(r=>{
+      this.options=r;
+      console.log(this.options)
+      this.filteredOptions = this.searchInput.valueChanges
+    .pipe(
+      startWith(''),
+      map(value => this.filter(value))
+    );
+    })
+  }
+  filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.options.filter(option => option.sectorName.toLowerCase().includes(filterValue));
+  }
+  filterDeliveries(){
+    this.allDeliveries=this.allDeliveries.filter(d=>{
+      if(d.sector==this.searchInput.value){
+        return d
+      }
+    })
+    console.log(this.allDeliveries)
+  }
 }

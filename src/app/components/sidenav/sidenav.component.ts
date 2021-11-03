@@ -44,7 +44,7 @@ export class SidenavComponent implements OnInit {
      
     }
     loadPermits(){
-      this.permits.map(p=>{
+      this.permits?.map(p=>{
         if(p.authority=="ROLE_ADMINISTRAR_USUARIOS"){
           this.ROLE_ADMINISTRAR_USUARIOS=true;
         }

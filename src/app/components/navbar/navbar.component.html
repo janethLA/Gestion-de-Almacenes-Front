@@ -5,7 +5,9 @@
             <mat-icon>menu</mat-icon>
           </button>
         <span></span>
-        <div class="example-spacer"></div>
+        <div class="example-spacer">
+          
+        </div>
         <a mat-button routerLink="/login" *ngIf="notLogedUser; else users"><mat-icon>person_outline</mat-icon> Iniciar sesion</a>
         <ng-template #users>
           <a mat-raised-button class="btn-raised " [matMenuTriggerFor]="menu" ><mat-icon>account_circle</mat-icon> {{user.userName}}<mat-icon>expand_more</mat-icon></a>
