@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import {RequestService} from '../../services/request.service'
+import { DgCreatePaymentComponent } from '../dialogs/dg-create-payment/dg-create-payment.component';
 import { DgOrdersRejectedComponent } from '../dialogs/dg-orders-rejected/dg-orders-rejected.component';
 
 @Component({
@@ -31,7 +32,7 @@ export class ShowOrdersComponent implements OnInit {
     this.user=JSON.parse(localStorage.getItem("user"))
   }
   loadOrders(){
-    this.RequestService.get('http://localhost:8080/api/order/allOrders')
+    this.RequestService.get('http://localhost:8080/api/order/allOrdersManaged/'+this.user.idUser)
      .subscribe(r=>{
        console.log(r);
        this.ordersReceived = r;
@@ -61,7 +62,7 @@ export class ShowOrdersComponent implements OnInit {
     }
   }
   loadOrdersAssigned(){
-    this.RequestService.get("http://localhost:8080/api/orderAssigned/allAssignedOrders").subscribe(r=>{
+    this.RequestService.get("http://localhost:8080/api/orderAssigned/allAssignedOrdersManaged/"+this.user.idUser).subscribe(r=>{
       this.ordersAssigned=r;
       console.log(this.ordersAssigned)
       this.ordersReject=this.ordersAssigned.filter(o=>o.status=="Rechazado")
@@ -77,6 +78,13 @@ export class ShowOrdersComponent implements OnInit {
     this.dialog.open(DgOrdersRejectedComponent,{
       width: '60%',
       data: {ordersRejected:this.ordersReject}
+      });
+  }
+  createPayment(){
+
+    this.dialog.open(DgCreatePaymentComponent,{
+      width: '60%',
+      data: {}
       });
   }
 }

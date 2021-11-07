@@ -22,7 +22,7 @@ export class OrdersListComponent implements OnInit {
     this.user=JSON.parse(localStorage.getItem("user"))
   }
   loadOrders(){
-    this.RequestService.get('http://localhost:8080/api/order/allOrder/'+this.user.idUser)
+    this.RequestService.get('http://localhost:8080/api/order/ordersByUser/'+this.user.idUser)
      .subscribe(r=>{
        console.log(r);
        this.ordersReceived = r;

@@ -1,0 +1,53 @@
+<div class="product"> 
+    <form  [formGroup]="payment" #formDirective="ngForm" (ngSubmit)="savePayment(payment.value,formDirective)">
+
+        <div style="text-align: center; margin-top: 5px; margin-bottom: 10px;"> 
+            <h2>NUEVA FORMA DE PAGO</h2>
+        </div> 
+
+            <div style="width: 100%; margin-top: 20px;" >
+                <div class="field">
+                    <mat-form-field  appearance="outline" style="width: 100%;">
+                    <mat-label>Nombre del titular</mat-label>
+                    <input matInput placeholder="ingres el nombre de la cuenta" required type="text" formControlName="nameAccount">
+                    <mat-error >este campo es requerido</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="field">
+                    <mat-form-field  appearance="outline" style="width: 100%;">
+                    <mat-label>Banco</mat-label>
+                    <input matInput placeholder="ingrese el nombre del Banco" required type="text" formControlName="bankName">
+                    <mat-error>este campo es requerido</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="field" >
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-label>Numero de Cuenta</mat-label>
+                        <input matInput placeholder="ingrese el numero de cuenta" required type="number" formControlName="nroAccount">
+                    <mat-error>este campo es requerido</mat-error>
+                      </mat-form-field>
+                </div>
+                <div style="width: 100%;text-align: center;" >
+                    <p *ngIf="dataFile!=null && replace==false" >Ya se subio un archivo.</p>
+                        
+                    <mat-form-field class="container__field" style="width: 70%; font-size: 14px; height: 100px;" appearance="outline"  >
+                        
+                    <mat-label style="font-size: 16px;"><mat-icon style="font-size: 20px;">qr_code</mat-icon> Añadir Qr</mat-label>
+                        <ngx-mat-file-input [disabled]="disalbedInput()" [accept]="'.jpg'" (change)="onFileSelected($event)" 
+                        #removableInput   placeholder="ingrese una imagen qr">
+                        </ngx-mat-file-input>
+                        <button mat-icon-button  matSuffix *ngIf="!removableInput.empty " (click)="removableInput.clear($event)">
+                          <mat-icon >clear</mat-icon>
+                        </button>
+                        
+                      </mat-form-field>
+                </div>
+                <div style="text-align: center; width: 100%;">
+                    <button mat-raised-button type="submit" class="btn-confirm" [disabled]="payment.invalid">
+                        CREAR
+                    </button>
+                </div>
+            </div>
+        
+    </form>
+</div>

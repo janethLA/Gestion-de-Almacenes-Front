@@ -2,6 +2,7 @@ import { getInterpolationArgsLength } from '@angular/compiler/src/render3/view/u
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroupDirective, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { Loader } from '@googlemaps/js-api-loader';
 
 import {RequestService} from '../../services/request.service';
@@ -27,7 +28,8 @@ export class RegisterStoreComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private RequestService: RequestService,
-    private snack:MatSnackBar
+    private snack:MatSnackBar,
+    private router:Router
   ) { }
 
   registerStoreForm= this.formBuilder.group({
@@ -84,7 +86,9 @@ export class RegisterStoreComponent implements OnInit {
     this.RequestService.post('http://localhost:8080/api/market/createMarket ',this.formData).subscribe({
       next:()=>{
         this.snack.open('Almacen registrado exitosamente.','CERRAR',{duration:5000,panelClass:'snackSuccess'})
-        window.location.reload();
+        this.router.navigate(['/showStores']).then(() => {
+          window.location.reload();
+        });
     
       },
       error:()=>{

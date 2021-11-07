@@ -2,7 +2,12 @@
 
 </div>
 <div style="min-height: calc(100vh - 98px); ">
-    <h2 style="text-align: start;">Lista de almacenes registrados. </h2>
+    <h2 style="text-align: center;">Almacenes registrados. </h2>
+    <a mat-button class="btn-catalog"[routerLink]="['/registerStores']"style="text-align:end">
+        <mat-icon>add_business</mat-icon>
+        <span>Nuevo Almacen </span>
+        
+    </a>
     <mat-grid-list [cols]="2" rowHeight="300px" gutterSize="10px">
         
         <mat-grid-tile *ngFor="let warehouse of warehousesReceived" >

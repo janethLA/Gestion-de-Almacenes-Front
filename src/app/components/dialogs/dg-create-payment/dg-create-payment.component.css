@@ -1,0 +1,30 @@
+.fields{
+    width: 50%;
+    font-size: 14px;
+}
+
+.field{
+    font-size: 14px;
+}
+::ng-deep .snackSuccess {
+    background-color: #41a812;
+  }
+  .btn-confirm{
+    background-color:#3b3b3b;
+    border-radius:5px;
+    color:#ffffff;
+    font-family:Montserrat;
+    font-weight:700;
+    line-height:24px;
+    padding:12px 0px;
+    text-align:center;
+    width: 100%;
+}
+h2{
+    color:#575757;
+    font-family:Montserrat;
+    font-weight:800;
+    line-height:16px;
+    margin:15px 0px 3px;
+    text-align: center;
+  }

@@ -1,0 +1,43 @@
+
+
+<div>
+    <h1>FORMAS DE PAGO REGISTRADAS</h1>
+</div>
+<a mat-button class="btn-catalog" (click)="createPayment()">
+    <mat-icon>add_card</mat-icon>
+    <span> Nueva forma de Pago</span>
+    
+</a>
+<div style="overflow: auto; max-height: 80vh;">
+    <mat-card class="main" *ngFor="let payment of allPayments" >
+      
+        <!-- <mat-card-title class="productName">{{productName}}</mat-card-title> -->
+        <!-- <mat-card-subtitle>{{description}}</mat-card-subtitle> -->
+        <mat-card-content style="width: 100%;">
+            <div style="display: flex; width: 100%;">
+              <p id="nroPedido">Forma de Pago Nro {{payment?.idPayment}}</p>
+              <div style="width: 30%; text-align: end; align-self: flex-end;" >
+                  <a mat-button class="btn-catalog">
+                      <span>Editar </span>
+                  </a>
+              </div>
+            </div>
+            <div style="display: flex;">
+                <div class="image">
+                    <img [src]='"data:image/jpg;base64,"+payment?.image' alt="photo of qr" >
+                </div>
+                <div>
+                    <p id="status" >{{payment?.bankName }}</p>
+                    <p style="font-weight: bold;" ><a style="font-weight: lighter;">Nombre: {{payment?.nameAccount}}</a></p>
+                    <p  >N° de Cuenta:  {{payment?.nroAccount}}</p>
+                    
+                </div>
+            </div>
+              
+              
+          
+          
+        </mat-card-content>
+        
+      </mat-card>
+</div>

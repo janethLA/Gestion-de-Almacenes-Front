@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatListOption } from '@angular/material/list';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -22,17 +22,27 @@ export class DgAssignDeliveryComponent implements OnInit {
   options: any;
   filteredOptions: Observable<string[]>;
   public notCompanies=false;
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
+  
   constructor(
     private RequestService:RequestService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private snack:MatSnackBar,
     private dialogRef: MatDialogRef<DgAssignDeliveryComponent>,
-    private dialog:MatDialog
+    private dialog:MatDialog,
+    private formBuilder:FormBuilder
   ) { }
 
   ngOnInit(): void {
     this.loadDeliveries();
     this.getAllSectors()
+    this.firstFormGroup = this.formBuilder.group({
+      firstCtrl: ['', Validators.required],
+    });
+    this.secondFormGroup = this.formBuilder.group({
+      secondCtrl: ['', Validators.required],
+    });
     /* this.allDeliveries=[
       {idUser:1,name:"marco",email:"marc@gmail.com",telephone:78787878,sector:"Zona SUD"},
       {idUser:2,name:"marco",email:"marc@gmail.com",telephone:78787878,sector:"Zona SUD"},

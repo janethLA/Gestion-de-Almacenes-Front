@@ -2,15 +2,22 @@
     
     <div class="info">
         <div class="header">
+            
             <h1>{{warehouseActual?.warehouseName}}</h1>
             <mat-divider></mat-divider>
-            <div class="second">
-                <h3><mat-icon>store</mat-icon> Descripcion</h3>
-            <h3><mat-icon>place</mat-icon> Informacion</h3>
-            <div class="add"><b>Dirección:</b><p>{{warehouseActual?.address}}</p></div>
-            <div class="add"><b>Latitud:</b><p>{{warehouseActual?.latitude}}</p></div>
-            <div class="add"><b>Longitud:</b><p>{{warehouseActual?.longitude}}</p></div>
+            <div style="display: flex;">
+                <div class="second">
+                    <h3><mat-icon>store</mat-icon> Descripcion</h3>
+                    <h3><mat-icon>place</mat-icon> Informacion</h3>
+                    <div class="add"><b>Dirección:</b><p>{{warehouseActual?.address}}</p></div>
+                    <div class="add"><b>Latitud:</b><p>{{warehouseActual?.latitude}}</p></div>
+                    <div class="add"><b>Longitud:</b><p>{{warehouseActual?.longitude}}</p></div>
+                </div>
+                <div class="image">
+                    <img mat-card-image [src]='"data:image/jpg;base64,"+warehouseActual?.warehouseImage' alt="Photo of a almacen">
+                </div>
             </div>
+           
             
             
         </div>

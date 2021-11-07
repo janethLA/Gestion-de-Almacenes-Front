@@ -18,7 +18,7 @@ mat-icon{
     display: flex;
 }
 .info{
-    width: 50%;
+    width: 100%;
 }
 .categories{
     width: 30%;
@@ -65,6 +65,15 @@ a:hover { color: #0460ca;border-style: solid;border-color:#002b5c ; cursor: poin
     box-shadow:#000000 0px 2px 4px 0px;
     line-height:16px;
     padding:20px;
+}
+.image{
+    width: 60%;
+    border-radius: 5px;
+    padding: 5px;
+}
+img{
+    width: 100%;
+    border-radius: 5px;
 }
 h1{
     color:#0460ca;

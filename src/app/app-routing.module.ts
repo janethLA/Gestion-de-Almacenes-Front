@@ -5,6 +5,7 @@ import { HomeAdminComponent } from './components/home-admin/home-admin.component
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { LoginComponent } from './components/login/login.component';
 import { OrdersListComponent } from './components/orders-list/orders-list.component';
+import { PaymentsContentComponent } from './components/payments-content/payments-content.component';
 import { RegisterStoreComponent } from './components/register-store/register-store.component';
 import { RegisterUserComponent } from './components/register-user/register-user.component';
 import { ReportOfOrdersComponent } from './components/report-of-orders/report-of-orders.component';
@@ -26,7 +27,8 @@ const routes: Routes = [
   {path:'home/user/update-user',component:UpdateUserComponent,canActivate:[UserGuard]},
   {path:'home/show-orders',component:ShowOrdersComponent,canActivate:[UserGuard]},
   {path:'home/reports',component:ReportOfOrdersComponent,canActivate:[UserGuard]},
-  {path:'home/delivery',component:DeliveryPageComponent,canActivate:[UserGuard]}
+  {path:'home/delivery',component:DeliveryPageComponent,canActivate:[UserGuard]},
+  {path:'home/payments',component:PaymentsContentComponent,canActivate:[UserGuard]},
   
 ];
 

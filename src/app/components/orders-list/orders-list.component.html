@@ -9,5 +9,6 @@
 </div>
 <div class="order" *ngFor="let order of ordersReceived">
     <app-order-card [idOrder]="order.idOrder" [orderDate]="order.orderDate" [orderDetail]=order.orderDetail
-    [quantityProducts]="order.quantityProducts" [status]="order.status" [totalPrice]="order.totalPrice" ></app-order-card>
+    [quantityProducts]="order.quantityProducts" [status]="order.status" [totalPrice]="order.totalPrice"
+    [shippingCost]="order.shippingCost" [linkAdmin]="order.adminWhatsappLink" ></app-order-card>
 </div>

@@ -23,6 +23,9 @@ export class OrderCardComponent implements OnInit {
   @Input() email:string;
   @Input() sectorName:string;
   @Input() shippingCost:number;
+  @Input() linkAdmin:string;
+  @Input() linkClient:string;
+  @Input() linkDelivery:string;
   @Input() buttons:boolean;
   @Input() idOrderAssigned:any;
   @Input() complete:boolean;
@@ -37,7 +40,6 @@ export class OrderCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProducts();
-    
     
   }
 

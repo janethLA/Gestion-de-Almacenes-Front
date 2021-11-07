@@ -72,6 +72,9 @@ import { DgFillEmergencyComponent } from './components/dialogs/dg-fill-emergency
 import { DgShippingCostComponent } from './components/dialogs/dg-shipping-cost/dg-shipping-cost.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { DgCreatePaymentComponent } from './components/dialogs/dg-create-payment/dg-create-payment.component';
+import { PaymentsContentComponent } from './components/payments-content/payments-content.component';
+import {MatStepperModule} from '@angular/material/stepper';
 @NgModule({
   declarations: [
     AppComponent,
@@ -108,6 +111,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     DgOrdersRejectedComponent,
     DgFillEmergencyComponent,
     DgShippingCostComponent,
+    DgCreatePaymentComponent,
+    PaymentsContentComponent,
   ],
   imports: [
     BrowserModule,
@@ -142,7 +147,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatExpansionModule,
     MatTooltipModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatStepperModule
     
   ],
   providers: [RequestService,CookieService,interceptorProvider],

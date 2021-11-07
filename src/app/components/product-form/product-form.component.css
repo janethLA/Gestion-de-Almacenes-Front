@@ -9,6 +9,14 @@ button{
 .field{
     font-size: 14px;
 }
+h2{
+    color:#575757;
+    font-family:Montserrat;
+    font-weight:800;
+    line-height:16px;
+    margin:15px 0px 3px;
+    text-align: center;
+  }
 ::ng-deep .snackSuccess {
     background-color: #41a812;
   }
