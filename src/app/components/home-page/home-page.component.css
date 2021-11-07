@@ -110,7 +110,7 @@
 .draw-map{
     width: 100%;
     border-radius: 5px;
-    height: 300px;
+    height: 350px;
 }
 h3{
     color:white;
@@ -162,6 +162,7 @@ a:hover { color: #0460ca;border-style: solid;border-color:#002b5c ; cursor: poin
     box-shadow:#000000 0px 2px 4px 0px;
     line-height:16px;
     padding:20px;
+    max-height: 350px;
 }
 h1{
     color:#0460ca;
@@ -174,13 +175,14 @@ h1{
 }
 .second{
     text-align: start;
+    max-height: 100%;
 }
 h3{
     color:#575757;
     font-family:Montserrat;
     font-weight:800;
     line-height:16px;
-    margin:15px 0px 3px;
+    margin:15px 0px 10px;
 }
 b{
     color:#757272;
@@ -197,10 +199,22 @@ p{
     color:#adadad;
     font-size:14px;
     line-height:12px;
-    text-align:right;
-    margin-left: 28px;
+    text-align:end;
+    /* margin-left: 28px; */
     }
 .add{
     display: flex;
-    padding: 10px;
+    max-width: 100%;
+}
+.image{
+    text-align: center;
+    width: 100%;
+    border-radius: 5px;
+    height: 10%;
+    padding-top: 5px;
+    
+}
+img{
+    max-width: 100%;
+    max-height: 100%;
 }

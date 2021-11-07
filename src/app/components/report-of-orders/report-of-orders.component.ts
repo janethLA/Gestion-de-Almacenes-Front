@@ -6,6 +6,7 @@ import { RequestService } from 'src/app/services/request.service';
 import { Canvas, ITable, Item, PdfMakeWrapper, Rect, Table, Txt } from 'pdfmake-wrapper';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { FormControl, FormGroup } from '@angular/forms';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 type TableRow=[any,any,any,any,any,any,any,any]
@@ -16,12 +17,15 @@ type TableRow=[any,any,any,any,any,any,any,any]
   styleUrls: ['./report-of-orders.component.css']
 })
 export class ReportOfOrdersComponent implements AfterViewInit {
-  displayedColumns: string[] = ['id', 'status', 'name', 'telephone','quantityProducts','totalPrice','hourOfOrder','dateOfOrder'];
+  displayedColumns: string[] = ['id', 'status', 'name', 'telephone','quantityProducts','delivery','shippingCost','totalPrice','hourOfOrder','dateOfOrder'];
   dataSource: MatTableDataSource<any>;
   allOrders:any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-
+  range = new FormGroup({
+    start: new FormControl(),
+    end: new FormControl(),
+  });
   
   constructor(
     private RequestService:RequestService,

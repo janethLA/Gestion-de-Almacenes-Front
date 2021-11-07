@@ -1,11 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatListOption } from '@angular/material/list';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { RequestService } from 'src/app/services/request.service';
+import { DgShippingCostComponent } from '../dg-shipping-cost/dg-shipping-cost.component';
 
 @Component({
   selector: 'app-dg-assign-delivery',
@@ -26,6 +27,7 @@ export class DgAssignDeliveryComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private snack:MatSnackBar,
     private dialogRef: MatDialogRef<DgAssignDeliveryComponent>,
+    private dialog:MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -53,7 +55,8 @@ export class DgAssignDeliveryComponent implements OnInit {
     }
 }
 assignDelivery(){
-  var assign={idUser:this.deliverySelected[0].idUser,idOrder:this.data.idOrder}
+  this.openShippingCost();
+  /* var assign={idUser:this.deliverySelected[0].idUser,idOrder:this.data.idOrder}
   this.RequestService.post('http://localhost:8080/api/orderAssigned/assignOrder',assign)
   .subscribe({
     next:()=>{
@@ -61,7 +64,7 @@ assignDelivery(){
     },error:()=>{
       window.location.reload()
     }
-  })
+  }) */
   }
 
   getAllSectors(){
@@ -87,5 +90,11 @@ assignDelivery(){
       }
     })
     console.log(this.allDeliveries)
+  }
+  openShippingCost(){
+    this.dialog.open(DgShippingCostComponent,{
+      width: '50%',
+      data: { idUser:this.deliverySelected[0].idUser,idOrder:this.data.idOrder}
+      });
   }
 }

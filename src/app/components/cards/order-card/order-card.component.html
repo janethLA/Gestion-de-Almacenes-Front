@@ -6,13 +6,19 @@
         
         <div style="display: flex;">
             <div style=" margin-top: 5px; text-align: center; width: 100px;"><p id="nroPedido">Nro {{idOrder}}</p></div>
-            <button mat-icon-button style="margin-top: -4px; margin-right: -10px;" *ngIf="disabled && status=='Pendiente'" (click)="openAssign()"><mat-icon>person_add_alt</mat-icon></button>
-            <button mat-icon-button style="margin-top: -4px; margin-right: -10px;" *ngIf="status=='En curso'" ><mat-icon>how_to_reg</mat-icon></button>
-            <button mat-icon-button style="margin-top: -4px; margin-right: -10px;color: green; " *ngIf="buttons"matTooltip="Aceptar" (click)="acceptOrder()"><mat-icon style="font-size: 30px;">check_circle_outline</mat-icon></button>
-            <button mat-icon-button style="margin-top: -4px; margin-right: -10px; color: red;" *ngIf="buttons"matTooltip="Rechazar" (click)="rejectOrder()"><mat-icon style="font-size: 30px;">highlight_off</mat-icon></button>
-            <button mat-icon-button style="margin-top: -4px; margin-right: -10px; color: rgb(247, 220, 72);" *ngIf="complete"matTooltip="Añadir Emergencia" (click)="addEmergency()"><mat-icon style="font-size: 30px;">feedback</mat-icon></button>
-            <button mat-icon-button style="margin-top: -4px; margin-right: -10px; color: green;" *ngIf="complete"matTooltip="Finalizar" (click)="completeOrder()"><mat-icon style="font-size: 30px;">task</mat-icon></button>
-            <button mat-icon-button style="margin-top: -4px; margin-right: -10px; color: rgb(0, 41, 128);" *ngIf="orderCompleted"matTooltip="Pedido Finalizado"><mat-icon style="font-size: 30px;">done_outline</mat-icon></button>
+            <button mat-icon-button style="margin-top: -4px; margin-right: -2px;" *ngIf="disabled && status=='Pendiente'" matTooltip="Asignar"(click)="openAssign()"><mat-icon style="font-size: 30px;">person_add_alt</mat-icon></button>
+            <button mat-icon-button style="margin-top: -4px; margin-right: -2px; color: rgb(140, 219, 21)" *ngIf="status=='Enviando'"matTooltip="Finalizar pedido" (click)="finalizeOrder()"><mat-icon style="font-size: 30px;">task</mat-icon></button>
+            <button mat-icon-button style="margin-top: -4px; margin-right: -2px;color: red;" *ngIf="disabled && status=='Pendiente'"matTooltip="Cancelar" (click)="cancelOrder()"><mat-icon style="font-size: 30px;">cancel</mat-icon></button>
+            <button mat-icon-button style="margin-top: -4px; margin-right: -2px;" *ngIf="status=='En curso'"matTooltip="Delivery asignado" ><mat-icon style="font-size: 30px;">how_to_reg</mat-icon></button>
+            <button mat-icon-button style="margin-top: -4px; margin-right: -2px;color: green; " *ngIf="status=='En curso'"matTooltip="Aceptar" (click)="orderSent()"><mat-icon style="font-size: 30px;">check_circle_outline</mat-icon></button>
+            <button mat-icon-button style="margin-top: -4px; margin-right: -2px;color: rgb(59, 48, 207); " *ngIf="status=='En curso'"matTooltip="Reasignar" (click)="orderReassign()"><mat-icon style="font-size: 30px;">delivery_dining</mat-icon></button>
+            <button mat-icon-button style="margin-top: -4px; margin-right: -2px;color: red;" *ngIf="status=='En curso' || status=='Enviando'"matTooltip="Cancelar" (click)="cancelOrderInProgress()"><mat-icon style="font-size: 30px;">cancel</mat-icon></button>
+            <button mat-icon-button style="margin-top: -4px; margin-right: -2px;color: green; " *ngIf="buttons"matTooltip="Aceptar" (click)="acceptOrder()"><mat-icon style="font-size: 30px;">check_circle_outline</mat-icon></button>
+            <button mat-icon-button style="margin-top: -4px; margin-right: -2px; color: red;" *ngIf="buttons"matTooltip="Rechazar" (click)="rejectOrder()"><mat-icon style="font-size: 30px;">highlight_off</mat-icon></button>
+            <button mat-icon-button style="margin-top: -4px; margin-right: -2px; color: rgb(247, 220, 72);" *ngIf="complete"matTooltip="Añadir Emergencia" (click)="addEmergency()"><mat-icon style="font-size: 30px;">feedback</mat-icon></button>
+            <button mat-icon-button style="margin-top: -4px; margin-right: -2px; color: green;" *ngIf="complete"matTooltip="Finalizar" (click)="completeOrder()"><mat-icon style="font-size: 30px;">task</mat-icon></button>
+            <button mat-icon-button style="margin-top: -4px; margin-right: -2px; color: rgb(0, 41, 128);" *ngIf="orderCompleted"matTooltip="Pedido Finalizado"><mat-icon style="font-size: 30px;">done_outline</mat-icon></button>
+            
         </div>
 
     </div>
@@ -65,12 +71,12 @@
             </li>
             
             <li>Gastos de Envio
-                <span class="subtotal">15,00 Bs.</span>
+                <span class="subtotal">{{shippingCost}} Bs.</span>
                 <span class="detailspan">dependiendo de su ubicacion se aplicaran los correspondientes gastos de envio</span>
             </li>
             <li class="totals">
                 <span class="totalprice">Total:</span>
-                <span class="totalprice">{{totalPrice+15}} Bs.</span>
+                <span class="totalprice">{{totalPrice+shippingCost}} Bs.</span>
             </li>
         </div>
     </mat-card-content>

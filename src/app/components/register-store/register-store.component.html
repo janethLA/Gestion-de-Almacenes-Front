@@ -70,7 +70,21 @@
                     </div>
                 </div>
             </div>
-            
+            <div style="width: 100%;" >
+                <p *ngIf="dataFile!=null && replace==false" >Ya se subio un archivo.</p>
+                    
+                <mat-form-field class="container__field" style="width: 100%; font-size: 14px; height: 100px;" appearance="outline"  >
+                    
+                <mat-label style="font-size: 16px;"><mat-icon style="font-size: 25px;">upload_file</mat-icon>Añadir imagen</mat-label>
+                    <ngx-mat-file-input [disabled]="disalbedInput()" [accept]="'.jpg'" (change)="onFileSelected($event)" 
+                    #removableInput   placeholder="ingrese una imagen">
+                    </ngx-mat-file-input>
+                    <button mat-icon-button  matSuffix *ngIf="!removableInput.empty " (click)="removableInput.clear($event)">
+                      <mat-icon >clear</mat-icon>
+                    </button>
+                    
+                  </mat-form-field>
+            </div>
             
 
             <div style="text-align: center; width: 100%;padding: 20px;">

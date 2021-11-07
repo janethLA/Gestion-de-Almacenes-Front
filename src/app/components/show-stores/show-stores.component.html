@@ -7,7 +7,7 @@
         
         <mat-grid-tile *ngFor="let warehouse of warehousesReceived" >
             <app-store-card [id]="warehouse.idMarket" [name]="warehouse.warehouseName" [address]="warehouse.address" 
-            [latitude]="warehouse.latitude" [longitude]="warehouse.longitude" ></app-store-card>
+            [latitude]="warehouse.latitude" [longitude]="warehouse.longitude"[image]='"data:image/jpg;base64,"+warehouse.warehouseImage' ></app-store-card>
         </mat-grid-tile>
 
     </mat-grid-list>

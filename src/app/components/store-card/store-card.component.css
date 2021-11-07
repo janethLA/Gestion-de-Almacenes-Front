@@ -1,6 +1,7 @@
 .example-card {
     max-width: 400px;
     height: min-content;
+    box-shadow:#575757 0px 2px 4px 0px;
   }
   
   
@@ -10,5 +11,27 @@
     padding: 5px;
 }
 button{
-  color: #0460ca;
+  width: 100%;
+  color: white;
+  font-family: Montserrat;
+}
+.image{
+  width: 50%;
+  border-radius: 5px;
+  padding: 10px;
+  margin-left: 5px;
+}
+img{
+  max-width: 100%;
+}
+.actions{
+  background-color: #575757;
+  border-radius: 5px;
+}
+.h1{
+  color:#0460ca;
+  font-family:Montserrat;
+  font-weight:800;
+  line-height:16px;
+  margin:15px 0px 3px;
 }

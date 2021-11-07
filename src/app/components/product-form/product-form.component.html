@@ -72,7 +72,7 @@
                         
                     <mat-label style="font-size: 16px;"><mat-icon style="font-size: 25px;">upload_file</mat-icon>Añadir imagen</mat-label>
                         <ngx-mat-file-input [disabled]="disalbedInput()" [accept]="'.jpg'" (change)="onFileSelected($event)" 
-                        #removableInput  formControlName="removablefile" placeholder="ingrese una imagen">
+                        #removableInput   placeholder="ingrese una imagen">
                         </ngx-mat-file-input>
                         <button mat-icon-button  matSuffix *ngIf="!removableInput.empty " (click)="removableInput.clear($event)">
                           <mat-icon >clear</mat-icon>

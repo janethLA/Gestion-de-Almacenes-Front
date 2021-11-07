@@ -12,10 +12,14 @@ export class StoreCardComponent implements OnInit {
 @Input() address:string;
 @Input() latitude:number;
 @Input() longitude:number;
+@Input() image:any;
 marker: google.maps.Marker;
   constructor() { }
 
   ngOnInit(): void {
+    
+  }
+  loadMap(){
     let loader=new Loader({
       apiKey:'AIzaSyAlZsuin6kTiBDLiELbZhUpgAeZ6UiYgWo'
     })

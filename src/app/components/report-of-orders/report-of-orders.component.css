@@ -10,6 +10,7 @@ table {
   th {
     font-weight: bold;
     min-width: 50px;
+    text-align: center;
   }
   
   th.mat-header-cell {
@@ -39,4 +40,15 @@ h3{
   font-weight:800;
   line-height:16px;
   margin:15px 0px 3px;
+}
+.filters{
+  display: flex;
+  height: 60px;
+}
+.date-picker{
+  width: 25%;
+}
+.field-filter{
+  width: 20%;
+  margin-right: 10px;
 }

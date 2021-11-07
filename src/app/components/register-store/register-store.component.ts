@@ -21,6 +21,9 @@ export class RegisterStoreComponent implements OnInit {
   coordenadas:coordenada[]=[];
   marker: google.maps.Marker;
   sectors:any;
+  dataFile:any;
+  fileName = '';
+  formData = new FormData();
   constructor(
     private formBuilder: FormBuilder,
     private RequestService: RequestService,
@@ -33,7 +36,7 @@ export class RegisterStoreComponent implements OnInit {
     latitude:['',[Validators.required]],
     longitude:['',[Validators.required]],
     idSector:['',[Validators.required]],
-    
+    image:['',[Validators.required]]
     });
 
   ngOnInit(): void {
@@ -78,7 +81,7 @@ export class RegisterStoreComponent implements OnInit {
     })
   }
   saveStore(store,formDirective: FormGroupDirective){
-    this.RequestService.post('http://localhost:8080/api/market/createMarket ',store).subscribe({
+    this.RequestService.post('http://localhost:8080/api/market/createMarket ',this.formData).subscribe({
       next:()=>{
         this.snack.open('Almacen registrado exitosamente.','CERRAR',{duration:5000,panelClass:'snackSuccess'})
         window.location.reload();
@@ -88,5 +91,34 @@ export class RegisterStoreComponent implements OnInit {
         this.snack.open('Fallo al registrar el Almacen','CERRAR',{duration:5000});
       }
     })
+  }
+  onFileSelected(event) {
+    const file:File = event.target.files[0];
+    //console.log(file, event);
+    if (file) {
+      this.fileName = file.name;
+      const formD = new FormData();
+      formD.append("image", file);
+      this.registerStoreForm.get('image').setValue(file)
+      //console.log(this.productForm.get('productName').value)
+       formD.append("marketName",this.registerStoreForm.get('marketName').value)
+      formD.append("address",this.registerStoreForm.get('address').value)
+      formD.append("longitude",this.registerStoreForm.get('longitude').value)
+      formD.append("latitude",this.registerStoreForm.get('latitude').value)
+      formD.append("idSector",this.registerStoreForm.get('idSector').value)
+      //console.log("formData",formD);
+      this.formData=formD;
+     }
+  }
+  replace:boolean=false;
+  disalbedInput(){
+    let disabled:boolean=false;
+    if(this.dataFile!=null){
+      disabled=true;
+    }
+    if(this.replace==true){
+      disabled=false;
+    }
+    return disabled;
   }
 }

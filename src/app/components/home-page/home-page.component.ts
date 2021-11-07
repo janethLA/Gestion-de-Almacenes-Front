@@ -154,7 +154,7 @@ export class HomePageComponent implements OnInit {
         position: { lat: this.latitudeUser, lng: this.longitudeUser },
       });
       this.warehousesReceived.map((w)=>{
-        this.marker = new google.maps.Marker({
+        const marker = new google.maps.Marker({
           map,
           draggable: false,
           animation: google.maps.Animation.DROP,
@@ -162,11 +162,14 @@ export class HomePageComponent implements OnInit {
           title: ` ${w.warehouseName}`,
           label: `${w.idMarket}`,
         });
-        this.marker.addListener("click", () => {
+        var image="data:image/jpg;base64,"+w.warehouseImage
+        var contentItem="<div style='width:150px'><img src='"+ image+"'style='width:100%'></div><div style=' padding: 10px;'><b>"+w.warehouseName+"</b></div>";
+        
+        marker.addListener("mouseover", () => {
           this.viewAllOfMarkets(w);
           infoWindow.close();
-          infoWindow.setContent(this.marker.getTitle());
-          infoWindow.open(this.marker.getMap(), this.marker);
+          infoWindow.setContent(contentItem);
+          infoWindow.open(marker.getMap(), marker);
         });
       })
       
@@ -253,7 +256,7 @@ export class HomePageComponent implements OnInit {
     this.RequestService.get('http://localhost:8080/api/category/allCategories/'+warehouse.idMarket).subscribe(r=>{
      this.areasReceived=r;
      this.warehouseSelected=warehouse;
-     console.log(this.areasReceived)
+     //console.log(this.areasReceived)
      var allProducts=[]
      this.areasReceived.map(area=>{
        area.product.map(product=>{
@@ -262,7 +265,7 @@ export class HomePageComponent implements OnInit {
        })
      })
      this.productsReceived=allProducts;
-     console.log(this.productsReceived)
+     //console.log(this.productsReceived)
      this.copyProductsReceived=this.productsReceived;
       }) 
   }

@@ -22,6 +22,7 @@ export class OrderCardComponent implements OnInit {
   @Input() telephone:number;
   @Input() email:string;
   @Input() sectorName:string;
+  @Input() shippingCost:number;
   @Input() buttons:boolean;
   @Input() idOrderAssigned:any;
   @Input() complete:boolean;
@@ -48,9 +49,11 @@ export class OrderCardComponent implements OnInit {
         color = '#1975ff';
       }else if(status=='En curso'){
         color= '#ffc400';
-      }else if(status=='Rechazado'){
+      }else if(status=='Rechazado'|| status=='Cancelado'){
         color= '#ff4848';
-      }else if(status=='Finalizado'|| status=='Enviado'){
+      }else if(status=='Enviando'){
+        color= '#ff961c';
+      }else if(status=='Finalizado'){
         color = '#28a745'
       }
     return color;
@@ -87,13 +90,58 @@ export class OrderCardComponent implements OnInit {
       }
     })
   }
+  cancelOrder(){
+    this.RequestService.put("http://localhost:8080/api/order/orderCanceled/"+this.idOrder,{}).subscribe({
+      next:()=>{
+        console.log("cancelado con exito")
+      },error:()=>{
+        window.location.reload()
+      }
+    })
+  }
   completeOrder(){
     this.RequestService.put("http://localhost:8080/api/orderAssigned/orderCompleted/"+this.idOrderAssigned,"").subscribe({
       next:()=>{
-        console.log("rechazado con exito")
+        console.log("completado con exito")
       },error:()=>{
         this.complete=false
         this.orderCompleted=true;
+        window.location.reload()
+      }
+    })
+  }
+  orderSent(){
+    this.RequestService.put("http://localhost:8080/api/order/orderSent/"+this.idOrder,{}).subscribe({
+      next:()=>{
+        console.log("enviando con exito")
+      },error:()=>{
+        window.location.reload()
+      }
+    })
+  }
+  orderReassign(){
+    this.RequestService.put("http://localhost:8080/api/order/reassignOrderInProgress/"+this.idOrder,{}).subscribe({
+      next:()=>{
+        console.log("reasignado con exito")
+      },error:()=>{
+        window.location.reload()
+      }
+    })
+  }
+  cancelOrderInProgress(){
+    this.RequestService.put("http://localhost:8080/api/order/cancelOrderInProgressAndSent/"+this.idOrder,{}).subscribe({
+      next:()=>{
+        console.log("cancelado con exito")
+      },error:()=>{
+        window.location.reload()
+      }
+    })
+  }
+  finalizeOrder(){
+    this.RequestService.put("http://localhost:8080/api/order/finalizeOrder/"+this.idOrder,{}).subscribe({
+      next:()=>{
+        console.log("finalizado con exito")
+      },error:()=>{
         window.location.reload()
       }
     })
