@@ -108,3 +108,73 @@ color: var(--btn-color-pri);
 border-color: var(--btn-color-pri);
 text-align: center;
 }
+.content{
+    text-align: center;
+    padding: 20px;
+}
+h3{
+    color:#002b5c;
+    font-family:Montserrat;
+    font-size:21px;
+    font-weight:700;
+    line-height:25.2px;
+    margin:0px 0px 7px;
+}
+.text{
+    color:#4a4a4a;
+    font-family:Montserrat;
+    line-height:20.8px;
+    margin:0px 0px 15px;
+}
+.btn-login{
+    background-color:#fafafa;
+    background-position:50% 100%;
+    border-color:#adadad;
+    border-style:solid;
+    border-width:1px;
+    color:#696969;
+    font-family:Montserrat;
+    font-weight:500;
+    padding:10px 10px 10px 10px;
+    text-align: start;
+}
+
+.btn-create{
+    color: #fff;
+    background-color:#002b5c ;
+  }
+  mat-error{
+      font-size: 12px;
+      margin-bottom: 5px;
+  }
+  .image{
+    align-items:center;
+    color:#424242;
+    display:block;
+    font-size:12.0012px;
+    justify-content:center;
+    line-height:18.0018px;
+    width: 120px;
+    height: 120px;
+}
+img{
+    font-size:12.0012px;
+    line-height:18.0018px;
+    width: 100%;
+    min-height: 120px;
+    max-height: 120px;
+    margin-left: 5px;
+    
+}
+#nroPedido{
+    margin-top: 5px;
+  color: var(--txt-color-error);
+  font-weight: 500;
+  width: 70%;
+}
+#status{
+    margin-top: 10px;
+  font-style: italic;
+  text-transform: uppercase;
+ 
+}

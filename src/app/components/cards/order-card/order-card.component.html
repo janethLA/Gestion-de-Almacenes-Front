@@ -6,10 +6,10 @@
         
         <div style="display: flex;">
             <div style=" margin-top: 5px; text-align: center; width: 100px;"><p id="nroPedido">Nro {{idOrder}}</p></div>
-            <button mat-icon-button style="margin-top: -4px; margin-right: -2px;" *ngIf="disabled && status=='Pendiente'" matTooltip="Asignar"(click)="openAssign()"><mat-icon style="font-size: 30px;">person_add_alt</mat-icon></button>
+            <button mat-icon-button style="margin-top: -4px; margin-right: -2px;color: #0460ca;" *ngIf="disabled && status=='Pendiente'" matTooltip="Asignar"(click)="openAssign()"><mat-icon style="font-size: 30px;">person_add_alt</mat-icon></button>
             <button mat-icon-button style="margin-top: -4px; margin-right: -2px; color: rgb(140, 219, 21)" *ngIf="disabled && status=='Enviando'"matTooltip="Finalizar pedido" (click)="finalizeOrder()"><mat-icon style="font-size: 30px;">task</mat-icon></button>
             <button mat-icon-button style="margin-top: -4px; margin-right: -2px;color: red;" *ngIf="disabled && status=='Pendiente'"matTooltip="Cancelar" (click)="cancelOrder()"><mat-icon style="font-size: 30px;">cancel</mat-icon></button>
-            <button mat-icon-button style="margin-top: -4px; margin-right: -2px;" *ngIf="status=='En curso'"matTooltip="Delivery asignado" ><mat-icon style="font-size: 30px;">how_to_reg</mat-icon></button>
+            <button mat-icon-button style="margin-top: -4px; margin-right: -2px;color: #0460ca;" *ngIf="status=='En curso'"matTooltip="Delivery asignado" ><mat-icon style="font-size: 30px;">how_to_reg</mat-icon></button>
             <button mat-icon-button style="margin-top: -4px; margin-right: -2px;color: green; " *ngIf="status=='En curso'"matTooltip="Aceptar" (click)="orderSent()"><mat-icon style="font-size: 30px;">check_circle_outline</mat-icon></button>
             <button mat-icon-button style="margin-top: -4px; margin-right: -2px;color: rgb(59, 48, 207); " *ngIf="status=='En curso'"matTooltip="Reasignar" (click)="orderReassign()"><mat-icon style="font-size: 30px;">delivery_dining</mat-icon></button>
             <button mat-icon-button style="margin-top: -4px; margin-right: -2px;color: red;" *ngIf="status=='En curso' || disabled && status=='Enviando'"matTooltip="Cancelar" (click)="cancelOrderInProgress()"><mat-icon style="font-size: 30px;">cancel</mat-icon></button>
@@ -23,9 +23,9 @@
 
     </div>
     <div style="text-align: end;">
-        <button mat-button *ngIf="linkAdmin!=undefined && status!='Finalizado'" onclick='location.href="http://google.com"' value="Go to Google"><mat-icon>whatsapp</mat-icon> Contactar Admin</button>
-        <button mat-button *ngIf="linkClient!=undefined"><mat-icon>whatsapp</mat-icon> Contactar Cliente</button>
-        <button mat-button *ngIf="linkDelivery!=undefined"><mat-icon>whatsapp</mat-icon> Contactar Delivery</button>
+        <button mat-button class="button" *ngIf="linkAdmin!=undefined && statusDiferent" (click)="openLink(linkAdmin)" ><mat-icon>whatsapp</mat-icon> Contactar Admin</button>
+        <button mat-button class="button" *ngIf="linkClient!=undefined && statusDiferent" (click)="openLink(linkClient)"><mat-icon>whatsapp</mat-icon> Contactar Cliente</button>
+        <button mat-button class="button" *ngIf="linkDelivery!=undefined && statusDiferent" (click)="openLink(linkClient)"><mat-icon>whatsapp</mat-icon> Contactar Delivery</button>
     </div>
     <mat-card-header style="margin-left: -17px; ">
         

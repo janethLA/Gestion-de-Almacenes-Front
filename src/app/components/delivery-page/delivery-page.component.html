@@ -24,8 +24,9 @@
               
                   <app-order-card [idOrder]="order.order.idOrder" [orderDate]="order.date" [orderDetail]=order.order.orderDetail
                      [quantityProducts]="order.order.quantityProducts" [status]="order.status" [totalPrice]="order.order.totalPrice" [disabled]="false"[buttons]="true"[userName]="order.userName"
-                        [warehouseName]="order.warehouseNameOfOrder" [telephone]="order.userTelephone" [email]="order.userEmail"
-                        [idOrderAssigned]="order.idOrderAssigned"></app-order-card>
+                        [warehouseName]="order.warehouseNameOfOrder" [telephone]="order.finalUserTelephone" [email]="order.finalUserEmail"
+                        [idOrderAssigned]="order.idOrderAssigned"
+                        [linkAdmin]="order.adminWhatsappLink"  [shippingCost]="order.order.shippingCost"></app-order-card>
                         
                 </mat-expansion-panel>
                 
@@ -58,9 +59,10 @@
               
                   <app-order-card [idOrder]="order.order.idOrder" [orderDate]="order.date" [orderDetail]=order.order.orderDetail
                      [quantityProducts]="order.order.quantityProducts" [status]="order.status" [totalPrice]="order.order.totalPrice" [disabled]="false"[buttons]="false"[complete]="true"
-                     [userName]="order.userName"
-                        [warehouseName]="order.warehouseNameOfOrder" [telephone]="order.userTelephone" [email]="order.userEmail"
-                        [idOrderAssigned]="order.idOrderAssigned"></app-order-card>
+                     [userName]="order.finalUserName"
+                        [warehouseName]="order.warehouseNameOfOrder" [telephone]="order.finalUserTelephone" [email]="order.finalUserEmail"
+                        [idOrderAssigned]="order.idOrderAssigned"
+                        [linkAdmin]="order.adminWhatsappLink" [linkClient]="order.finalUserWhatsappLink" [shippingCost]="order.order.shippingCost"></app-order-card>
                         
                 </mat-expansion-panel>
                 
@@ -92,7 +94,8 @@
               
                   <app-order-card [idOrder]="order.order.idOrder" [orderDate]="order.date" [orderDetail]=order.order.orderDetail
                      [quantityProducts]="order.order.quantityProducts" [status]="order.status" [totalPrice]="order.order.totalPrice" [disabled]="false"[buttons]="false"[userName]="order.userName"
-                        [warehouseName]="order.warehouseNameOfOrder" [telephone]="order.userTelephone" [email]="order.userEmail"></app-order-card>
+                        [warehouseName]="order.warehouseNameOfOrder" [telephone]="order.finalUserTelephone" [email]="order.finalUserEmail"
+                         [shippingCost]="order.order.shippingCost"></app-order-card>
                         
                 </mat-expansion-panel>
                 
@@ -124,8 +127,9 @@
               
                   <app-order-card [idOrder]="order.order.idOrder" [orderDate]="order.date" [orderDetail]=order.order.orderDetail
                      [quantityProducts]="order.order.quantityProducts" [status]="order.status" [totalPrice]="order.order.totalPrice" [disabled]="false"[buttons]="false"
-                     [userName]="order.userName" [completed]="true"
-                        [warehouseName]="order.warehouseNameOfOrder" [telephone]="order.userTelephone" [email]="order.userEmail"></app-order-card>
+                     [userName]="order.finalUserName" [completed]="true"
+                        [warehouseName]="order.warehouseNameOfOrder" [telephone]="order.finalUserTelephone" [email]="order.finalUserEmail"
+                        [linkAdmin]="order.adminWhatsappLink" [linkClient]="order.finalUserWhatsappLink" [shippingCost]="order.order.shippingCost"></app-order-card>
                         
                 </mat-expansion-panel>
                 

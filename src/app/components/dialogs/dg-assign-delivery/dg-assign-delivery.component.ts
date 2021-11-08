@@ -18,12 +18,18 @@ export class DgAssignDeliveryComponent implements OnInit {
   allDeliveriesCopy:any;
   noDeliverySelected:boolean=true;
   deliverySelected:any;
-  searchInput = new FormControl();
+  searchInput = new FormControl;
   options: any;
   filteredOptions: Observable<string[]>;
   public notCompanies=false;
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
+  allPayments:any;
+  noPaymentSelected:boolean=true;
+  paymentSelected:any;
+  user:any;
+  shippingForm= this.formBuilder.group({
+    shippingCost:['',[Validators.required]],
+    
+  });
   
   constructor(
     private RequestService:RequestService,
@@ -35,19 +41,18 @@ export class DgAssignDeliveryComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.loadDataUser()
     this.loadDeliveries();
-    this.getAllSectors()
-    this.firstFormGroup = this.formBuilder.group({
-      firstCtrl: ['', Validators.required],
-    });
-    this.secondFormGroup = this.formBuilder.group({
-      secondCtrl: ['', Validators.required],
-    });
+    this.getAllSectors();
+    this.loadPayments();
     /* this.allDeliveries=[
       {idUser:1,name:"marco",email:"marc@gmail.com",telephone:78787878,sector:"Zona SUD"},
       {idUser:2,name:"marco",email:"marc@gmail.com",telephone:78787878,sector:"Zona SUD"},
       {idUser:3,name:"marco",email:"marc@gmail.com",telephone:78787878,sector:"Zona SUD"},
     ] */
+  }
+  loadDataUser(){
+    this.user=JSON.parse(localStorage.getItem("user"))
   }
   loadDeliveries(){
     this.RequestService.get('http://localhost:8080/api/order/allDeliveries')
@@ -64,19 +69,37 @@ export class DgAssignDeliveryComponent implements OnInit {
       this.noDeliverySelected=false;
     }
 }
-assignDelivery(){
-  this.openShippingCost();
-  /* var assign={idUser:this.deliverySelected[0].idUser,idOrder:this.data.idOrder}
-  this.RequestService.post('http://localhost:8080/api/orderAssigned/assignOrder',assign)
-  .subscribe({
-    next:()=>{
-
-    },error:()=>{
-      window.location.reload()
-    }
-  }) */
+  loadPayments(){
+    this.RequestService.get('http://localhost:8080/api/payment/allPayments')
+    .subscribe(r=>{
+      this.allPayments=r
+      console.log(this.allPayments)
+    })
   }
-
+  getPayment(options: MatListOption[]) {
+    this.paymentSelected=options.map(o=> o.value);
+    console.log(this.paymentSelected)
+    if(options!=[]){
+      this.noPaymentSelected=false;
+    }
+  }
+  
+/* assignDelivery(){
+  this.openShippingCost();
+  } */
+  assignDelivery(){
+    var assign={idUser:this.deliverySelected[0].idUser,idOrder:this.data.idOrder,shippingCost:this.shippingForm.get('shippingCost').value,
+                idUserCallCenter:this.user.idUser,idPayment:this.paymentSelected[0].idPayment}
+    console.log(assign)
+    this.RequestService.post('http://localhost:8080/api/orderAssigned/assignOrder',assign)
+    .subscribe({
+      next:()=>{
+        //window.location.reload()
+      },error:()=>{
+        window.location.reload()
+      }
+    }) 
+    }
   getAllSectors(){
     this.RequestService.get('http://localhost:8080/api/sector/allSector').subscribe(r=>{
       this.options=r;
@@ -107,4 +130,5 @@ assignDelivery(){
       data: { idUser:this.deliverySelected[0].idUser,idOrder:this.data.idOrder}
       });
   }
+  
 }

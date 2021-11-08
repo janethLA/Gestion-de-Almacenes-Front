@@ -31,7 +31,7 @@ export class DgNewUserComponent implements OnInit {
     finalUserName:['',Validators.required],
     userName:['',],
     email:['',{
-      validators:[Validators.required,Validators.pattern(this.isValidEmail)],
+      validators:[Validators.pattern(this.isValidEmail)],
       asyncValidators:[this.emailCheck()],
       updateOn: 'blur'
     }],
@@ -44,6 +44,7 @@ export class DgNewUserComponent implements OnInit {
   
   code:any;
   activateSpinner:boolean;
+  finalUser:any;
   ngOnInit(): void {
   }
   redirect(){
@@ -52,6 +53,7 @@ export class DgNewUserComponent implements OnInit {
   saveUserFinal(user,formDirective: FormGroupDirective){
     user.userName=this.generateUserName(user.finalUserName)
     //console.log(user)
+    this.finalUser=user;
     this.activateSpinner=true
     this.RequestService.post('http://localhost:8080/api/finalUser/createFinalUser',user).subscribe({
       
@@ -59,6 +61,7 @@ export class DgNewUserComponent implements OnInit {
         console.log(respuesta)
         this.activateSpinner=false;
         this.code=respuesta.code;
+        this.sendMessage(this.code)
         //this.snack.open('Usuario creado exitosamente.','CERRAR',{duration:5000,panelClass:'snackSuccess',})
         //this.sendSMS()
         this.openDialogCodeValidate(respuesta.idFinalUser,respuesta.code,user.telephone,user)
@@ -70,6 +73,13 @@ export class DgNewUserComponent implements OnInit {
         this.snack.open('Fallo al registrar el usuario','CERRAR',{duration:5000});
         
       } 
+    })
+  }
+  sendMessage(code){
+    var message={message:"*Verifica tu número*, tu codigo de verificacion es:"+code,number:"591"+this.finalUser.telephone}
+    console.log(message)
+    this.RequestService.post("http://localhost:9000/send",message).subscribe(r=>{
+      console.log(r)
     })
   }
   generateUserName(nameUser){

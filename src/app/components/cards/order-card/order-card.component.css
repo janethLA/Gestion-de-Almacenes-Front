@@ -128,7 +128,7 @@ li{
 /* button{
     color: #0460ca;
 } */
-button{
+.button{
     width: max-content;
     color: white;
     font-family: Montserrat;

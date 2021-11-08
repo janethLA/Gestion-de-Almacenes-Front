@@ -33,6 +33,7 @@ export class OrderCardComponent implements OnInit {
   productsCart:any[]=[];
   image:any;
   orderCompleted:boolean;
+  statusDiferent:boolean;
   constructor(
     private dialog:MatDialog,
     private RequestService:RequestService
@@ -47,14 +48,18 @@ export class OrderCardComponent implements OnInit {
     let color:string;
     if (status=='Pendiente') {
       color = '#979797';
+      this.statusDiferent=true;
     } else if (status=='Aceptado') {
         color = '#1975ff';
+        this.statusDiferent=true;
       }else if(status=='En curso'){
         color= '#ffc400';
+        this.statusDiferent=true;
       }else if(status=='Rechazado'|| status=='Cancelado'){
         color= '#ff4848';
       }else if(status=='Enviando'){
         color= '#ff961c';
+        this.statusDiferent=true;
       }else if(status=='Finalizado'){
         color = '#28a745'
       }
@@ -70,7 +75,7 @@ export class OrderCardComponent implements OnInit {
   }
   openAssign(){
     this.dialog.open(DgAssignDeliveryComponent,{
-      width: '45%',
+      width: '70%',
       data: {idOrder:this.idOrder}
       });
   }
@@ -153,5 +158,8 @@ export class OrderCardComponent implements OnInit {
       width: '50%',
       data: {idOrderAssigned:this.idOrderAssigned}
       });
+  }
+  openLink(link:string){
+    window.open(link,'_blank')
   }
 }
