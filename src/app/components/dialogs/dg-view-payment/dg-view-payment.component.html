@@ -1,0 +1,16 @@
+<div class="payment">
+    <div style="text-align: center; margin-top: 5px; margin-bottom: 10px;"> 
+        <h2>FORMA DE PAGO</h2>
+    </div>
+    <div style="display: block;">
+        <div class="image">
+            <img [src]='"data:image/jpg;base64,"+payment?.qr' alt="photo of qr" >
+        </div>
+        <div>
+            <p id="status" >{{payment?.bankName }}</p>
+            <p style="font-weight: bold;" ><a style="font-weight: lighter;">Nombre: {{payment?.nameAccount}}</a></p>
+            <p  >N° de Cuenta:  {{payment?.nroAccount}}</p>
+            
+        </div>
+    </div>
+</div>

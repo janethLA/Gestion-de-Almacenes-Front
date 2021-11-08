@@ -1,0 +1,47 @@
+.image{
+    align-items:center;
+    color:#424242;
+    display:block;
+    font-size:12.0012px;
+    justify-content:center;
+    line-height:18.0018px;
+    width: 100%;
+    height: 250px;
+    text-align: center;
+}
+img{
+    font-size:12.0012px;
+    line-height:18.0018px;
+    width: 250px;
+    min-height: 250px;
+    max-height: 250px;
+    margin-left: 5px;
+    
+}
+h2{
+    color:#002b5c;
+    font-family:Montserrat;
+    font-size:21px;
+    font-weight:700;
+    line-height:25.2px;
+    margin:0px 0px 7px;
+}
+p{
+    color:#696969;
+    font-family:Montserrat;
+    font-size:15px;
+    line-height:22.5px;
+    margin:0px 0px 9px;
+}
+#nroPedido{
+    margin-top: 5px;
+  color: var(--txt-color-error);
+  font-weight: 500;
+  width: 70%;
+}
+#status{
+    margin-top: 10px;
+  font-style: italic;
+  text-transform: uppercase;
+ 
+}

@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { RequestService } from 'src/app/services/request.service';
 import { DgAssignDeliveryComponent } from '../../dialogs/dg-assign-delivery/dg-assign-delivery.component';
 import { DgFillEmergencyComponent } from '../../dialogs/dg-fill-emergency/dg-fill-emergency.component';
+import { DgViewPaymentComponent } from '../../dialogs/dg-view-payment/dg-view-payment.component';
 
 @Component({
   selector: 'app-order-card',
@@ -26,6 +27,9 @@ export class OrderCardComponent implements OnInit {
   @Input() linkAdmin:string;
   @Input() linkClient:string;
   @Input() linkDelivery:string;
+  @Input() nameAccount:string;
+  @Input() nroAccount:any;
+  @Input() qr:any;
   @Input() buttons:boolean;
   @Input() idOrderAssigned:any;
   @Input() complete:boolean;
@@ -77,6 +81,12 @@ export class OrderCardComponent implements OnInit {
     this.dialog.open(DgAssignDeliveryComponent,{
       width: '70%',
       data: {idOrder:this.idOrder}
+      });
+  }
+  openPayment(){
+    this.dialog.open(DgViewPaymentComponent,{
+      width: '50%',
+      data: {idOrder:this.idOrder,nameAccount:this.nameAccount,nroAccount:this.nroAccount,qr:this.qr}
       });
   }
   acceptOrder(){
