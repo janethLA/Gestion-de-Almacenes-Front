@@ -21,6 +21,7 @@ export class SidenavComponent implements OnInit {
   ROLE_ACTUALIZAR_PRECIOS:boolean;
   ROLE_VER_PEDIDOS:boolean;
   ROLE_FINAL_USER:boolean;
+  ROLE_ACTUALIZAR_IMAGEN:boolean;
   constructor(
     public cookieService:CookieService,
     private router:Router
@@ -68,6 +69,12 @@ export class SidenavComponent implements OnInit {
         }
         if(p.authority=="ROLE_VER_PEDIDOS"){
           this.ROLE_VER_PEDIDOS=true;
+        }
+        if(p.authority=="ROLE_ACTUALIZAR_IMAGEN"){
+          this.ROLE_ACTUALIZAR_IMAGEN=true;
+        }
+        if(p.authority=="ROLE_ACTUALIZAR_PRECIOS"){
+          this.ROLE_ACTUALIZAR_PRECIOS=true;
         }
         
       })

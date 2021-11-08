@@ -1,0 +1,20 @@
+<h2>Actualizar Almacenes</h2>
+<mat-tab-group >
+    <mat-tab label="{{sector.sectorName}}" *ngFor="let sector of allSectors"> 
+        <div class="orders-pending" style="margin-top: 15px;">
+            
+             <mat-grid-list [cols]="2" rowHeight="300px" gutterSize="10px">
+        
+                    <mat-grid-tile *ngFor="let warehouse of getWarehousesByZone(sector.sectorName)" >
+                        <app-store-card [id]="warehouse.idMarket" [name]="warehouse.warehouseName" [address]="warehouse.address" 
+                        [latitude]="warehouse.latitude" [longitude]="warehouse.longitude"[image]='"data:image/jpg;base64,"+warehouse.warehouseImage' ></app-store-card>
+                    </mat-grid-tile>
+            
+                </mat-grid-list>
+                
+        </div>
+    </mat-tab>
+
+
+
+</mat-tab-group>

@@ -7,6 +7,7 @@ import { Canvas, ITable, Item, PdfMakeWrapper, Rect, Table, Txt } from 'pdfmake-
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { FormControl, FormGroup } from '@angular/forms';
+import { DataSource } from '@angular/cdk/collections';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 type TableRow=[any,any,any,any,any,any,any,any]
@@ -22,6 +23,8 @@ export class ReportOfOrdersComponent implements AfterViewInit {
   allOrders:any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  delivery= new FormControl();
+  status= new FormControl();
   range = new FormGroup({
     start: new FormControl(),
     end: new FormControl(),
@@ -32,22 +35,56 @@ export class ReportOfOrdersComponent implements AfterViewInit {
   ) {
     
    }
-
+   filteredValues = { id:'', status:'',name:'',telephone:'',quantityProducts:'',delivery:'',shippingCost:'',totalPrice:'',hourOfOrder:'',dateOfOrder:''};
   ngOnInit(): void {
+    
     
   }
 
   ngAfterViewInit() {
     this.loadReportData();
+    this.listenFilters();
     
   }
-
+  /* applyFilter(filterValue: string) {
+    let filter = {
+      delivery: filterValue.trim().toLowerCase(),
+      position: filterValue.trim().toLowerCase(),
+      topFilter: true
+    }
+    this.dataSource.filter = JSON.stringify(filter)
+  } */
+  listenFilters(){
+    this.delivery.valueChanges.subscribe((deliveryFilterValue)=> {
+      this.filteredValues.delivery = deliveryFilterValue;
+      this.dataSource.filter = JSON.stringify(this.filteredValues);
+      });
+  
+      this.status.valueChanges.subscribe((statusFilterValue) => {
+        this.filteredValues.status = statusFilterValue;
+        this.dataSource.filter = JSON.stringify(this.filteredValues);
+        
+      });
+  
+    this.dataSource.filterPredicate = this.customFilterPredicate();
+  }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  } 
+  customFilterPredicate() {
+    const myFilterPredicate = function(data:any,filter:string) :boolean {
+      let searchString = JSON.parse(filter);
+      let deliveryFound = data.delivery.toString().trim().toLowerCase().indexOf(searchString.delivery.toLowerCase()) !== -1
+      let statusFound = data.status.toString().trim().indexOf(searchString.status) !== -1
+      
+          return deliveryFound && statusFound 
+      
+    }
+    return myFilterPredicate;
   }
   loadReportData(){
     this.RequestService.get('http://localhost:8080/api/report/reportOfOrders ')

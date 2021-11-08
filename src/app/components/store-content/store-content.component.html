@@ -77,7 +77,7 @@
         
     <mat-grid-tile *ngFor="let product of productsReceived" >
         <app-product-card [idProduct]="product.idProduct" [productName]="product.productName"[description]="product.description" [image]="product.image" 
-        [measurement]="product.measurement" [price]="product.price[0].price" ></app-product-card>
+        [measurement]="product.measurement" [price]="product.price[product.price.length-1].price"[edit]="true" ></app-product-card>
     </mat-grid-tile>
 
 </mat-grid-list>

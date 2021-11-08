@@ -76,6 +76,9 @@ import { DgCreatePaymentComponent } from './components/dialogs/dg-create-payment
 import { PaymentsContentComponent } from './components/payments-content/payments-content.component';
 import {MatStepperModule} from '@angular/material/stepper';
 import { DgViewPaymentComponent } from './components/dialogs/dg-view-payment/dg-view-payment.component';
+import { UpdateWarehouseComponent } from './components/update-warehouse/update-warehouse.component';
+import { DgUpdatePriceComponent } from './components/dialogs/dg-update-price/dg-update-price.component';
+import { DgUpdateImageComponent } from './components/dialogs/dg-update-image/dg-update-image.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -115,6 +118,9 @@ import { DgViewPaymentComponent } from './components/dialogs/dg-view-payment/dg-
     DgCreatePaymentComponent,
     PaymentsContentComponent,
     DgViewPaymentComponent,
+    UpdateWarehouseComponent,
+    DgUpdatePriceComponent,
+    DgUpdateImageComponent,
   ],
   imports: [
     BrowserModule,

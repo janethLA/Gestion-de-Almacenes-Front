@@ -1,0 +1,12 @@
+<!--para editar monto-->
+    <h2>Actualizar Precio </h2>
+    <div style="display: flex;">
+        <div style="margin-top: 5px; width: 100%;">
+          <mat-form-field  appearance="outline" style="width: 100%">
+              <mat-label>Nuevo Precio</mat-label>
+              <input matInput placeholder="ingres el nuevo precio" type="number"required [formControl]="newPrice">
+              <mat-error >este campo es requerido</mat-error>
+              </mat-form-field>
+        </div>
+        <button mat-icon-button   (click)="updatePrice()"><mat-icon color="primary" style="font-size: 35px;">save</mat-icon></button>
+    </div>

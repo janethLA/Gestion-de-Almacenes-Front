@@ -10,6 +10,7 @@ export class OrdersListComponent implements OnInit {
 
   ordersReceived:any
   user:any;
+  payment:any;
   constructor(
     private RequestService:RequestService,
   ) { }
@@ -26,6 +27,7 @@ export class OrdersListComponent implements OnInit {
      .subscribe(r=>{
        console.log(r);
        this.ordersReceived = r;
+       
      })
   }
 

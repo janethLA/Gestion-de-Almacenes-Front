@@ -1,14 +1,18 @@
 <mat-card class="main">
     <div class="image">
         <img mat-card-image [src]="image" alt="Photo of a Product">
- 
+        <button  *ngIf="edit"mat-icon-button style="font-size: 5px;"  (click)="editImage(image)"><mat-icon>edit</mat-icon></button>
     </div>
     
     <mat-card-title class="productName">{{productName}}</mat-card-title>
     <mat-card-subtitle>{{expirationDate}}</mat-card-subtitle>
     <mat-card-content>
+      <div style="display: inline-flex;">
+        <p class="price" >{{price}} Bs.</p>
+        <button  *ngIf="edit"mat-icon-button  (click)="editPrice(price)"><mat-icon>edit</mat-icon></button>
+       
+      </div>
       
-      <p class="price">{{price}} Bs.</p>
       <p class="measurement">C/{{measurement}}</p>
       
     </mat-card-content>

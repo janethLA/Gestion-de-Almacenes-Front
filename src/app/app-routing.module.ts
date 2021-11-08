@@ -13,6 +13,7 @@ import { ShowOrdersComponent } from './components/show-orders/show-orders.compon
 import { ShowStoresComponent } from './components/show-stores/show-stores.component';
 import { StoreContentComponent } from './components/store-content/store-content.component';
 import { UpdateUserComponent } from './components/update-user/update-user.component';
+import { UpdateWarehouseComponent } from './components/update-warehouse/update-warehouse.component';
 import { UserGuard } from './security/user.guard';
 
 const routes: Routes = [
@@ -29,6 +30,7 @@ const routes: Routes = [
   {path:'home/reports',component:ReportOfOrdersComponent,canActivate:[UserGuard]},
   {path:'home/delivery',component:DeliveryPageComponent,canActivate:[UserGuard]},
   {path:'home/payments',component:PaymentsContentComponent,canActivate:[UserGuard]},
+  {path:'home/update/warehouses',component:UpdateWarehouseComponent},
   
 ];
 
