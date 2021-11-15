@@ -5,9 +5,11 @@ import { HomeAdminComponent } from './components/home-admin/home-admin.component
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { LoginComponent } from './components/login/login.component';
 import { OrdersListComponent } from './components/orders-list/orders-list.component';
+import { PayDeliveryComponent } from './components/pay-delivery/pay-delivery.component';
 import { PaymentsContentComponent } from './components/payments-content/payments-content.component';
 import { RegisterStoreComponent } from './components/register-store/register-store.component';
 import { RegisterUserComponent } from './components/register-user/register-user.component';
+import { ReportOfDeliveryComponent } from './components/report-of-delivery/report-of-delivery.component';
 import { ReportOfOrdersComponent } from './components/report-of-orders/report-of-orders.component';
 import { ShowOrdersComponent } from './components/show-orders/show-orders.component';
 import { ShowStoresComponent } from './components/show-stores/show-stores.component';
@@ -28,10 +30,11 @@ const routes: Routes = [
   {path:'home/user/update-user',component:UpdateUserComponent,canActivate:[UserGuard]},
   {path:'home/show-orders',component:ShowOrdersComponent,canActivate:[UserGuard]},
   {path:'home/reports',component:ReportOfOrdersComponent,canActivate:[UserGuard]},
+  {path:'home/reports/delivery',component:ReportOfDeliveryComponent,canActivate:[UserGuard]},
   {path:'home/delivery',component:DeliveryPageComponent,canActivate:[UserGuard]},
   {path:'home/payments',component:PaymentsContentComponent,canActivate:[UserGuard]},
-  {path:'home/update/warehouses',component:UpdateWarehouseComponent},
-  
+  {path:'home/update/warehouses',component:UpdateWarehouseComponent,canActivate:[UserGuard]},
+  {path:'home/pay-delivery',component:PayDeliveryComponent}
 ];
 
 @NgModule({

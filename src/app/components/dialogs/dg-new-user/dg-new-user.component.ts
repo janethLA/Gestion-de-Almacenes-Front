@@ -26,14 +26,11 @@ export class DgNewUserComponent implements OnInit {
     public dialog: MatDialog,
   ) { }
   private isValidNumber="([6-7]{1})([0-9]{7})"
-  private isValidEmail:any=/\S+@\S+\.\S/;
   createUser=this.formBuilder.group({
     finalUserName:['',Validators.required],
     userName:['',],
-    email:['',{
-      validators:[Validators.pattern(this.isValidEmail)],
-      asyncValidators:[this.emailCheck()],
-      updateOn: 'blur'
+    password:['',{
+      validators:[Validators.required],
     }],
     telephone:['',{
       validators:[Validators.required,Validators.pattern(this.isValidNumber)],

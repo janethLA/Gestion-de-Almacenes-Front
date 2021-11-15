@@ -79,6 +79,10 @@ import { DgViewPaymentComponent } from './components/dialogs/dg-view-payment/dg-
 import { UpdateWarehouseComponent } from './components/update-warehouse/update-warehouse.component';
 import { DgUpdatePriceComponent } from './components/dialogs/dg-update-price/dg-update-price.component';
 import { DgUpdateImageComponent } from './components/dialogs/dg-update-image/dg-update-image.component';
+import { PayDeliveryComponent } from './components/pay-delivery/pay-delivery.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { DgAddReceiptComponent } from './components/dialogs/dg-add-receipt/dg-add-receipt.component';
+import { ReportOfDeliveryComponent } from './components/report-of-delivery/report-of-delivery.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -121,6 +125,9 @@ import { DgUpdateImageComponent } from './components/dialogs/dg-update-image/dg-
     UpdateWarehouseComponent,
     DgUpdatePriceComponent,
     DgUpdateImageComponent,
+    PayDeliveryComponent,
+    DgAddReceiptComponent,
+    ReportOfDeliveryComponent,
   ],
   imports: [
     BrowserModule,
@@ -156,7 +163,8 @@ import { DgUpdateImageComponent } from './components/dialogs/dg-update-image/dg-
     MatTooltipModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatStepperModule
+    MatStepperModule,
+    MatCheckboxModule
     
   ],
   providers: [RequestService,CookieService,interceptorProvider],

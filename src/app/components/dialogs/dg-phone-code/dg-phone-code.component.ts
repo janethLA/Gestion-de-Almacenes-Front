@@ -31,7 +31,7 @@ export class DgPhoneCodeComponent implements OnInit {
   userName:any
   identifier=this.data.identifier
   ngOnInit(): void {
-   
+   console.log(this.data)
   }
   verifyCode(code){
     if(code.value==this.data.code){
@@ -103,7 +103,7 @@ export class DgPhoneCodeComponent implements OnInit {
       });
   }
   loginFinalUSer(){
-    var login={username:this.user.userName,password:this.user.telephone}
+    var login={username:this.user.userName,password:this.user.password}
     //console.log(login)
     this.RequestService.post('http://localhost:8080/api/auth/authenticate',login)
     .subscribe( {
@@ -133,9 +133,9 @@ export class DgPhoneCodeComponent implements OnInit {
   }
   restartEmail(code){
     if(code.value==this.data.code){
-      var send={idFinalUser:this.data.idFinalUser,code:this.data.code,email:this.data.email}
-      
-      this.RequestService.put("http://localhost:8080/api/finalUser/updateEmail",send).subscribe({
+      var send={idFinalUser:this.data.idFinalUser,code:this.data.code,password:this.data.password}
+      console.log(send)
+      this.RequestService.put("http://localhost:8080/api/finalUser/updateDataUser/"+this.data.idFinalUser,send).subscribe({
       next:()=>{
         this.dialogRef.close()
         window.location.reload()

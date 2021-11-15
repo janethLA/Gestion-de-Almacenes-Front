@@ -35,9 +35,7 @@ export class DgRestartPasswordComponent implements OnInit {
   })
   changePasswordUser=this.formBuilder.group({
     password:['',{
-      validators:[Validators.required,Validators.minLength(6)], 
-      asyncValidators:[this.passwordCheck()],
-        updateOn: 'blur'
+      validators:[Validators.required,Validators.minLength(6)],
     }],
     confirmPassword:['',[Validators.required,Validators.minLength(6),this.confirmCheckUser()]],
   })
@@ -148,13 +146,13 @@ export class DgRestartPasswordComponent implements OnInit {
   }
   updatePassword(){
     
-    if(this.data.identifier==1){
+    /* if(this.data.identifier==1){
         var dataUser={idFinalUser:this.data.idFinalUser,identifier:this.data.identifier,password:this.changePassword.get('password').value}
       console.log(dataUser)
-    }else{
+    }else{ }*/
       var dataUser={idFinalUser:this.data.idFinalUser,identifier:this.data.identifier,password:this.changePasswordUser.get('password').value}
       console.log(dataUser)
-    }
+    
       this.RequestService.put("http://localhost:8080/api/auth/changePassword",dataUser)
       .subscribe({
         next:()=>{
@@ -165,8 +163,8 @@ export class DgRestartPasswordComponent implements OnInit {
         error:()=>{
           //this.snack.open('Fallo al actualizar la contraseña','CERRAR',{duration:5000})
           this.snack.open('contraseña actualizado exitosamente.','CERRAR',{duration:5000,panelClass:'snackSuccess',})
-          this.dialogRef.close()
-          window.location.reload();
+          //this.dialogRef.close()
+          //window.location.reload();
         }
       });
     

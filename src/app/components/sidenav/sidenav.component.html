@@ -34,10 +34,20 @@
             <span>Pedidos por producto</span>
         </a>
     </div>
-    <a mat-button class="menu-button" routerLink="/home/delivery" *ngIf="ROLE_ADMINISTRAR_PEDIDOS || ROLE_VER_PEDIDOS">
+    <a mat-button class="menu-button" (click)="openDelivery=!openDelivery" *ngIf="ROLE_VER_PEDIDOS">
         <mat-icon>delivery_dining</mat-icon>
         <span>Delivery</span>
     </a>
+    <div *ngIf="openDelivery" style="margin-left: 10px;">
+        <a mat-button class="sub-menu-button" routerLink="/home/reports/delivery">
+            <mat-icon>summarize</mat-icon>
+            <span>Reportes</span>
+        </a>
+        <a mat-button class="sub-menu-button" routerLink="/home/delivery">
+            <mat-icon>delivery_dining</mat-icon>
+            <span>Pedidos Delivery</span>
+        </a>
+    </div>
     <a mat-button class="menu-button" routerLink="/home/payments" *ngIf="ROLE_ADMINISTRAR_PEDIDOS">
         <mat-icon>payments</mat-icon>
         <span>Formas de Pago</span>
@@ -45,6 +55,10 @@
     <a mat-button class="menu-button" routerLink="/home/update/warehouses" *ngIf="ROLE_ACTUALIZAR_PRECIOS || ROLE_ACTUALIZAR_IMAGEN">
         <mat-icon>update</mat-icon>
         <span>Actualizar Datos</span>
+    </a>
+    <a mat-button class="menu-button" routerLink="/home/pay-delivery" *ngIf="ROLE_ADMINISTRAR_PEDIDOS">
+        <mat-icon>paid</mat-icon>
+        <span>Pagos Delivery</span>
     </a>
 <mat-divider></mat-divider>
     <a mat-button class="menu-button">

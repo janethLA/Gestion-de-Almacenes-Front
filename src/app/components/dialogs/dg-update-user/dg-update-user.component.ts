@@ -29,10 +29,8 @@ export class DgUpdateUserComponent implements OnInit {
   private isValidEmail:any=/\S+@\S+\.\S/;
   editUser = this.formBuilder.group({
     finalUserName:['',],
-    email:['',{
-      validators:[Validators.required,Validators.pattern(this.isValidEmail)],
-      asyncValidators:[this.emailCheck()],
-      updateOn: 'blur'
+    password:['',{
+      validators:[Validators.required,]
     }],
     telephone:['',{
       validators:[Validators.required,Validators.pattern(this.isValidNumber)],
@@ -51,11 +49,12 @@ export class DgUpdateUserComponent implements OnInit {
   ngOnInit(): void {
     this.user=this.data.user;
       //this.fiterRoleType();
+      console.log(this.user)
       this.editUser.controls['finalUserName'].setValue(this.user?.finalUserName);
       //this.editUser.controls['password'].setValue(this.user?.password);
       this.editUser.controls['userName'].setValue(this.user?.userName);
       this.editUser.controls['telephone'].setValue(this.user?.telephone);
-      this.editUser.controls['email'].setValue(this.user?.email);
+      this.editUser.controls['password'].setValue(this.user?.password);
 
   }
 
@@ -64,8 +63,8 @@ export class DgUpdateUserComponent implements OnInit {
     if(update.userName==this.user.userName){
       update.userName=""
     }
-    if(update.email==this.user.email){
-      update.email=""
+    if(update.password==this.user.password){
+      update.password=""
     }
     if(update.telephone==this.user.telephone){
       update.telephone=""
@@ -165,7 +164,7 @@ export class DgUpdateUserComponent implements OnInit {
       openDialogCode(respuesta){
         this.dialog.open(DgPhoneCodeComponent,{
           width: '50%',
-          data: { idFinalUser:respuesta.idFinalUser,code:respuesta.code,email:respuesta.email,identifier:2}
+          data: { idFinalUser:respuesta.idFinalUser,code:respuesta.code,password:respuesta.password,identifier:2}
           });
       }    
 

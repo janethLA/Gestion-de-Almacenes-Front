@@ -6,7 +6,7 @@ import { RequestService } from 'src/app/services/request.service';
 import { Canvas, ITable, Item, PdfMakeWrapper, Rect, Table, Txt } from 'pdfmake-wrapper';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DataSource } from '@angular/cdk/collections';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -23,27 +23,29 @@ export class ReportOfOrdersComponent implements AfterViewInit {
   allOrders:any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  delivery= new FormControl();
-  status= new FormControl();
+  
   range = new FormGroup({
     start: new FormControl(),
     end: new FormControl(),
   });
+  public searchForm: FormGroup;
+  public status = '';
+  public delivery = '';
+  public dateOfOrder = '';
   
   constructor(
     private RequestService:RequestService,
   ) {
     
    }
-   filteredValues = { id:'', status:'',name:'',telephone:'',quantityProducts:'',delivery:'',shippingCost:'',totalPrice:'',hourOfOrder:'',dateOfOrder:''};
-  ngOnInit(): void {
-    
+   ngOnInit(): void {
+    this.searchFormInit();
+    this.loadReportData();
     
   }
 
   ngAfterViewInit() {
-    this.loadReportData();
-    this.listenFilters();
+    
     
   }
   /* applyFilter(filterValue: string) {
@@ -54,37 +56,13 @@ export class ReportOfOrdersComponent implements AfterViewInit {
     }
     this.dataSource.filter = JSON.stringify(filter)
   } */
-  listenFilters(){
-    this.delivery.valueChanges.subscribe((deliveryFilterValue)=> {
-      this.filteredValues.delivery = deliveryFilterValue;
-      this.dataSource.filter = JSON.stringify(this.filteredValues);
-      });
   
-      this.status.valueChanges.subscribe((statusFilterValue) => {
-        this.filteredValues.status = statusFilterValue;
-        this.dataSource.filter = JSON.stringify(this.filteredValues);
-        
-      });
-  
-    this.dataSource.filterPredicate = this.customFilterPredicate();
-  }
-  applyFilter(event: Event) {
+  applyFilter2(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
-  } 
-  customFilterPredicate() {
-    const myFilterPredicate = function(data:any,filter:string) :boolean {
-      let searchString = JSON.parse(filter);
-      let deliveryFound = data.delivery.toString().trim().toLowerCase().indexOf(searchString.delivery.toLowerCase()) !== -1
-      let statusFound = data.status.toString().trim().indexOf(searchString.status) !== -1
-      
-          return deliveryFound && statusFound 
-      
-    }
-    return myFilterPredicate;
   }
   loadReportData(){
     this.RequestService.get('http://localhost:8080/api/report/reportOfOrders ')
@@ -94,7 +72,77 @@ export class ReportOfOrdersComponent implements AfterViewInit {
       this.dataSource = new MatTableDataSource(this.allOrders);
       this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    
+    /* Filter predicate used for filtering table per different columns
+    *  */
+    this.dataSource.filterPredicate = this.getFilterPredicate();
     })
+  }
+  searchFormInit() {
+    this.searchForm = new FormGroup({
+      status: new FormControl('', Validators.pattern('^[a-zA-Z ]+$')),
+      delivery: new FormControl('', Validators.pattern('^[a-zA-Z ]+$')),
+      dateOfOrderStart: new FormControl(''),
+      dateOfOrderEnd: new FormControl('')
+    });
+  }
+  /* this method well be called for each row in table  */
+  getFilterPredicate() {
+    return (row: any, filters: string) => {
+      // split string per '$' to array
+      const filterArray = filters.split('$');
+      const dateOfOrderStart = filterArray[0];
+      const dateEnd=this.searchForm.get('dateOfOrderEnd').value;
+      const dateOfOrderEnd = (dateEnd === null || dateEnd === '') ? '' : dateEnd.toISOString().split('T')[0];
+      const status = filterArray[1];
+      const delivery = filterArray[2];
+      const matchFilter = [];
+
+      // Fetch data from row
+      let columnDateOfOrder = row.dateOfOrder;
+      const columnStatus = row.status;
+      const columnDelivery = row.delivery;
+      //var parts =columnDateOfOrder.split('-');
+      //columnDateOfOrder = new Date(parts[0], parts[1] - 1, parts[2]); 
+      // verify fetching data by our searching values
+      var customFilterDD;
+      if(dateOfOrderEnd=== ''){
+        customFilterDD = columnDateOfOrder?.includes(dateOfOrderStart);
+        
+      }else{
+        
+        if(columnDateOfOrder>= dateOfOrderStart && columnDateOfOrder<= dateOfOrderEnd){
+          customFilterDD=true;
+        }else{
+          customFilterDD=false;
+        }
+      }
+      
+      const customFilterDS = columnStatus?.toLowerCase().includes(status);
+      const customFilterAS = columnDelivery?.toLowerCase().includes(delivery);
+
+      // push boolean values into array
+      matchFilter.push(customFilterDD);
+      matchFilter.push(customFilterDS);
+      matchFilter.push(customFilterAS);
+
+      // return true if all values in array is true
+      // else return false
+      return matchFilter.every(Boolean);
+    };
+  }
+
+  applyFilter() {
+    const date = this.searchForm.get('dateOfOrderStart').value;
+    const as = this.searchForm.get('status').value;
+    const ds = this.searchForm.get('delivery').value;
+    this.dateOfOrder = (date === null || date === '') ? '' : date.toISOString().split('T')[0];
+    this.status = as === null ? '' : as;
+    this.delivery = ds === null ? '' : ds;
+
+    // create string of our searching values and split if by '$'
+    const filterValue = this.dateOfOrder + '$' + this.status + '$' + this.delivery;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   async printReport(){
         const pdf=new PdfMakeWrapper();

@@ -7,9 +7,10 @@
             <img [src]='"data:image/jpg;base64,"+payment?.qr' alt="photo of qr" >
         </div>
         <div>
-            <p id="status" >{{payment?.bankName }}</p>
-            <p style="font-weight: bold;" ><a style="font-weight: lighter;">Nombre: {{payment?.nameAccount}}</a></p>
-            <p  >N° de Cuenta:  {{payment?.nroAccount}}</p>
+            
+            <p style="font-weight: bold;" >Banco: <a style="font-weight: lighter;" id="status">{{payment?.bankName}}</a></p>
+            <p style="font-weight: bold;" >Nombre: <a style="font-weight: lighter;">{{payment?.nameAccount}}</a></p>
+            <p style="font-weight: bold;" >N° de Cuenta: <a style="font-weight: lighter;">{{payment?.nroAccount}}</a></p>
             
         </div>
     </div>

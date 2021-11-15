@@ -5,39 +5,37 @@
 <div class="search">
     <mat-form-field appearance="standard">
       <mat-label>Filtrar por: </mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Ingrese su busqueda" #input>
+      <input matInput (keyup)="applyFilter2($event)" placeholder="Ingrese su busqueda" #input>
     </mat-form-field>
     
 </div>
-<div class="filters">
+<form class="filters"[formGroup]="searchForm">
   <a mat-button class="btn-catalog"(click)="printReport()">
     <span>Generar Reporte </span>
     <mat-icon>picture_as_pdf</mat-icon>
 </a>
+<mat-form-field appearance="fill" class="date-picker">
+  <mat-label>Ingresa un rango de fechas</mat-label>
+  <mat-date-range-input  [rangePicker]="picker">
+    <input matStartDate  formControlName="dateOfOrderStart" placeholder="Start date" (dateInput)="applyFilter()">
+    <input matEndDate   formControlName="dateOfOrderEnd"  placeholder="End date" (dateInput)="applyFilter()">
+  </mat-date-range-input>
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-date-range-picker #picker></mat-date-range-picker>
+
+</mat-form-field>
 <mat-form-field appearance="standard" class="field-filter">
   <mat-label>Delivery</mat-label>
-  <input matInput  placeholder="Filtrar por delivery" [formControl]="delivery"#input>
+  <input matInput  placeholder="Filtrar por delivery" formControlName="delivery"#input (keyup)="applyFilter()">
 </mat-form-field>
 <mat-form-field appearance="standard" class="field-filter">
   <mat-label>Estado </mat-label>
-  <input matInput  placeholder="Filtrar por estado" [formControl]="status"#input>
+  <input matInput  placeholder="Filtrar por estado" formControlName="status"#input (keyup)="applyFilter()">
 </mat-form-field>
-  <mat-form-field appearance="fill" class="date-picker">
-    <mat-label>Ingresa un rango de fechas</mat-label>
-    <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
-      <input matStartDate  formControlName="start" placeholder="Start date">
-      <input matEndDate formControlName="end" placeholder="End date">
-    </mat-date-range-input>
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-date-range-picker #picker></mat-date-range-picker>
-  
-    <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
-    <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
-  </mat-form-field>
   
   
-</div>
-<p style="font-size: small;">Selected range: {{range.value | json}}</p>
+  
+</form>
   <div class="mat-elevation-z8"style="max-width: 100%;">
     <table mat-table [dataSource]="dataSource" matSort style="max-width: 100%;">
   

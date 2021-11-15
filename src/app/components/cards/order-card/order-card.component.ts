@@ -28,12 +28,14 @@ export class OrderCardComponent implements OnInit {
   @Input() linkClient:string;
   @Input() linkDelivery:string;
   @Input() nameAccount:string;
+  @Input() bankName:string;
   @Input() nroAccount:any;
   @Input() qr:any;
   @Input() buttons:boolean;
   @Input() idOrderAssigned:any;
   @Input() complete:boolean;
   @Input() completed:boolean;
+  @Input() finalUserPendiente:boolean;
   productsCart:any[]=[];
   image:any;
   orderCompleted:boolean;
@@ -86,7 +88,7 @@ export class OrderCardComponent implements OnInit {
   openPayment(){
     this.dialog.open(DgViewPaymentComponent,{
       width: '50%',
-      data: {idOrder:this.idOrder,nameAccount:this.nameAccount,nroAccount:this.nroAccount,qr:this.qr}
+      data: {idOrder:this.idOrder,nameAccount:this.nameAccount,nroAccount:this.nroAccount,bankName:this.bankName,qr:this.qr}
       });
   }
   acceptOrder(){

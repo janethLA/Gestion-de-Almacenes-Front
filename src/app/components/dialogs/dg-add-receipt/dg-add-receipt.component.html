@@ -1,0 +1,29 @@
+
+<div class="position-button">
+    <button mat-icon-button mat-dialog-close style="top: 0;right: 0;"><mat-icon>cancel</mat-icon></button>
+</div>
+
+<div class="popup" [formGroup]="addReceipt">
+    <h1>Añadir N° de Recibo</h1>
+    <p>A continuacion escribe el N° del recibo de estos pagos:</p>
+    <div style="text-align: center;">
+           
+        <li style="text-align: center;display: inline;width: 80%;" *ngFor="let pay of dataPays"><p style="font-weight: bold;">{{pay.shippingCost +"Bs." +" a "+pay.delivery}}</p></li>
+    </div>
+    <div class="field">
+        <mat-form-field  appearance="outline" style="width: 100%;">
+        <mat-label>N° de recibo</mat-label>
+        <input matInput placeholder="Ingrese el N° de recibo " required type="number" formControlName='receipt'>
+        <mat-error >este campo es requerido</mat-error>
+        </mat-form-field>
+    </div>
+    <div class="links">
+      <a mat-button class="btn-confirm"[disabled]="addReceipt.invalid"(click)="sendReceipt()">
+        <span *ngIf="activateSpinner==undefined"> Guardar</span>
+        <span *ngIf="activateSpinner"> Guardadando</span>
+        <span *ngIf="activateSpinner==false">Recibo guardado</span>
+        <mat-icon><mat-spinner *ngIf="activateSpinner" [diameter]="30"></mat-spinner></mat-icon>
+        <mat-icon *ngIf="activateSpinner==false">done</mat-icon>
+      </a>
+    </div>
+  </div>

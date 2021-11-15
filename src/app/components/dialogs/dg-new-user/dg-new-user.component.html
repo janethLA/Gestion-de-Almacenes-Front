@@ -22,9 +22,9 @@
             </div>
             <div class="field">
                 <mat-form-field  appearance="outline" style="width: 100%;">
-                <mat-label>E-mail</mat-label>
-                <input matInput placeholder="Ingrese su email"  type="text" formControlName='email'>
-                <mat-error *ngIf="isValidField('email')" >{{getErrorMessage('email','register')}}</mat-error>
+                <mat-label>Contraseña</mat-label>
+                <input matInput placeholder="Ingrese su contraseña"  type="text" formControlName='password'>
+                <mat-error *ngIf="isValidField('password')" >{{getErrorMessage('password','register')}}</mat-error>
                 </mat-form-field>
             </div>
             <div class="field">

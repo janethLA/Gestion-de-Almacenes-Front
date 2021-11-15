@@ -38,11 +38,11 @@
                     </div>
                     <div class="field">
                         <mat-form-field  appearance="outline" style="width: 100%;">
-                        <mat-label>Email</mat-label>
-                        <input matInput placeholder="ingres su email" formControlName="email"
+                        <mat-label>Contraseña</mat-label>
+                        <input matInput placeholder="ingres su contraseña" formControlName="password"
                                  type="text">
                         
-                        <mat-error *ngIf="isValidFieldEdit('email')" >{{getErrorMessage('email','edit')}}</mat-error>
+                        <mat-error *ngIf="isValidFieldEdit('password')" >{{getErrorMessage('password','edit')}}</mat-error>
                         </mat-form-field>
                     </div>
                     <div style="text-align: center; width: 100%;">

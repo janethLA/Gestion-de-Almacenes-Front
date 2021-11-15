@@ -54,3 +54,24 @@ h3{
   margin-right: 10px;
   
 }
+.button-pay{
+    width: max-content;
+    color: white;
+    font-family: Montserrat;
+    background-color: #25D366;
+    border-radius: 5px;
+    display:flex;
+    font-family:Montserrat;
+    font-size:13px;
+    font-weight:500;
+    line-height:19.5px;
+    padding:6px 14px;
+    margin-left:20px;
+    margin-right:20px;
+    margin-bottom:20px;
+    margin-top: 5px;
+  }
+  tr.mat-footer-row {
+    font-weight: bold;
+    background-color: #ebebeb;
+  }
