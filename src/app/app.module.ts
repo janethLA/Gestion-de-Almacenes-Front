@@ -83,6 +83,10 @@ import { PayDeliveryComponent } from './components/pay-delivery/pay-delivery.com
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { DgAddReceiptComponent } from './components/dialogs/dg-add-receipt/dg-add-receipt.component';
 import { ReportOfDeliveryComponent } from './components/report-of-delivery/report-of-delivery.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { DgUpdateBusinessComponent } from './components/dialogs/settings/dg-update-business/dg-update-business.component';
+import { DgUpdateDistanceComponent } from './components/dialogs/settings/dg-update-distance/dg-update-distance.component';
+import { DgUpdateKeymapComponent } from './components/dialogs/settings/dg-update-keymap/dg-update-keymap.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -128,6 +132,10 @@ import { ReportOfDeliveryComponent } from './components/report-of-delivery/repor
     PayDeliveryComponent,
     DgAddReceiptComponent,
     ReportOfDeliveryComponent,
+    SettingsComponent,
+    DgUpdateBusinessComponent,
+    DgUpdateDistanceComponent,
+    DgUpdateKeymapComponent,
   ],
   imports: [
     BrowserModule,

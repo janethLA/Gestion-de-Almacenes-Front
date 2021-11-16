@@ -1,0 +1,46 @@
+<div class="position-button">
+    <button mat-icon-button mat-dialog-close style="top: 0;right: 0;"><mat-icon>cancel</mat-icon></button>
+</div>
+
+<div class="popup" [formGroup]="updateBusiness">
+    <h1>Actualizar datos de Empresa</h1>
+    <p>A continuacion escribe los datos que desea actualizar:</p>
+    
+    <div class="field">
+        <mat-form-field  appearance="outline" style="width: 100%;">
+        <mat-label>Nombre de Empresa</mat-label>
+        <input matInput placeholder="Ingrese el nombre " required type="text" formControlName='nameForReport'>
+        <mat-error >este campo es requerido</mat-error>
+        </mat-form-field>
+    </div>
+    <div class="field">
+        <mat-form-field  appearance="outline" style="width: 100%;">
+        <mat-label>Telefono</mat-label>
+        <input matInput placeholder="Ingrese el telephono" required type="text" formControlName='telephoneForReport'>
+        <mat-error >este campo es requerido</mat-error>
+        </mat-form-field>
+    </div>
+    <div class="field">
+        <mat-form-field  appearance="outline" style="width: 100%;">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Ingrese el email " required type="text" formControlName='emailForReport'>
+        <mat-error >este campo es requerido</mat-error>
+        </mat-form-field>
+    </div>
+    <div class="field">
+        <mat-form-field  appearance="outline" style="width: 100%;">
+        <mat-label>Dirección</mat-label>
+        <input matInput placeholder="Ingrese la dirección" required type="text" formControlName='addresForReport'>
+        <mat-error >este campo es requerido</mat-error>
+        </mat-form-field>
+    </div>
+    <div class="links">
+      <a mat-button class="btn-confirm"[disabled]="updateBusiness.invalid"(click)="updateBusinessData(updateBusiness.value)">
+        <span *ngIf="activateSpinner==undefined"> Actualizar</span>
+        <span *ngIf="activateSpinner"> Actualizando</span>
+        <span *ngIf="activateSpinner==false">Datos Actualizados</span>
+        <mat-icon><mat-spinner *ngIf="activateSpinner" [diameter]="30"></mat-spinner></mat-icon>
+        <mat-icon *ngIf="activateSpinner==false">done</mat-icon>
+      </a>
+    </div>
+  </div>

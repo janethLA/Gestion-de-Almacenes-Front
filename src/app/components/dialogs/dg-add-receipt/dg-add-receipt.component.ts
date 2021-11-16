@@ -33,12 +33,12 @@ export class DgAddReceiptComponent implements OnInit {
     this.dataPays.map(data=>{
       listPays.push(data.idOrder)
     })
-    console.log(listPays)
-    this.RequestService.put("http://localhost:8080/api/orderAssigned/payDelivery/"+5+"/"+this.addReceipt.get('receipt').value,listPays).subscribe({
+    console.log(this.dataPays)
+    this.RequestService.put("http://localhost:8080/api/orderAssigned/payDelivery/"+this.dataPays[0].idDelivery+"/"+this.addReceipt.get('receipt').value,listPays).subscribe({
       next:()=>{
-
-      },error:()=>{
         window.location.reload()
+      },error:()=>{
+        //window.location.reload()
       }
     })
   }

@@ -11,6 +11,7 @@ import { RegisterStoreComponent } from './components/register-store/register-sto
 import { RegisterUserComponent } from './components/register-user/register-user.component';
 import { ReportOfDeliveryComponent } from './components/report-of-delivery/report-of-delivery.component';
 import { ReportOfOrdersComponent } from './components/report-of-orders/report-of-orders.component';
+import { SettingsComponent } from './components/settings/settings.component';
 import { ShowOrdersComponent } from './components/show-orders/show-orders.component';
 import { ShowStoresComponent } from './components/show-stores/show-stores.component';
 import { StoreContentComponent } from './components/store-content/store-content.component';
@@ -34,7 +35,8 @@ const routes: Routes = [
   {path:'home/delivery',component:DeliveryPageComponent,canActivate:[UserGuard]},
   {path:'home/payments',component:PaymentsContentComponent,canActivate:[UserGuard]},
   {path:'home/update/warehouses',component:UpdateWarehouseComponent,canActivate:[UserGuard]},
-  {path:'home/pay-delivery',component:PayDeliveryComponent}
+  {path:'home/pay-delivery',component:PayDeliveryComponent,canActivate:[UserGuard]},
+  {path:'home/settings',component:SettingsComponent,canActivate:[UserGuard]}
 ];
 
 @NgModule({

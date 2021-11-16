@@ -8,19 +8,22 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DataSource } from '@angular/cdk/collections';
+import { DatePipe } from '@angular/common';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-type TableRow=[any,any,any,any,any,any,any,any]
+type TableRow=[any,any,any,any,any,any,any,any,any,any]
 
 @Component({
   selector: 'app-report-of-orders',
   templateUrl: './report-of-orders.component.html',
-  styleUrls: ['./report-of-orders.component.css']
+  styleUrls: ['./report-of-orders.component.css'],
+  providers: [DatePipe]
 })
 export class ReportOfOrdersComponent implements AfterViewInit {
   displayedColumns: string[] = ['id', 'status', 'name', 'telephone','quantityProducts','delivery','shippingCost','totalPrice','hourOfOrder','dateOfOrder'];
   dataSource: MatTableDataSource<any>;
   allOrders:any;
+  configurations:any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   
@@ -32,15 +35,19 @@ export class ReportOfOrdersComponent implements AfterViewInit {
   public status = '';
   public delivery = '';
   public dateOfOrder = '';
+  totalShippingCost=0;
+  totalPrice=0;
   
   constructor(
     private RequestService:RequestService,
+    private datePipe: DatePipe
   ) {
     
    }
    ngOnInit(): void {
     this.searchFormInit();
     this.loadReportData();
+    this.loadConfigurations();
     
   }
 
@@ -48,21 +55,11 @@ export class ReportOfOrdersComponent implements AfterViewInit {
     
     
   }
-  /* applyFilter(filterValue: string) {
-    let filter = {
-      delivery: filterValue.trim().toLowerCase(),
-      position: filterValue.trim().toLowerCase(),
-      topFilter: true
-    }
-    this.dataSource.filter = JSON.stringify(filter)
-  } */
-  
-  applyFilter2(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  loadConfigurations(){
+    this.RequestService.get('http://localhost:8080/api/setting/getSetting')
+    .subscribe(r=>{
+      this.configurations = r;
+    })
   }
   loadReportData(){
     this.RequestService.get('http://localhost:8080/api/report/reportOfOrders ')
@@ -125,7 +122,10 @@ export class ReportOfOrdersComponent implements AfterViewInit {
       matchFilter.push(customFilterDD);
       matchFilter.push(customFilterDS);
       matchFilter.push(customFilterAS);
-
+      if(matchFilter.every(Boolean)){
+        this.totalShippingCost+=row.shippingCost;
+        this.totalPrice+=row.totalPrice;
+      }
       // return true if all values in array is true
       // else return false
       return matchFilter.every(Boolean);
@@ -133,6 +133,8 @@ export class ReportOfOrdersComponent implements AfterViewInit {
   }
 
   applyFilter() {
+    this.totalShippingCost=0;
+    this.totalPrice=0;
     const date = this.searchForm.get('dateOfOrderStart').value;
     const as = this.searchForm.get('status').value;
     const ds = this.searchForm.get('delivery').value;
@@ -144,27 +146,44 @@ export class ReportOfOrdersComponent implements AfterViewInit {
     const filterValue = this.dateOfOrder + '$' + this.status + '$' + this.delivery;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+  getTotalCost(field:string) {
+    if(this.totalShippingCost==0 && this.totalPrice==0){
+      return this.dataSource?.data.map(t => t[field]).reduce((acc, value) => acc + value, 0);
+    }else{
+      if(field=='shippingCost'){
+        return this.totalShippingCost
+      }else{
+        return this.totalPrice;
+      }
+      
+    }
+    
+  }
   async printReport(){
+    let myDate = new Date();
+    let myActualDate = this.datePipe.transform(myDate, 'yyyy-MM-dd');
         const pdf=new PdfMakeWrapper();
         pdf.pageMargins([0,20,0,0])
         pdf.pageSize('A4')
+        pdf.pageOrientation('landscape')
         pdf.defaultStyle({
           fontSize:11,
           //font:'roboto'
         })
        
           pdf.add(new Txt('SISTEMA DE GESTION DE ALMACENES').margin([20,0]).bold().fontSize(13).end);
-          pdf.add(new Txt('HELPSYSTEM').margin([20,0]).bold().fontSize(13).end);
-          pdf.add(new Txt('Teléfono: 4444444 ; 444444').margin([20,0]).fontSize(10).end);
-          pdf.add(new Txt('Cochabamba - Bolivia').margin([20,0]).fontSize(10).end);
+          pdf.add(new Txt(this.configurations.nameForReport).margin([20,0]).bold().fontSize(13).end);
+          pdf.add(new Txt('Teléfono: '+this.configurations.telephoneForReport).margin([20,0]).fontSize(10).end);
+          pdf.add(new Txt('Email: '+this.configurations.emailForReport).margin([20,0]).fontSize(10).end);
+          pdf.add(new Txt('Dirección: '+this.configurations.addresForReport).margin([20,0]).fontSize(10).end);
 
           pdf.add(new Txt('REPORTE DE PEDIDOS').bold().alignment('center').fontSize(13).end);
           pdf.add(new Txt('Moneda (Bs)').bold().alignment('center').fontSize(12).end);
           pdf.add(pdf.ln(1));
-          pdf.add(new Txt('Busqueda por filtro: '+"-----"+this.dataSource.filter+"-----"+'............................................\
-          Fecha: ............./............./............./').margin([20,10]).end);
+          pdf.add(new Txt('Busqueda por filtro: '+"-----"+this.dataSource.filter+"-----").margin([20,10]).end);
+          pdf.add(new Txt('Fecha: '+ myActualDate).margin([20,10]).relativePosition(550,-32).end);
           pdf.add(new Txt('los pedidos que se detallan a continuacion son de proposito informativo')
-            .margin([30,0]).fontSize(9).end);
+            .margin([20,10]).fontSize(10).end);
           if(this.dataSource.filteredData==[]){
             pdf.add(this.createTable(this.dataSource.data))
           }else{
@@ -179,9 +198,10 @@ export class ReportOfOrdersComponent implements AfterViewInit {
 
     createTable(data: Item[]):ITable{
       [{}]
+      var foot=['Totales','','','','','',this.totalShippingCost,this.totalPrice,'','']
         return new Table([
-        [ 'ID', 'ESTADO','NOMBRE','TELEFONO','N° DE PRODUCTOS','TOTAL','HORA','FECHA'],
-        ...this.extractData(data),
+        [ 'ID', 'ESTADO','NOMBRE USUARIO','TELEFONO','N° DE PRODUCTOS','DELIVERY','COSTO DE ENVIO','TOTAL','HORA','FECHA'],
+        ...this.extractData(data),foot,
       ]).margin([20,10]).alignment('center').fontSize(10).layout({hLineColor:(rowIndex:number,node:any,columnIndex:number)=>{
               return  '#c2c2c2';
       },vLineColor:((rowIndex:number,node:any,columnIndex:number)=>{
@@ -194,7 +214,7 @@ export class ReportOfOrdersComponent implements AfterViewInit {
   
     extractData(data:any[]):TableRow[]{
         var index=1
-        return data.map(row=>[row.idOrder,row.status,row.userName,row.telephone,row.quantityProducts,row.totalPrice,row.hourOfOrder,row.dateOfOrder])
+        return data.map(row=>[row.idOrder,row.status,row.userName,row.telephone,row.quantityProducts,row.delivery,row.shippingCost,row.totalPrice,row.hourOfOrder,row.dateOfOrder])
     } 
 
     

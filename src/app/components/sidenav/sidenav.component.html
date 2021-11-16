@@ -61,9 +61,9 @@
         <span>Pagos Delivery</span>
     </a>
 <mat-divider></mat-divider>
-    <a mat-button class="menu-button">
-        <mat-icon>help</mat-icon>
-        <span>Help</span>
+    <a mat-button class="menu-button" routerLink="/home/settings" *ngIf="ROLE_CONFIGURAR_SISTEMA">
+        <mat-icon>settings</mat-icon>
+        <span>Configuraciones</span>
     </a>
     <a mat-button class="menu-button" (click)="logout()">
         <mat-icon>logout</mat-icon>

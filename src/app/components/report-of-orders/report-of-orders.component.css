@@ -54,3 +54,7 @@ h3{
   margin-right: 10px;
   
 }
+tr.mat-footer-row {
+  font-weight: bold;
+  background-color: #ebebeb;
+}

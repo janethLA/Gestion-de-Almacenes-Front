@@ -1,0 +1,70 @@
+<div class="manage">
+    <a mat-button class="btn-catalog" routerLink="/home">
+        
+        <mat-icon>home</mat-icon>
+        <span>Ir a Home </span>
+    </a>
+    <h3>CONFIGURACIONES DEL SISTEMA</h3>
+    <div class="personal-data">
+        <mat-icon style="font-size: 45px;">business</mat-icon>
+        <h1>Datos de la empresa</h1>
+        
+    </div>
+    <div style="padding: 20px; margin-left: 45px;">
+        <li class="data">Nombre:
+            <span class="subdata">{{dataConfiguration?.nameForReport}}</span>
+        </li>
+        <li class="data">Telefono:
+            <span class="subdata">{{dataConfiguration?.telephoneForReport}}</span>
+        </li>
+        <li class="data">E-mail:
+            <span class="subdata">{{dataConfiguration?.emailForReport}}</span>
+        </li>
+        <li class="data">Dirección:
+            <span class="subdata">{{dataConfiguration?.addresForReport}}</span>
+        </li>
+    </div>
+    <div style="display: flex;padding: 20px;">
+        <li>
+            <a mat-button (click)="openUpdateBusiness()"><span>Actualizar Datos de Empresa</span></a>
+        </li><!-- 
+        <li>
+            <a mat-button><span>Cambia tu contraseña</span></a>
+        </li> -->
+    </div>
+    <!-- Distancia de busqueda -->
+    <div class="personal-data">
+        <mat-icon style="font-size: 45px;">my_location</mat-icon>
+        <h1>Distancia de Búsqueda</h1>
+        
+    </div>
+    <div style="padding: 20px; margin-left: 45px;">
+        <li class="data">Distancia:
+            <span class="subdata">{{dataConfiguration?.searchDistance}} Km</span>
+        </li>
+        
+    </div>
+    <div style="display: flex;padding: 20px;">
+        <li>
+            <a mat-button (click)="openUpdateDistance()" ><span>Actualizar Distancia</span></a>
+        </li>
+    </div>
+
+    <!-- Google Maps -->
+    <div class="personal-data">
+        <mat-icon style="font-size: 45px;">vpn_key</mat-icon>
+        <h1>Google Maps</h1>
+        
+    </div>
+    <div style="padding: 20px; margin-left: 45px;">
+        <li class="data">Llave de Google Maps:
+            <span class="subdata">{{dataConfiguration?.googleKey}}</span>
+        </li>
+        
+    </div>
+    <div style="display: flex;padding: 20px;">
+        <li>
+            <a mat-button (click)="openUpdateKey()" ><span>Actualizar Llave</span></a>
+        </li>
+    </div>
+</div>

@@ -12,7 +12,7 @@ import { RequestService } from 'src/app/services/request.service';
 })
 export class ReportOfDeliveryComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'status', 'name', 'telephone','quantityProducts','delivery','shippingCost','totalPrice','hourOfOrder','dateOfOrder'];
+  displayedColumns: string[] = ['id', 'statusOfOrderAssigned','delivery','shippingCost','dateOfOrderAssigned','receiptNumber','paymentDate'];
   dataSource: MatTableDataSource<any>;
   allOrders:any;
   user:any;
@@ -27,7 +27,7 @@ export class ReportOfDeliveryComponent implements OnInit {
   public status = '';
   public delivery = '';
   public dateOfOrder = '';
-  
+  totalShippingCost=0;
   constructor(
     private RequestService:RequestService,
   ) {
@@ -78,8 +78,8 @@ export class ReportOfDeliveryComponent implements OnInit {
       const matchFilter = [];
 
       // Fetch data from row
-      let columnDateOfOrder = row.dateOfOrder;
-      const columnStatus = row.status;
+      let columnDateOfOrder = row.dateOfOrderAssigned;
+      const columnStatus = row.statusOfOrderAssigned;
       const columnDelivery = row.delivery;
       //var parts =columnDateOfOrder.split('-');
       //columnDateOfOrder = new Date(parts[0], parts[1] - 1, parts[2]); 
@@ -104,7 +104,9 @@ export class ReportOfDeliveryComponent implements OnInit {
       matchFilter.push(customFilterDD);
       matchFilter.push(customFilterDS);
       matchFilter.push(customFilterAS);
-
+      if(matchFilter.every(Boolean)){
+        this.totalShippingCost+=row.shippingCost;
+      }
       // return true if all values in array is true
       // else return false
       return matchFilter.every(Boolean);
@@ -112,6 +114,7 @@ export class ReportOfDeliveryComponent implements OnInit {
   }
 
   applyFilter() {
+    this.totalShippingCost=0;
     const date = this.searchForm.get('dateOfOrderStart').value;
     const as = this.searchForm.get('status').value;
     const ds = this.searchForm.get('delivery').value;
@@ -122,5 +125,14 @@ export class ReportOfDeliveryComponent implements OnInit {
     // create string of our searching values and split if by '$'
     const filterValue = this.dateOfOrder + '$' + this.status + '$' + this.delivery;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  getTotalCost() {
+    if(this.totalShippingCost==0){
+      return this.dataSource?.data.map(t => t.shippingCost).reduce((acc, value) => acc + value, 0);
+    }else{
+      return this.totalShippingCost;
+    }
+    
   }
 }
