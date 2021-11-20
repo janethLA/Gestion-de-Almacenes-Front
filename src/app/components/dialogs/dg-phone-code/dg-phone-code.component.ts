@@ -133,14 +133,16 @@ export class DgPhoneCodeComponent implements OnInit {
   }
   restartEmail(code){
     if(code.value==this.data.code){
-      var send={idFinalUser:this.data.idFinalUser,code:this.data.code,password:this.data.password}
+      var send={idFinalUser:this.data.idFinalUser,code:this.data.code,telephone:this.data.telephone}
       console.log(send)
-      this.RequestService.put("http://localhost:8080/api/finalUser/updateDataUser/"+this.data.idFinalUser,send).subscribe({
+      this.RequestService.put("http://localhost:8080/api/finalUser/updateTelephone",send).subscribe({
       next:()=>{
         this.dialogRef.close()
         window.location.reload()
       },error:()=>{
-        console.log("error al actualizar")
+        //console.log("error al actualizar")
+        this.dialogRef.close()
+        window.location.reload()
       }  
       
       })

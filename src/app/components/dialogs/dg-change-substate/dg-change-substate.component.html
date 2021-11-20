@@ -1,0 +1,28 @@
+
+<div class="position-button">
+    <button mat-icon-button mat-dialog-close style="top: 0;right: 0;"><mat-icon>cancel</mat-icon></button>
+</div>
+
+<div class="popup" >
+    <h1>Cambiar estado de Pago</h1>
+    <p>Selecciona el estado del pago:</p>
+    <div class="field">
+        <mat-radio-group
+            aria-labelledby="example-radio-group-label"
+            class="example-radio-group"
+            [(ngModel)]="substateSelect">
+            <mat-radio-button class="example-radio-button" *ngFor="let substate of substates" [value]="substate">
+                {{substate}}
+            </mat-radio-button>
+        </mat-radio-group>
+    </div>
+    <div class="links">
+      <a mat-button class="btn-confirm" (click)="changeSubstate()">
+        <span *ngIf="activateSpinner==undefined"> Guardar</span>
+        <span *ngIf="activateSpinner"> Enviando mensaje </span>
+        <span *ngIf="activateSpinner==false"> Mensaje enviado</span>
+        <mat-icon><mat-spinner *ngIf="activateSpinner" [diameter]="30"></mat-spinner></mat-icon>
+        <mat-icon *ngIf="activateSpinner==false">done</mat-icon>
+      </a>
+    </div>
+  </div>

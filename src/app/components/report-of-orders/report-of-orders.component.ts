@@ -198,7 +198,7 @@ export class ReportOfOrdersComponent implements AfterViewInit {
 
     createTable(data: Item[]):ITable{
       [{}]
-      var foot=['Totales','','','','','',this.totalShippingCost,this.totalPrice,'','']
+      var foot=['Totales','','','','','',this.getTotalCost('shippingCost'),this.getTotalCost('totalPrice'),'','']
         return new Table([
         [ 'ID', 'ESTADO','NOMBRE USUARIO','TELEFONO','N° DE PRODUCTOS','DELIVERY','COSTO DE ENVIO','TOTAL','HORA','FECHA'],
         ...this.extractData(data),foot,

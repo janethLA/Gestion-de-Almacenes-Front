@@ -87,6 +87,7 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { DgUpdateBusinessComponent } from './components/dialogs/settings/dg-update-business/dg-update-business.component';
 import { DgUpdateDistanceComponent } from './components/dialogs/settings/dg-update-distance/dg-update-distance.component';
 import { DgUpdateKeymapComponent } from './components/dialogs/settings/dg-update-keymap/dg-update-keymap.component';
+import { DgChangeSubstateComponent } from './components/dialogs/dg-change-substate/dg-change-substate.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -136,6 +137,7 @@ import { DgUpdateKeymapComponent } from './components/dialogs/settings/dg-update
     DgUpdateBusinessComponent,
     DgUpdateDistanceComponent,
     DgUpdateKeymapComponent,
+    DgChangeSubstateComponent,
   ],
   imports: [
     BrowserModule,

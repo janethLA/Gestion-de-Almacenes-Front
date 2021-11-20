@@ -9,7 +9,7 @@
             <button mat-icon-button style="margin-top: -4px; margin-right: -2px;color: #0460ca;" *ngIf="disabled && status=='Pendiente'" matTooltip="Asignar"(click)="openAssign()"><mat-icon style="font-size: 30px;">person_add_alt</mat-icon></button>
             <button mat-icon-button style="margin-top: -4px; margin-right: -2px; color: rgb(140, 219, 21)" *ngIf="disabled && status=='Enviando'"matTooltip="Finalizar pedido" (click)="finalizeOrder()"><mat-icon style="font-size: 30px;">task</mat-icon></button>
             <button mat-icon-button style="margin-top: -4px; margin-right: -2px;color: red;" *ngIf="disabled && status=='Pendiente'"matTooltip="Cancelar" (click)="cancelOrder()"><mat-icon style="font-size: 30px;">cancel</mat-icon></button>
-            <button mat-icon-button style="margin-top: -4px; margin-right: -2px;color: #0460ca;" *ngIf="disabled && status=='En curso'"matTooltip="Delivery asignado" ><mat-icon style="font-size: 30px;">how_to_reg</mat-icon></button>
+            <button mat-icon-button style="margin-top: -4px; margin-right: -2px;color: #cdd2d6;" *ngIf="disabled && status=='En curso'"matTooltip="Delivery asignado" disabled ><mat-icon style="font-size: 30px;">how_to_reg</mat-icon></button>
             <button mat-icon-button style="margin-top: -4px; margin-right: -2px;color: green; " *ngIf="disabled && status=='En curso'"matTooltip="Aceptar" (click)="orderSent()"><mat-icon style="font-size: 30px;">check_circle_outline</mat-icon></button>
             <button mat-icon-button style="margin-top: -4px; margin-right: -2px;color: rgb(59, 48, 207); " *ngIf="disabled && status=='En curso'"matTooltip="Reasignar" (click)="orderReassign()"><mat-icon style="font-size: 30px;">delivery_dining</mat-icon></button>
             <button mat-icon-button style="margin-top: -4px; margin-right: -2px;color: red;" *ngIf="status=='En curso' && disabled || disabled && status=='Enviando'"matTooltip="Cancelar" (click)="cancelOrderInProgress()"><mat-icon style="font-size: 30px;">cancel</mat-icon></button>
@@ -26,6 +26,7 @@
         <button mat-button class="button" *ngIf="linkAdmin!=undefined && statusDiferent" (click)="openLink(linkAdmin)" ><mat-icon>whatsapp</mat-icon> Contactar Admin</button>
         <button mat-button class="button" *ngIf="linkClient!=undefined && statusDiferent" (click)="openLink(linkClient)"><mat-icon>whatsapp</mat-icon> Contactar Cliente</button>
         <button mat-button class="button" *ngIf="linkDelivery!=undefined && statusDiferent" (click)="openLink(linkClient)"><mat-icon>whatsapp</mat-icon> Contactar Delivery</button>
+        <button mat-button class="button" *ngIf="linkBuyer!=undefined && statusDiferent" (click)="openLink(linkClient)"><mat-icon>whatsapp</mat-icon> Contactar Comprador</button>
     </div>
     <div style="text-align: end; margin-top: 10px;">
         <button mat-button class="button-payment" *ngIf="linkAdmin!=undefined && statusDiferent && status!='Pendiente'" (click)="openPayment()" ><mat-icon>payment</mat-icon> Ver forma de pago</button>
@@ -92,6 +93,8 @@
     </mat-card-content>
     <div style="text-align: end;" >
         <p id="status" [ngStyle]="{'color':getColorSR(status)}">{{status}}</p>
+        <p id="substate" [ngStyle]="{'color':getColorSubState(substate)}">{{substate}} <mat-icon style="font-size: 20px;">paid</mat-icon></p>
+        <button mat-button class="button-update" *ngIf="substate=='por pagar'&& (status=='En curso'|| status=='Enviando') " (click)="openChangeSubstate(status)"><mat-icon>update</mat-icon> Actualizar</button>
         <p id="fecha">Fecha de pedido:  {{orderDate}}</p>
     </div>
 

@@ -24,7 +24,7 @@
               
                   <app-order-card [idOrder]="order.order.idOrder" [orderDate]="order.date" [orderDetail]=order.order.orderDetail
                      [quantityProducts]="order.order.quantityProducts" [status]="order.status" [totalPrice]="order.order.totalPrice" [disabled]="false"[buttons]="true"[userName]="order.finalUserName"
-                        [warehouseName]="order.warehouseNameOfOrder" [telephone]="order.finalUserTelephone" [email]="order.finalUserEmail"
+                        [warehouseName]="order.warehouseNameOfOrder" [telephone]="order.finalUserTelephone" [email]="order.finalUserEmail"[substate]="order.order.substate"
                         [idOrderAssigned]="order.idOrderAssigned"
                         [linkAdmin]="order.adminWhatsappLink"  [shippingCost]="order.order.shippingCost"></app-order-card>
                         
@@ -60,7 +60,7 @@
                   <app-order-card [idOrder]="order.order.idOrder" [orderDate]="order.date" [orderDetail]=order.order.orderDetail
                      [quantityProducts]="order.order.quantityProducts" [status]="order.status" [totalPrice]="order.order.totalPrice" [disabled]="false"[buttons]="false"[complete]="true"
                      [userName]="order.finalUserName"
-                        [warehouseName]="order.warehouseNameOfOrder" [telephone]="order.finalUserTelephone" [email]="order.finalUserEmail"
+                        [warehouseName]="order.warehouseNameOfOrder" [telephone]="order.finalUserTelephone" [email]="order.finalUserEmail" [substate]="order.order.substate"
                         [idOrderAssigned]="order.idOrderAssigned"
                         [linkAdmin]="order.adminWhatsappLink" [linkClient]="order.finalUserWhatsappLink" [shippingCost]="order.order.shippingCost"></app-order-card>
                         
@@ -94,7 +94,7 @@
               
                   <app-order-card [idOrder]="order.order.idOrder" [orderDate]="order.date" [orderDetail]=order.order.orderDetail
                      [quantityProducts]="order.order.quantityProducts" [status]="order.status" [totalPrice]="order.order.totalPrice" [disabled]="false"[buttons]="false"[userName]="order.userName"
-                        [warehouseName]="order.warehouseNameOfOrder" [telephone]="order.finalUserTelephone" [email]="order.finalUserEmail"
+                        [warehouseName]="order.warehouseNameOfOrder" [telephone]="order.finalUserTelephone" [email]="order.finalUserEmail" 
                          [shippingCost]="order.order.shippingCost"></app-order-card>
                         
                 </mat-expansion-panel>
@@ -128,7 +128,7 @@
                   <app-order-card [idOrder]="order.order.idOrder" [orderDate]="order.date" [orderDetail]=order.order.orderDetail
                      [quantityProducts]="order.order.quantityProducts" [status]="order.status" [totalPrice]="order.order.totalPrice" [disabled]="false"[buttons]="false"
                      [userName]="order.finalUserName" [completed]="true"
-                        [warehouseName]="order.warehouseNameOfOrder" [telephone]="order.finalUserTelephone" [email]="order.finalUserEmail"
+                        [warehouseName]="order.warehouseNameOfOrder" [telephone]="order.finalUserTelephone" [email]="order.finalUserEmail" [substate]="order.order.substate"
                         [linkAdmin]="order.adminWhatsappLink" [linkClient]="order.finalUserWhatsappLink" [shippingCost]="order.order.shippingCost"></app-order-card>
                         
                 </mat-expansion-panel>

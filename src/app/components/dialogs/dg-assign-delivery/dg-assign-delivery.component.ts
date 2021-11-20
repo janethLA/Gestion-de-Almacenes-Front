@@ -16,8 +16,11 @@ import { DgShippingCostComponent } from '../dg-shipping-cost/dg-shipping-cost.co
 export class DgAssignDeliveryComponent implements OnInit {
   allDeliveries:any;
   allDeliveriesCopy:any;
+  allBuyers:any;
+  allBuyersCopy:any;
   noDeliverySelected:boolean=true;
   deliverySelected:any;
+  buyerSelected:any;
   searchInput = new FormControl;
   options: any;
   filteredOptions: Observable<string[]>;
@@ -27,7 +30,9 @@ export class DgAssignDeliveryComponent implements OnInit {
   paymentSelected:any;
   user:any;
   shippingForm= this.formBuilder.group({
-    shippingCost:['',[Validators.required]],
+    shippingCost:['',[]],
+    deliveryCost:['',[Validators.required]],
+    buyerCost:['',[Validators.required]],
     
   });
   
@@ -41,10 +46,13 @@ export class DgAssignDeliveryComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log(this.data)
     this.loadDataUser()
     this.loadDeliveries();
+    this.loadBuyers();
     this.getAllSectors();
     this.loadPayments();
+    
     /* this.allDeliveries=[
       {idUser:1,name:"marco",email:"marc@gmail.com",telephone:78787878,sector:"Zona SUD"},
       {idUser:2,name:"marco",email:"marc@gmail.com",telephone:78787878,sector:"Zona SUD"},
@@ -62,18 +70,50 @@ export class DgAssignDeliveryComponent implements OnInit {
       console.log(this.allDeliveries)
     })
   }
+  loadBuyers(){
+    this.RequestService.get('http://localhost:8080/api/order/allBuyers')
+    .subscribe(r=>{
+      this.allBuyers=r
+      this.allBuyersCopy=this.allBuyers
+      console.log(this.allBuyers)
+      if(this.data.assign!= undefined){
+        this.allBuyers = this.allBuyers.map((buyer) => ({
+          ...buyer,
+          seleccionado: buyer.idUser===this.data.assign.idUserOfBuyer
+        }));
+        this.noDeliverySelected=false;
+        this.buyerSelected=[{idUser:this.data.assign.idUserOfBuyer}];
+        this.loadDataAssign();
+      }
+    })
+  }
   getDelivery(options: MatListOption[]) {
     this.deliverySelected=options.map(o=> o.value);
     console.log(this.deliverySelected)
     if(options!=[]){
       this.noDeliverySelected=false;
     }
-}
+  }
+  getBuyer(options: MatListOption[]) {
+    this.buyerSelected=options.map(o=> o.value);
+    console.log(this.buyerSelected)
+    if(options!=[]){
+      this.noDeliverySelected=false;
+    }
+  }
   loadPayments(){
     this.RequestService.get('http://localhost:8080/api/payment/allPayments')
     .subscribe(r=>{
       this.allPayments=r
       console.log(this.allPayments)
+      if(this.data.assign!= undefined){
+        this.allPayments = this.allPayments.map((payment) => ({
+          ...payment,
+          seleccionado: payment.idPayment===this.data.assign.idPayment
+        }));
+        this.noPaymentSelected=false;
+        this.paymentSelected=[{idPayment:this.data.assign.idPayment}]
+      }
     })
   }
   getPayment(options: MatListOption[]) {
@@ -83,15 +123,18 @@ export class DgAssignDeliveryComponent implements OnInit {
       this.noPaymentSelected=false;
     }
   }
-  
-/* assignDelivery(){
-  this.openShippingCost();
-  } */
+  loadDataAssign(){
+      this.shippingForm.get('deliveryCost').setValue(this.data.assign?.deliveryCost)
+      this.shippingForm.get('buyerCost').setValue(this.data.assign?.buyerCost)
+      this.shippingForm.get('shippingCost').setValue(this.shippingForm.get('deliveryCost').value + this.shippingForm.get('buyerCost').value)
+ }
   assignDelivery(){
+    this.shippingForm.get('shippingCost').setValue(this.shippingForm.get('deliveryCost').value + this.shippingForm.get('buyerCost').value)
     var assign={idUser:this.deliverySelected[0].idUser,idOrder:this.data.idOrder,shippingCost:this.shippingForm.get('shippingCost').value,
-                idUserCallCenter:this.user.idUser,idPayment:this.paymentSelected[0].idPayment}
+                idUserCallCenter:this.user.idUser,idPayment:this.paymentSelected[0].idPayment, idUserOfBuyer:this.buyerSelected[0].idUser,
+                deliveryCost:this.shippingForm.get('deliveryCost').value,buyerCost:this.shippingForm.get('buyerCost').value}
     console.log(assign)
-    this.RequestService.post('http://localhost:8080/api/orderAssigned/assignOrder',assign)
+   this.RequestService.post('http://localhost:8080/api/orderAssigned/assignOrder',assign)
     .subscribe({
       next:()=>{
         //window.location.reload()

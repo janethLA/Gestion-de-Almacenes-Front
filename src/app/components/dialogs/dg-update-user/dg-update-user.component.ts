@@ -72,18 +72,18 @@ export class DgUpdateUserComponent implements OnInit {
     if(update.finalUserName==this.user.finalUserName){
       update.finalUserName=""
     }
-    //console.log(update)
+    console.log(update)
     this.RequestService.put('http://localhost:8080/api/finalUser/updateDataUser/'+this.user?.idFinalUser, update)
     .subscribe({
       next:(r:any)=>{
-        console.log(r.code)
+        console.log(r)
         if(r.code!=''){
-          this.openDialogCode(r)
+          this.openDialogCode(r,update.telephone)
         }else{
           
         this.activateSpinner=false;
         this.snack.open('Usuario actualizado exitosamente.','CERRAR',{duration:5000,panelClass:'snackSuccess',})
-        window.location.reload()
+        //window.location.reload()
         }
         //window.location.reload();
       },
@@ -161,10 +161,10 @@ export class DgUpdateUserComponent implements OnInit {
          !this.editUser.get(field).valid
       )  }
 
-      openDialogCode(respuesta){
+      openDialogCode(respuesta,telephone){
         this.dialog.open(DgPhoneCodeComponent,{
           width: '50%',
-          data: { idFinalUser:respuesta.idFinalUser,code:respuesta.code,password:respuesta.password,identifier:2}
+          data: { idFinalUser:respuesta.idFinalUser,code:respuesta.code,password:respuesta.password,identifier:2,telephone:telephone}
           });
       }    
 

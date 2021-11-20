@@ -13,19 +13,25 @@ import { DgAddReceiptComponent } from '../dialogs/dg-add-receipt/dg-add-receipt.
   styleUrls: ['./pay-delivery.component.css']
 })
 export class PayDeliveryComponent implements OnInit {
-  displayedColumns: string[] = ['select','id', 'status', 'delivery','shippingCost','dateOfOrderAssigned','actions'];
+  displayedColumns: string[] = ['select','id', 'status','paymentStatusToDelivery', 'delivery','deliveryCost','dateOfOrderAssigned','actions'];
+  displayedColumnsBuyer: string[] = ['select','id', 'status','paymentStatusToBuyer', 'buyerName','buyerCost','dateOfOrderAssigned','actions'];
   dataSource: MatTableDataSource<any>;
+  dataSourceBuyer: MatTableDataSource<any>;
   selection = new SelectionModel<any>(true, []);
   allOrders:any;
   selectedRow:boolean;
+  allOrdersBuyer:any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   
   public searchForm: FormGroup;
+  public searchFormBuyer: FormGroup;
   public status = '';
   public delivery = '';
   public dateOfOrder = '';
+  public buyer='';
   public totalShippingCost=0;
+  public totalBuyerCost=0;
   
   constructor(
     private RequestService:RequestService,
@@ -33,8 +39,9 @@ export class PayDeliveryComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.searchFormInit()
-    this.loadDeliveryData()
+    this.searchFormInit();
+    this.loadDeliveryData();
+    this.loadBuyerData();
   }
   loadDeliveryData(){
     this.RequestService.get('http://localhost:8080/api/order/allOrdersCompletedForPay')
@@ -47,12 +54,29 @@ export class PayDeliveryComponent implements OnInit {
     this.dataSource.filterPredicate = this.getFilterPredicate();
     })
   }
+  loadBuyerData(){
+    this.RequestService.get('http://localhost:8080/api/order/allOrdersCompletedForPayToBuyer')
+    .subscribe(r=>{
+      this.allOrdersBuyer = r;
+      console.log(this.allOrdersBuyer)
+      this.dataSourceBuyer = new MatTableDataSource(this.allOrdersBuyer);
+      this.dataSourceBuyer.paginator = this.paginator;
+    this.dataSourceBuyer.sort = this.sort;
+    //this.dataSourceBuyer.filterPredicate = this.getFilterPredicate();
+    })
+  }
   searchFormInit() {
     this.searchForm = new FormGroup({
       status: new FormControl('', Validators.pattern('^[a-zA-Z ]+$')),
       delivery: new FormControl('', Validators.pattern('^[a-zA-Z ]+$')),
       dateOfOrderStart: new FormControl(''),
       dateOfOrderEnd: new FormControl('')
+    });
+    this.searchFormBuyer = new FormGroup({
+      status: new FormControl('', Validators.pattern('^[a-zA-Z ]+$')),
+      buyer: new FormControl('', Validators.pattern('^[a-zA-Z ]+$')),
+      dateOfOrderStartBuyer: new FormControl(''),
+      dateOfOrderEndBuyer: new FormControl('')
     });
   }
   /* this method well be called for each row in table  */
@@ -145,16 +169,24 @@ export class PayDeliveryComponent implements OnInit {
 
   getTotalCost() {
     if(this.totalShippingCost==0){
-      return this.dataSource?.data.map(t => t.shippingCost).reduce((acc, value) => acc + value, 0);
+      return this.dataSource?.data.map(t => t.deliveryCost).reduce((acc, value) => acc + value, 0);
     }else{
       return this.totalShippingCost;
     }
     
   }
-  openAddReceipt(){
+  getTotalCostBuyer() {
+    if(this.totalBuyerCost==0){
+      return this.dataSourceBuyer?.data.map(t => t.buyerCost).reduce((acc, value) => acc + value, 0);
+    }else{
+      return this.totalBuyerCost;
+    }
+    
+  }
+  openAddReceipt(name:string){
     this.dialog.open(DgAddReceiptComponent,{
         width: '60%',
-        data: { dataSelected:this.selection.selected}
+        data: { dataSelected:this.selection.selected,name:name}
         });
     } 
     

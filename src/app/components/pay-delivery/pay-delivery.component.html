@@ -1,110 +1,234 @@
 <div class="header">
-    <h3>Administración de Pagos al Delivery</h3>
+    <h3>Administración de Pagos </h3>
     
   </div>
-  
-  <form class="filters"[formGroup]="searchForm">
-    <a mat-button class="button-pay" (click)="openAddReceipt()">
-        <mat-icon>paid</mat-icon>
-        <span>Pagar</span>
+  <mat-tab-group>
+    <mat-tab label=" Pagos Delivery">
+      <form class="filters"[formGroup]="searchForm">
+        <a mat-button class="button-pay" (click)="openAddReceipt('delivery')">
+            <mat-icon>paid</mat-icon>
+            <span>Pagar</span>
+          
+      </a>
+      <mat-form-field appearance="fill" class="date-picker">
+        <mat-label>Ingresa un rango de fechas</mat-label>
+        <mat-date-range-input  [rangePicker]="picker">
+          <input matStartDate  formControlName="dateOfOrderStart" placeholder="Start date" (dateInput)="applyFilter()">
+          <input matEndDate   formControlName="dateOfOrderEnd"  placeholder="End date" (dateInput)="applyFilter()">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
       
-  </a>
-  <mat-form-field appearance="fill" class="date-picker">
-    <mat-label>Ingresa un rango de fechas</mat-label>
-    <mat-date-range-input  [rangePicker]="picker">
-      <input matStartDate  formControlName="dateOfOrderStart" placeholder="Start date" (dateInput)="applyFilter()">
-      <input matEndDate   formControlName="dateOfOrderEnd"  placeholder="End date" (dateInput)="applyFilter()">
-    </mat-date-range-input>
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-date-range-picker #picker></mat-date-range-picker>
-  
-  </mat-form-field>
-  <mat-form-field appearance="standard" class="field-filter">
-    <mat-label>Delivery</mat-label>
-    <input matInput  placeholder="Filtrar por delivery" formControlName="delivery"#input (keyup)="applyFilter()">
-  </mat-form-field>
-  
+      </mat-form-field>
+      <mat-form-field appearance="standard" class="field-filter">
+        <mat-label>Delivery</mat-label>
+        <input matInput  placeholder="Filtrar por delivery" formControlName="delivery"#input (keyup)="applyFilter()">
+      </mat-form-field>
+      
+        
+        
+        
+      </form>
+        <div class="mat-elevation-z8"style="max-width: 100%;">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     
-    
-    
-  </form>
-    <div class="mat-elevation-z8"style="max-width: 100%;">
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-            <!-- Checkbox Column -->
-            <ng-container matColumnDef="select">
-              <th mat-header-cell *matHeaderCellDef>
-                <mat-checkbox (change)="$event ? masterToggle() : null"
-                              [checked]="selection.hasValue() && isAllSelected()"
-                              [indeterminate]="selection.hasValue() && !isAllSelected()"
-                              [aria-label]="checkboxLabel()">
-                </mat-checkbox>
-              </th>
-              <td mat-cell *matCellDef="let row">
-                <mat-checkbox (click)="$event.stopPropagation()"
-                              (change)="$event ? selection.toggle(row) : null"
-                              [checked]="selection.isSelected(row)"
-                              [aria-label]="checkboxLabel(row)">
-                </mat-checkbox>
-              </td>
-              <td mat-footer-cell *matFooterCellDef="let row">  </td>
-            </ng-container>
-          
-            <!-- Position Column -->
-            <ng-container matColumnDef="id">
-              <th mat-header-cell *matHeaderCellDef> N°. </th>
-              <td mat-cell *matCellDef="let row"> {{row.idOrder}} </td>
-              <td mat-footer-cell *matFooterCellDef="let row"> Totales </td>
-            </ng-container>
-          
-            <!-- Name Column -->
-            <ng-container matColumnDef="status">
-              <th mat-header-cell *matHeaderCellDef> Estado </th>
-              <td mat-cell *matCellDef="let row"> {{row.status}} </td>
-              <td mat-footer-cell *matFooterCellDef="let row">  </td>
-            </ng-container>
-          
-            <!-- Weight Column -->
-            <ng-container matColumnDef="delivery">
-              <th mat-header-cell *matHeaderCellDef> Delivery </th>
-              <td mat-cell *matCellDef="let row"> {{row.delivery}} </td>
-              <td mat-footer-cell *matFooterCellDef="let row"> </td>
-            </ng-container>
-          
-            <!-- Symbol Column -->
-            <ng-container matColumnDef="shippingCost">
-              <th mat-header-cell *matHeaderCellDef> Costo de Envio </th>
-              <td mat-cell *matCellDef="let row"> {{row.shippingCost}} </td>
-              <td mat-footer-cell *matFooterCellDef="let row">{{getTotalCost() +" Bs."}} </td>
-            </ng-container>
-          
-            <ng-container matColumnDef="dateOfOrderAssigned">
-                <th mat-header-cell *matHeaderCellDef> Fecha de Asignación </th>
-                <td mat-cell *matCellDef="let row"> {{row.dateOfOrderAssigned}} </td>
-                <td mat-footer-cell *matFooterCellDef="let row"> </td>
+                <!-- Checkbox Column -->
+                <ng-container matColumnDef="select">
+                  <th mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox (change)="$event ? masterToggle() : null"
+                                  [checked]="selection.hasValue() && isAllSelected()"
+                                  [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                  [aria-label]="checkboxLabel()">
+                    </mat-checkbox>
+                  </th>
+                  <td mat-cell *matCellDef="let row">
+                    <mat-checkbox (click)="$event.stopPropagation()"
+                                  (change)="$event ? selection.toggle(row) : null"
+                                  [checked]="selection.isSelected(row)"
+                                  [aria-label]="checkboxLabel(row)"
+                                  [indeterminate]="row.paymentStatusToDelivery === 'Pagado'">
+                    </mat-checkbox>
+                  </td>
+                  <td mat-footer-cell *matFooterCellDef="let row">  </td>
+                </ng-container>
+              
+                <!-- Position Column -->
+                <ng-container matColumnDef="id">
+                  <th mat-header-cell *matHeaderCellDef> N°. </th>
+                  <td mat-cell *matCellDef="let row"> {{row.idOrder}} </td>
+                  <td mat-footer-cell *matFooterCellDef="let row"> Totales </td>
+                </ng-container>
+              
+                <!-- Name Column -->
+                <ng-container matColumnDef="status">
+                  <th mat-header-cell *matHeaderCellDef> Estado </th>
+                  <td mat-cell *matCellDef="let row"> {{row.status}} </td>
+                  <td mat-footer-cell *matFooterCellDef="let row">  </td>
+                </ng-container>
+              <!--  -->
+              <ng-container matColumnDef="paymentStatusToDelivery">
+                <th mat-header-cell *matHeaderCellDef> Estado de Pago Delivery </th>
+                <td mat-cell *matCellDef="let row"> {{row.paymentStatusToDelivery}} </td>
+                <td mat-footer-cell *matFooterCellDef="let row">  </td>
               </ng-container>
-              <ng-container matColumnDef="actions" >
-                <th mat-header-cell *matHeaderCellDef style="min-width: 85px;   text-align: center;font-weight: bold;"> Acciones </th>
-                <td mat-cell *matCellDef="let row " style="text-align: center; " > 
-
-                   
-                    <a mat-button class="button-pay"(click)="openAddReceipt()">
-                        <mat-icon>paid</mat-icon>
-                        <span>Pagar</span>
-                      
-                  </a>
-
-                 </td>
-                <td mat-footer-cell *matFooterCellDef="let row"></td>
-            </ng-container>
-      
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-                (click)="selection.toggle(row)">
-            </tr>
-            <tr mat-footer-row *matFooterRowDef="displayedColumns" class="example-first-footer-row"></tr>
-          </table>
+                <!-- Weight Column -->
+                <ng-container matColumnDef="delivery">
+                  <th mat-header-cell *matHeaderCellDef> Delivery </th>
+                  <td mat-cell *matCellDef="let row"> {{row.delivery}} </td>
+                  <td mat-footer-cell *matFooterCellDef="let row"> </td>
+                </ng-container>
+              
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="deliveryCost">
+                  <th mat-header-cell *matHeaderCellDef> Costo de Envio </th>
+                  <td mat-cell *matCellDef="let row"> {{row.deliveryCost}} </td>
+                  <td mat-footer-cell *matFooterCellDef="let row">{{getTotalCost() +" Bs."}} </td>
+                </ng-container>
+              
+                <ng-container matColumnDef="dateOfOrderAssigned">
+                    <th mat-header-cell *matHeaderCellDef> Fecha de Asignación </th>
+                    <td mat-cell *matCellDef="let row"> {{row.dateOfOrderAssigned}} </td>
+                    <td mat-footer-cell *matFooterCellDef="let row"> </td>
+                  </ng-container>
+                  <ng-container matColumnDef="actions" >
+                    <th mat-header-cell *matHeaderCellDef style="min-width: 85px;   text-align: center;font-weight: bold;"> Acciones </th>
+                    <td mat-cell *matCellDef="let row " style="text-align: center; " > 
     
-      <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="Select page of orders"></mat-paginator>
-    </div>
+                       
+                        <a mat-button class="button-pay"(click)="openAddReceipt('delivery')" *ngIf="row.paymentStatusToDelivery === 'Por pagar'">
+                            <mat-icon>paid</mat-icon>
+                            <span>Pagar</span>
+                          
+                      </a>
+    
+                     </td>
+                    <td mat-footer-cell *matFooterCellDef="let row"></td>
+                </ng-container>
+          
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                    (click)="selection.toggle(row)" [ngClass]="{'change-color':row.paymentStatusToDelivery === 'Pagado'}">
+                </tr>
+                <tr mat-footer-row *matFooterRowDef="displayedColumns" class="example-first-footer-row"></tr>
+              </table>
+        
+          <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="Select page of orders"></mat-paginator>
+        </div>
+    </mat-tab>
+    
+    <!-- Pagos Comprador -->
+    <mat-tab label="Pagos Comprador">
+      <form class="filters"[formGroup]="searchFormBuyer">
+        <a mat-button class="button-pay" (click)="openAddReceipt('buyer')">
+            <mat-icon>paid</mat-icon>
+            <span>Pagar</span>
+          
+      </a>
+      <mat-form-field appearance="fill" class="date-picker">
+        <mat-label>Ingresa un rango de fechas</mat-label>
+        <mat-date-range-input  [rangePicker]="picker1">
+          <input matStartDate  formControlName="dateOfOrderStartBuyer" placeholder="Start date" (dateInput)="applyFilter()">
+          <input matEndDate   formControlName="dateOfOrderEndBuyer"  placeholder="End date" (dateInput)="applyFilter()">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker1></mat-date-range-picker>
+      
+      </mat-form-field>
+      <mat-form-field appearance="standard" class="field-filter">
+        <mat-label>Comprador</mat-label>
+        <input matInput  placeholder="Filtrar por comprador" formControlName="buyer"#input (keyup)="applyFilter()">
+      </mat-form-field>
+      
+        
+        
+        
+      </form>
+        <div class="mat-elevation-z8"style="max-width: 100%;">
+            <table mat-table [dataSource]="dataSourceBuyer" class="mat-elevation-z8">
+    
+                <!-- Checkbox Column -->
+                <ng-container matColumnDef="select">
+                  <th mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox (change)="$event ? masterToggle() : null"
+                                  [checked]="selection.hasValue() && isAllSelected()"
+                                  [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                  [aria-label]="checkboxLabel()">
+                    </mat-checkbox>
+                  </th>
+                  <td mat-cell *matCellDef="let row">
+                    <mat-checkbox (click)="$event.stopPropagation()"
+                                  (change)="$event ? selection.toggle(row) : null"
+                                  [checked]="selection.isSelected(row)"
+                                  [aria-label]="checkboxLabel(row)"
+                                  [indeterminate]="row.paymentStatusToBuyer === 'Pagado'">
+                    </mat-checkbox>
+                  </td>
+                  <td mat-footer-cell *matFooterCellDef="let row">  </td>
+                </ng-container>
+              
+                <!-- Position Column -->
+                <ng-container matColumnDef="id">
+                  <th mat-header-cell *matHeaderCellDef> N°. </th>
+                  <td mat-cell *matCellDef="let row"> {{row.idOrder}} </td>
+                  <td mat-footer-cell *matFooterCellDef="let row"> Totales </td>
+                </ng-container>
+              
+                <!-- Name Column -->
+                <ng-container matColumnDef="status">
+                  <th mat-header-cell *matHeaderCellDef> Estado </th>
+                  <td mat-cell *matCellDef="let row"> {{row.status}} </td>
+                  <td mat-footer-cell *matFooterCellDef="let row">  </td>
+                </ng-container>
+              <!--  -->
+              <ng-container matColumnDef="paymentStatusToBuyer">
+                <th mat-header-cell *matHeaderCellDef> Estado de Pago Comprador </th>
+                <td mat-cell *matCellDef="let row"> {{row.paymentStatusToBuyer}} </td>
+                <td mat-footer-cell *matFooterCellDef="let row">  </td>
+              </ng-container>
+                <!-- Weight Column -->
+                <ng-container matColumnDef="buyerName">
+                  <th mat-header-cell *matHeaderCellDef> Comprador </th>
+                  <td mat-cell *matCellDef="let row"> {{row.buyerName}} </td>
+                  <td mat-footer-cell *matFooterCellDef="let row"> </td>
+                </ng-container>
+              
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="buyerCost">
+                  <th mat-header-cell *matHeaderCellDef> Costo de Envio </th>
+                  <td mat-cell *matCellDef="let row"> {{row.buyerCost}} </td>
+                  <td mat-footer-cell *matFooterCellDef="let row">{{getTotalCostBuyer() +" Bs."}} </td>
+                </ng-container>
+              
+                <ng-container matColumnDef="dateOfOrderAssigned">
+                    <th mat-header-cell *matHeaderCellDef> Fecha de Asignación </th>
+                    <td mat-cell *matCellDef="let row"> {{row.dateOfOrderAssigned}} </td>
+                    <td mat-footer-cell *matFooterCellDef="let row"> </td>
+                  </ng-container>
+                  <ng-container matColumnDef="actions" >
+                    <th mat-header-cell *matHeaderCellDef style="min-width: 85px;   text-align: center;font-weight: bold;"> Acciones </th>
+                    <td mat-cell *matCellDef="let row " style="text-align: center; " > 
+    
+                       
+                        <a mat-button class="button-pay"(click)="openAddReceipt('buyer')" *ngIf="row.paymentStatusToBuyer === 'Por pagar'">
+                            <mat-icon>paid</mat-icon>
+                            <span>Pagar</span>
+                          
+                      </a>
+    
+                     </td>
+                    <td mat-footer-cell *matFooterCellDef="let row"></td>
+                </ng-container>
+          
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsBuyer"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsBuyer;"
+                    (click)="selection.toggle(row)" [ngClass]="{'change-color':row.paymentStatusToBuyer === 'Pagado'}">
+                </tr>
+                <tr mat-footer-row *matFooterRowDef="displayedColumnsBuyer" class="example-first-footer-row"></tr>
+              </table>
+        
+          <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="Select page of orders"></mat-paginator>
+        </div>
+    </mat-tab>
+  </mat-tab-group>
+  
     

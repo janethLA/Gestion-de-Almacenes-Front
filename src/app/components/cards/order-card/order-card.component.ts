@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { RequestService } from 'src/app/services/request.service';
 import { DgAssignDeliveryComponent } from '../../dialogs/dg-assign-delivery/dg-assign-delivery.component';
+import { DgChangeSubstateComponent } from '../../dialogs/dg-change-substate/dg-change-substate.component';
 import { DgFillEmergencyComponent } from '../../dialogs/dg-fill-emergency/dg-fill-emergency.component';
 import { DgViewPaymentComponent } from '../../dialogs/dg-view-payment/dg-view-payment.component';
 
@@ -27,27 +29,31 @@ export class OrderCardComponent implements OnInit {
   @Input() linkAdmin:string;
   @Input() linkClient:string;
   @Input() linkDelivery:string;
+  @Input() linkBuyer:string;
   @Input() nameAccount:string;
   @Input() bankName:string;
   @Input() nroAccount:any;
   @Input() qr:any;
   @Input() buttons:boolean;
   @Input() idOrderAssigned:any;
+  @Input() substate:string;
+  @Input() reassigned:boolean;
   @Input() complete:boolean;
   @Input() completed:boolean;
   @Input() finalUserPendiente:boolean;
+  @Input() assignData:any;
   productsCart:any[]=[];
   image:any;
   orderCompleted:boolean;
   statusDiferent:boolean;
   constructor(
     private dialog:MatDialog,
-    private RequestService:RequestService
+    private RequestService:RequestService,
+    private snack:MatSnackBar,
   ) { }
 
   ngOnInit(): void {
     this.getProducts();
-    
   }
 
   getColorSR(status){
@@ -71,6 +77,17 @@ export class OrderCardComponent implements OnInit {
       }
     return color;
   }
+  getColorSubState(status){
+    let color:string;
+    if (status=='por pagar') {
+      color= '#ff4848'
+    } else if (status=='pagado') {
+      color = '#28a745'
+      }else if(status=='pagado al delivery'){
+        color = '#28a745'
+      }
+    return color;
+  }
   getProducts(){
     this.orderDetail.map(order=>{
       var prod=Object.assign(order.product,{subtotal:order.subtotal, units:order.units})
@@ -80,10 +97,18 @@ export class OrderCardComponent implements OnInit {
     //console.log(this.productsCart)
   }
   openAssign(){
-    this.dialog.open(DgAssignDeliveryComponent,{
-      width: '70%',
-      data: {idOrder:this.idOrder}
-      });
+    if(this.reassigned==true){
+      this.dialog.open(DgAssignDeliveryComponent,{
+        width: '70%',
+        data: {idOrder:this.idOrder, assign:this.assignData}
+        });
+    }else{
+      this.dialog.open(DgAssignDeliveryComponent,{
+        width: '70%',
+        data: {idOrder:this.idOrder}
+        });
+    }
+    
   }
   openPayment(){
     this.dialog.open(DgViewPaymentComponent,{
@@ -119,7 +144,9 @@ export class OrderCardComponent implements OnInit {
     })
   }
   completeOrder(){
-    this.RequestService.put("http://localhost:8080/api/orderAssigned/orderCompleted/"+this.idOrderAssigned,"").subscribe({
+    console.log(this.substate)
+    if(this.substate!= 'por pagar'){
+      this.RequestService.put("http://localhost:8080/api/orderAssigned/orderCompleted/"+this.idOrderAssigned,"").subscribe({
       next:()=>{
         console.log("completado con exito")
       },error:()=>{
@@ -128,6 +155,11 @@ export class OrderCardComponent implements OnInit {
         window.location.reload()
       }
     })
+    }else{
+      this.snack.open('No se puede finalizar, falta pagar','CERRAR',{duration:5000,panelClass:'snackError',})
+       
+    }
+    
   }
   orderSent(){
     this.RequestService.put("http://localhost:8080/api/order/orderSent/"+this.idOrder,{}).subscribe({
@@ -157,6 +189,7 @@ export class OrderCardComponent implements OnInit {
     })
   }
   finalizeOrder(){
+    if(this.substate!= 'por pagar'){
     this.RequestService.put("http://localhost:8080/api/order/finalizeOrder/"+this.idOrder,{}).subscribe({
       next:()=>{
         console.log("finalizado con exito")
@@ -164,6 +197,10 @@ export class OrderCardComponent implements OnInit {
         window.location.reload()
       }
     })
+  }else{
+    this.snack.open('No se puede finalizar, verifique el estado del pago','CERRAR',{duration:5000,panelClass:'snackError',})
+     
+  }
   }
   addEmergency(){
     this.dialog.open(DgFillEmergencyComponent,{
@@ -173,5 +210,12 @@ export class OrderCardComponent implements OnInit {
   }
   openLink(link:string){
     window.open(link,'_blank')
+  }
+  openChangeSubstate(status:string){
+    
+      this.dialog.open(DgChangeSubstateComponent,{
+        width: '40%',
+        data: {idOrder: this.idOrder, status:status}
+        });
   }
 }

@@ -47,20 +47,91 @@
     
       </form>
     </mat-step>
+    <!-- Comprador -->
+    <mat-step [stepControl]="noDeliverySelected" errorMessage="Comprador is required.">
+        <form >
+          <ng-template matStepLabel>Selecciona un comprador</ng-template>
+          <h3 mat-card-title>Elija un comprador para el pedido</h3>
+      <div>
+          <div class="search__bar"  >
+              <mat-form-field appearance="outline" >
+                  <input matInput placeholder="buscar por rubro"
+                  [formControl]="searchInput"
+                  [matAutocomplete]="auto">
+                 <mat-icon matSuffix>search</mat-icon>
+                 <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let option of filteredOptions | async" [value]="option.sectorName">
+                    {{option.sectorName}}
+                  </mat-option>
+                </mat-autocomplete>
+               </mat-form-field>
+                   <button color="primary" mat-raised-button (click)="filterDeliveries()" >BUSCAR</button>
+          </div>
+  
+          <div class="search__list">
+          <mat-dialog-content style="padding-bottom: 5px; max-height: 400px;">
+              <mat-selection-list #buyers (selectionChange)="getBuyer(buyers.selectedOptions.selected)"[multiple]="false">
+                  <div class="company-card" *ngFor="let buyer of allBuyers" >
+                      <mat-list-option style="height: 75px; " class="mat-primary" [value]="buyer" [selected]="buyer.seleccionado" >
+                          <div>
+                              <h2>{{buyer?.name}}</h2>
+                              <p>{{buyer?.sector}}</p>
+                              <p>{{buyer?.telephone}}</p>
+                              <p>{{buyer?.email}}</p>
+                          </div>
+                      </mat-list-option>
+                  </div>
+              </mat-selection-list>
+          </mat-dialog-content>
+          
+          </div>
+          
+          
+      </div>
+          <mat-dialog-actions align="end" class="btn__search" style="margin-top:10px; ">
+              <button class="btn__search--omit" mat-button mat-dialog-close  >Cancelar</button>
+              <button class="btn__search--choice" mat-raised-button   matStepperNext [disabled]="noDeliverySelected">Siguiente</button>
+          </mat-dialog-actions>
+      
+        </form>
+      </mat-step>
     <!-----------------Assign shipping Cost--------------->
     <mat-step [stepControl]="shippingForm" errorMessage="Costo de envio is required.">
       <form [formGroup]="shippingForm">
         <ng-template matStepLabel>Añadir Costo de Envio</ng-template>
         <div class="content" >
             <h3>Asignar costo de envio</h3>
-                <p class="text">El monto ingresado se aplicara como costo de envio:</p>
-            <mat-form-field class="example-full-width" appearance="fill">
+               
+            <div style="text-align: center; width: 100%;">
+                
+                    <mat-form-field class="example-full-width" appearance="outline" >
+                        <mat-label>Costo de Delivery</mat-label>
+                        
+                        <input type="number" matInput placeholder="Ingrese el costo para el delivery" formControlName="deliveryCost">
+                        <span matPrefix>Bs. &nbsp;</span>
+                        <mat-error>costo de delivery es requerido</mat-error>
+                    </mat-form-field>
+                
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Costo del Comprador</mat-label>
+                        
+                        <input type="number" matInput placeholder="Ingrese el costo para el comprador" formControlName="buyerCost">
+                        <span matPrefix>Bs. &nbsp;</span>
+                        <mat-error>costo de comprador es requerido</mat-error>
+                    </mat-form-field>
+            </div>
+            <p class="text">El siguiente monto se aplicara como costo de envio:</p>
+            <p class="total-price">{{shippingForm.get('deliveryCost').value + shippingForm.get('buyerCost').value}} Bs.</p>
+            <!-- <mat-form-field class="example-full-width" appearance="fill">
                 <mat-label>Costo de envio</mat-label>
                 
-                <input type="number" matInput placeholder="Ingrese el costo de envio" formControlName="shippingCost">
+                <input type="number" matInput placeholder="Ingrese el costo de envio" formControlName="shippingCost" readonly>
                 <span matPrefix>Bs. &nbsp;</span>
                 <mat-error>costo de envio es requerido</mat-error>
-            </mat-form-field>
+            </mat-form-field> -->
+            
+                
+            
             <mat-dialog-actions align="end" class="btn__search" style="margin-top:10px; ">
                 <button class="btn__search--omit" mat-button matStepperPrevious >Atras</button>
                 <button class="btn__search--choice" mat-raised-button   matStepperNext [disabled]="shippingForm.invalid">Siguiente</button>
@@ -73,13 +144,13 @@
      <!-----------------Select payment--------------->
     <mat-step [stepControl]="noPaymentSelected" errorMessage="Forma de pago es requerida.">
       <ng-template matStepLabel>Forma de Pago</ng-template>
-      <h3>Formas de PAgo disponibles</h3>
+      <h3>Formas de Pago disponibles</h3>
       <p>Selecciona una cuenta como forma de Pago.</p>
       <div class="search__list">
         <mat-dialog-content style="padding-bottom: 5px; max-height: 400px;">
             <mat-selection-list #payments (selectionChange)="getPayment(payments.selectedOptions.selected)"[multiple]="false">
                 <div class="company-card" *ngFor="let payment of allPayments" >
-                    <mat-list-option style="height: 120px; " class="mat-primary" [value]="payment" >
+                    <mat-list-option style="height: 120px; " class="mat-primary" [value]="payment" [selected]="payment.seleccionado">
                         <div style="display: flex;">
                             <div class="image">
                                 <img [src]='"data:image/jpg;base64,"+payment?.image' alt="photo of qr" >

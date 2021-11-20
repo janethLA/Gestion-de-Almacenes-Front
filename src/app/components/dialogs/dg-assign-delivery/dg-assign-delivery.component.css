@@ -110,7 +110,6 @@ text-align: center;
 }
 .content{
     text-align: center;
-    padding: 20px;
 }
 h3{
     color:#002b5c;
@@ -161,8 +160,10 @@ img{
     font-size:12.0012px;
     line-height:18.0018px;
     width: 100%;
-    min-height: 120px;
-    max-height: 120px;
+    height: 80px;
+    max-width: 80px;
+    min-height: 80px;
+    max-height: 80px;
     margin-left: 5px;
     
 }
@@ -177,4 +178,16 @@ img{
   font-style: italic;
   text-transform: uppercase;
  
+}
+.cost{
+    display:flex;
+    vertical-align: middle;
+}
+.total-price{
+    color:#002b5c;
+    font-size:20px;
+    font-weight:800;
+    line-height:30px;
+    width: 100%;
+    font-family: Montserrat;
 }

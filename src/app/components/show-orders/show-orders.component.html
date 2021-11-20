@@ -30,5 +30,6 @@
     <app-order-card [idOrder]="order.idOrder" [orderDate]="order.orderDate" [orderDetail]=order.orderDetail [shippingCost]="order.shippingCost"
     [quantityProducts]="order.quantityProducts" [status]="order.status" [totalPrice]="order.totalPrice" [disabled]="true"[userName]="order.finalUserName"
     [warehouseName]="order.warehouseName" [sectorName]="order.sectorName"[telephone]="order.finalUserTelephone" [email]="order.finalUserEmail"
-    [linkClient]="order.finalUserWhatsappLink" [linkDelivery]="order.deliveryWhatsappLink"></app-order-card>
+    [substate]="order.substate" [reassigned]="order.reassigned" [assignData]="{idUserOfBuyer:order.idUserOfBuyer,idPayment:order.idPayment,deliveryCost:order.deliveryCost,buyerCost:order.buyerCost}"
+    [linkClient]="order.finalUserWhatsappLink" [linkDelivery]="order.deliveryWhatsappLink" [linkBuyer]="order.buyerWhatsappLink"></app-order-card>
 </div>
