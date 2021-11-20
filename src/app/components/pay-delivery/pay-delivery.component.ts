@@ -15,22 +15,28 @@ import { DgAddReceiptComponent } from '../dialogs/dg-add-receipt/dg-add-receipt.
 export class PayDeliveryComponent implements OnInit {
   displayedColumns: string[] = ['select','id', 'status','paymentStatusToDelivery', 'delivery','deliveryCost','dateOfOrderAssigned','actions'];
   displayedColumnsBuyer: string[] = ['select','id', 'status','paymentStatusToBuyer', 'buyerName','buyerCost','dateOfOrderAssigned','actions'];
+  displayedColumnsCollect: string[] = ['select','id', 'status','substateOfOrder', 'deliveryName','shippingCost','totalPrice','dateOfOrderAssigned','actions'];
   dataSource: MatTableDataSource<any>;
   dataSourceBuyer: MatTableDataSource<any>;
+  dataSourceCollect: MatTableDataSource<any>;
   selection = new SelectionModel<any>(true, []);
   allOrders:any;
   selectedRow:boolean;
   allOrdersBuyer:any;
+  allCollectsDelivery:any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   
   public searchForm: FormGroup;
   public searchFormBuyer: FormGroup;
+  public searchFormCollect: FormGroup;
   public status = '';
   public delivery = '';
   public dateOfOrder = '';
   public buyer='';
   public totalShippingCost=0;
+  public totalShippingCostCollect=0;
+  public totalPriceCollect=0;
   public totalBuyerCost=0;
   
   constructor(
@@ -42,6 +48,7 @@ export class PayDeliveryComponent implements OnInit {
     this.searchFormInit();
     this.loadDeliveryData();
     this.loadBuyerData();
+    this.loadCollectData();
   }
   loadDeliveryData(){
     this.RequestService.get('http://localhost:8080/api/order/allOrdersCompletedForPay')
@@ -65,6 +72,17 @@ export class PayDeliveryComponent implements OnInit {
     //this.dataSourceBuyer.filterPredicate = this.getFilterPredicate();
     })
   }
+  loadCollectData(){
+    this.RequestService.get('http://localhost:8080/api/order/allOrdersToCollectDelivery')
+    .subscribe(r=>{
+      this.allCollectsDelivery = r;
+      console.log(this.allCollectsDelivery)
+      this.dataSourceCollect = new MatTableDataSource(this.allCollectsDelivery);
+      this.dataSourceCollect.paginator = this.paginator;
+    this.dataSourceCollect.sort = this.sort;
+    //this.dataSourceBuyer.filterPredicate = this.getFilterPredicate();
+    })
+  }
   searchFormInit() {
     this.searchForm = new FormGroup({
       status: new FormControl('', Validators.pattern('^[a-zA-Z ]+$')),
@@ -77,6 +95,12 @@ export class PayDeliveryComponent implements OnInit {
       buyer: new FormControl('', Validators.pattern('^[a-zA-Z ]+$')),
       dateOfOrderStartBuyer: new FormControl(''),
       dateOfOrderEndBuyer: new FormControl('')
+    });
+    this.searchFormCollect = new FormGroup({
+      status: new FormControl('', Validators.pattern('^[a-zA-Z ]+$')),
+      delivery: new FormControl('', Validators.pattern('^[a-zA-Z ]+$')),
+      dateOfOrderStartCollect: new FormControl(''),
+      dateOfOrderEndCollect: new FormControl('')
     });
   }
   /* this method well be called for each row in table  */
@@ -180,6 +204,19 @@ export class PayDeliveryComponent implements OnInit {
       return this.dataSourceBuyer?.data.map(t => t.buyerCost).reduce((acc, value) => acc + value, 0);
     }else{
       return this.totalBuyerCost;
+    }
+    
+  }
+  getTotalCostCollect(field:string) {
+    if(this.totalShippingCostCollect==0 && this.totalPriceCollect==0){
+      return this.dataSourceCollect?.data.map(t => t[field]).reduce((acc, value) => acc + value, 0);
+    }else{
+      if(field=='shippingCost'){
+        return this.totalShippingCostCollect
+      }else{
+        return this.totalPriceCollect;
+      }
+      
     }
     
   }

@@ -44,6 +44,7 @@ h3{
 .filters{
   display: flex;
   height: 60px;
+  margin-top: 15px;
 }
 .date-picker{
   width: 25%;
