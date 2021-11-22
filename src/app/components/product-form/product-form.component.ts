@@ -100,6 +100,7 @@ export class ProductFormComponent implements OnInit {
       formD.append("price",this.productForm.get('price').value)
       formD.append("measurement",this.productForm.get('measurement').value)
       formD.append("idCategory",this.productForm.get('idCategory').value) 
+      formD.append("quantity",this.productForm.get('quantity').value) 
       //console.log("formData",formD);
       this.formData=formD;
      }

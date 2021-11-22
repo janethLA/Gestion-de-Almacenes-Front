@@ -56,23 +56,23 @@ export class RegisterUserComponent implements OnInit {
     email:['',[Validators.pattern(this.isValidEmail)]],
     username:['',{
       validators:[Validators.required], 
-      asyncValidators:[this.usernameCheck()],
+      asyncValidators:[this.usernameCheckEdit()],
         updateOn: 'blur'
     }],
     idRole:['',[]],
     telephone:['',{
       validators:[Validators.required,Validators.pattern(this.isValidNumber)],
-      asyncValidators:[this.telephoneCheck()],
+      asyncValidators:[this.telephoneCheckEdit()],
       updateOn: 'blur'
     }],
-    idSector:['',[]]
+    idSector:['',[]],
   })
   hide = false;
   passwordGenerate:any=this.generatePassword(8);
   rolesDisp:any[]=[];
   destroy:boolean;
   ngOnInit(): void {
-   
+   console.log(this.data)
     this.transform=this.data.transform;
     this.roles=this.data.roleList;
     this.units=this.data.unitList;
@@ -85,11 +85,12 @@ export class RegisterUserComponent implements OnInit {
       this.editUser.get('name').setValue(this.user?.name);
       //this.editUser.controls['password'].setValue(this.user?.password);
       this.editUser.controls['email'].setValue(this.user?.email);
-      this.editUser.controls['username'].setValue(this.user?.username);
-      this.editUser.controls['password'].setValue(this.user?.password);
+      this.editUser.controls['username'].setValue(this.user?.userName);
+      this.editUser.controls['password'].setValue("");
       this.editUser.controls['telephone'].setValue(this.user?.telephone);
       this.editUser.controls['idSector'].setValue(this.user?.idSector);
       this.editUser.controls['idRole'].setValue(this.user?.idRole);
+      console.log(this.editUser)
 
     }
     //this.filterUnit();
@@ -245,13 +246,54 @@ export class RegisterUserComponent implements OnInit {
       (this.registerUser.get(field).touched || this.registerUser.get(field).dirty) &&
        !this.registerUser.get(field).valid
     )  }
+    usernameCheckEdit(): AsyncValidatorFn{
+      return (control: AbstractControl) => {
+      console.log(control.value)
+      return this.RequestService.get('http://localhost:8080/api/user/uniqueUserName/'+control.value)
+        .pipe(
+            map((result) => (result==true) ?  null : ((control.value==this.user.userName)?null:{exist:!result}))
+          );
+        
+      };
+    }
+    telephoneCheckEdit(): AsyncValidatorFn{
 
+      return (control: AbstractControl) => {
+        console.log(control.value)
+        return this.RequestService.get('http://localhost:8080/api/auth/uniqueTelephoneAll/'+control.value)
+          .pipe(
+            map((result) => (result==true) ?  null : ((control.value==this.user.telephone)?null:{exist:!result}))
+          );
+        
+      };
+    }
+  getErrorMessage2(field: string,funct:string):string{
+    let message;let name;
+    if(field=="email"){
+      name="email"
+    }else if(field=="telephone"){
+      name="el numero"
+    }else if(field=="userName"){
+      name="el nombre de usuario"
+    }
+    
+      if(this.editUser?.get(field).hasError('pattern')){
+        message= name+" no es valido"
+      }else if(this.editUser?.get(field).hasError('exist')){
+        message=name+"  ya esta en uso"
+      }
+    
+    return message
+  }
+
+
+  
     isValidFieldEdit(field: string):boolean{
       return(
         (this.editUser.get(field).touched || this.editUser.get(field).dirty) &&
          !this.editUser.get(field).valid
       )  }
-      
+
      
 }
 

@@ -19,6 +19,7 @@ export class ProductCardComponent implements OnInit {
   @Input() expirationDate:any;
   @Input() categoryName:any;
   @Input() warehouseName:any;
+  @Input() quantity:any;
   @Input() edit:boolean;
   @Output() addProductEvent=new EventEmitter<any>();
   product:any;

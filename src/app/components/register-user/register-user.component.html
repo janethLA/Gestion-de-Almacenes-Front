@@ -114,7 +114,7 @@
                         <mat-label>Nombre de usuario</mat-label>
                         <input matInput placeholder="ingrese un nick"  type="text"
                                 formControlName="username" >
-                        <mat-error *ngIf="isValidFieldEdit('username')" >{{getErrorMessage('username','edit')}}</mat-error>
+                        <mat-error *ngIf="isValidFieldEdit('username')" >{{getErrorMessage2 ('username','edit')}}</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="field">
@@ -134,7 +134,7 @@
                         <mat-label>Correo electronico</mat-label>
                         <input matInput placeholder="ingrese un correo"  type="email"
                                 formControlName="email">
-                        <mat-error *ngIf="isValidFieldEdit('email')" >{{getErrorMessageEmail('email','edit')}}</mat-error>
+                        <mat-error *ngIf="isValidFieldEdit('email')" >{{getErrorMessage2('email','edit')}}</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="field">
@@ -142,7 +142,7 @@
                         <mat-label>N° Celular</mat-label>
                         <input matInput placeholder="ingrese su numero de celular" formControlName="telephone"
                                 required type="number">
-                                <mat-error *ngIf="isValidFieldEdit('telephone')">{{getErrorMessageNumber('telephone','edit')}}</mat-error>
+                                <mat-error *ngIf="isValidFieldEdit('telephone')">{{getErrorMessage2('telephone','edit')}}</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="field">
@@ -172,7 +172,6 @@
                     </div>
                 </div>
         </div>
-        
     </form>
 </div>
 

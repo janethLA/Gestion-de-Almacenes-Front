@@ -73,14 +73,19 @@
      
 </a>
 <mat-divider></mat-divider>
-<mat-grid-list [cols]="5" rowHeight="300px" gutterSize="10px">
+<div style="display: flex;  flex-wrap: wrap; padding: 5px; ">
+    <app-product-card *ngFor="let product of productsReceived"style="margin-right:10px;margin-bottom:10px" [idProduct]="product.idProduct" [productName]="product.productName"[description]="product.description" [image]="product.image" 
+        [measurement]="product.measurement"[quantity]="product.quantity" [price]="product.price[product.price.length-1].price"[edit]="true" ></app-product-card>
+        
+</div>
+<!-- <mat-grid-list [cols]="5" rowHeight="300px" gutterSize="10px">
         
     <mat-grid-tile *ngFor="let product of productsReceived" >
         <app-product-card [idProduct]="product.idProduct" [productName]="product.productName"[description]="product.description" [image]="product.image" 
         [measurement]="product.measurement" [price]="product.price[product.price.length-1].price"[edit]="true" ></app-product-card>
     </mat-grid-tile>
 
-</mat-grid-list>
+</mat-grid-list> -->
 <div style="display: flex; min-height: 300px">
     <div class="createCategory" *ngIf="pressedCategory==true">
         <app-category-form [pressedCategory]="true" [idStore]="idStore"></app-category-form>

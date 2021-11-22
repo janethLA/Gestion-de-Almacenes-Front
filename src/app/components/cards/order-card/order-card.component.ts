@@ -1,6 +1,8 @@
+import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PdfMakeWrapper, Txt } from 'pdfmake-wrapper';
 import { RequestService } from 'src/app/services/request.service';
 import { DgAssignDeliveryComponent } from '../../dialogs/dg-assign-delivery/dg-assign-delivery.component';
 import { DgChangeSubstateComponent } from '../../dialogs/dg-change-substate/dg-change-substate.component';
@@ -10,7 +12,8 @@ import { DgViewPaymentComponent } from '../../dialogs/dg-view-payment/dg-view-pa
 @Component({
   selector: 'app-order-card',
   templateUrl: './order-card.component.html',
-  styleUrls: ['./order-card.component.css']
+  styleUrls: ['./order-card.component.css'],
+  providers: [DatePipe]
 })
 export class OrderCardComponent implements OnInit {
   @Input() idOrder:number;
@@ -50,6 +53,7 @@ export class OrderCardComponent implements OnInit {
     private dialog:MatDialog,
     private RequestService:RequestService,
     private snack:MatSnackBar,
+    private datePipe: DatePipe
   ) { }
 
   ngOnInit(): void {
@@ -94,7 +98,7 @@ export class OrderCardComponent implements OnInit {
     
       this.productsCart.push(prod)
     })
-    //console.log(this.productsCart)
+    console.log(this.productsCart)
   }
   openAssign(){
     if(this.reassigned==true){
@@ -218,4 +222,34 @@ export class OrderCardComponent implements OnInit {
         data: {idOrder: this.idOrder, status:status}
         });
   }
+  async printOrder(){
+    let myDate = new Date();
+    let myActualDate = this.datePipe.transform(myDate, 'yyyy-MM-dd');
+        const pdf=new PdfMakeWrapper();
+        pdf.pageMargins([0,20,0,0])
+        pdf.pageSize('A6')
+        pdf.pageOrientation('portrait')
+        pdf.defaultStyle({
+          fontSize:11,
+         //font: 'timesNewRoman'
+          //font:'Courier New'
+        })
+       
+          pdf.add(new Txt('PEDIDO #'+this.idOrder).alignment('center').fontSize(12).bold().end);
+          pdf.add(new Txt('Almacen:'+this.warehouseName).alignment('left').fontSize(11).margin([20,0]).end);
+          pdf.add(new Txt('Sector:'+this.sectorName).alignment('left').fontSize(9).margin([20,0]).end);
+          pdf.add(new Txt('Fecha: '+ myActualDate).margin([20,5]).alignment('right').end);
+          pdf.add(new Txt('******************************************************').margin([20,0]).end);
+          pdf.add(pdf.ln(1));
+          pdf.add(new Txt('Productos                           Cantidad               Subtotal  ').margin([20,0]).bold().end);
+          this.productsCart.map(product=>{
+            pdf.add(new Txt('- '+product.productName +"("+product.quantity+product.measurement+")"+ ".........."+product.units+"unidad"+ ".........."+(product.subtotal)+"Bs").alignment('left').fontSize(10).margin([20,0]).end);
+          })
+          pdf.add(new Txt('******************************************************').margin([20,0]).end);
+          pdf.add(new Txt('Total: ' + this.totalPrice + " "+ 'Bs.').margin([20,5]).bold().alignment('right').fontSize(11).end);
+          
+           pdf.create().open()
+        
+    }
+
 }

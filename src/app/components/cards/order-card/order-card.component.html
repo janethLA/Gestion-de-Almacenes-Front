@@ -6,6 +6,7 @@
         
         <div style="display: flex;">
             <div style=" margin-top: 5px; text-align: center; width: 100px;"><p id="nroPedido">Nro {{idOrder}}</p></div>
+            <button mat-icon-button style="margin-top: -4px; margin-right: -2px;color: #85878a;" *ngIf="statusDiferent"  matTooltip="imprimir"(click)="printOrder()"><mat-icon style="font-size: 30px;">print</mat-icon></button>
             <button mat-icon-button style="margin-top: -4px; margin-right: -2px;color: #0460ca;" *ngIf="disabled && status=='Pendiente'" matTooltip="Asignar"(click)="openAssign()"><mat-icon style="font-size: 30px;">person_add_alt</mat-icon></button>
             <button mat-icon-button style="margin-top: -4px; margin-right: -2px; color: rgb(140, 219, 21)" *ngIf="disabled && status=='Enviando'"matTooltip="Finalizar pedido" (click)="finalizeOrder()"><mat-icon style="font-size: 30px;">task</mat-icon></button>
             <button mat-icon-button style="margin-top: -4px; margin-right: -2px;color: red;" *ngIf="disabled && status=='Pendiente'"matTooltip="Cancelar" (click)="cancelOrder()"><mat-icon style="font-size: 30px;">cancel</mat-icon></button>
@@ -53,7 +54,7 @@
       
                     <mat-grid-tile *ngFor="let product of productsCart" >
                         <app-item-card [disabledQuantity]="true" [units]="product.units"[idProduct]="product.idProduct" [productName]="product.productName"[description]="product.description" [image]='"data:image/jpg;base64,"+product.image' 
-                        [measurement]="product.measurement" [price]="product.subtotal/product.units"[index]="positionItem" (deleteProductEvent)="deleteProduct($event)"
+                        [measurement]="product.measurement" [price]="product.subtotal/product.units"[index]="positionItem" [quantity]="product.quantity"(deleteProductEvent)="deleteProduct($event)"
                         ></app-item-card>
                     </mat-grid-tile>
               
