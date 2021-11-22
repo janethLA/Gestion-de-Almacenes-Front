@@ -45,10 +45,10 @@
                     </div>
                     <div class="field">
                         <mat-form-field  appearance="outline" style="width: 100%;">
-                        <mat-label>N° Telefono/Celular</mat-label>
+                        <mat-label>N° Celular</mat-label>
                         <input matInput placeholder="ingrese su numero de celular" formControlName="telephone"
                                 required type="number">
-                        <mat-error >este campo es requerido</mat-error>
+                        <mat-error *ngIf="isValidField('telephone')">{{getErrorMessageNumber('telephone','register')}}</mat-error>
                         </mat-form-field>
                     </div>
                     <mat-divider style="padding-bottom: 15px;"></mat-divider>
@@ -139,10 +139,10 @@
                     </div>
                     <div class="field">
                         <mat-form-field  appearance="outline" style="width: 100%;">
-                        <mat-label>N° Telefono/Celular</mat-label>
+                        <mat-label>N° Celular</mat-label>
                         <input matInput placeholder="ingrese su numero de celular" formControlName="telephone"
                                 required type="number">
-                        <mat-error >este campo es requerido</mat-error>
+                                <mat-error *ngIf="isValidFieldEdit('telephone')">{{getErrorMessageNumber('telephone','edit')}}</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="field">

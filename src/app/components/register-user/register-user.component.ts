@@ -37,7 +37,11 @@ export class RegisterUserComponent implements OnInit {
     email:['',[Validators.required,Validators.pattern(this.isValidEmail)]],
     idRole:['',[Validators.required]],
     idSector:['',[Validators.required]],
-    telephone:['',[Validators.required,Validators.pattern(this.isValidNumber)]]
+    telephone:['',{
+      validators:[Validators.required,Validators.pattern(this.isValidNumber)],
+      asyncValidators:[this.telephoneCheck()],
+      updateOn: 'blur'
+    }],
     
     /* username:['',{
       validators:[Validators.required,Validators.pattern(this.isValidUserName)], 
@@ -56,7 +60,11 @@ export class RegisterUserComponent implements OnInit {
         updateOn: 'blur'
     }],
     idRole:['',[]],
-    telephone:['',[]],
+    telephone:['',{
+      validators:[Validators.required,Validators.pattern(this.isValidNumber)],
+      asyncValidators:[this.telephoneCheck()],
+      updateOn: 'blur'
+    }],
     idSector:['',[]]
   })
   hide = false;
@@ -163,7 +171,17 @@ export class RegisterUserComponent implements OnInit {
       
     };
   }
+  telephoneCheck(): AsyncValidatorFn{
 
+    return (control: AbstractControl) => {
+      console.log(control.value)
+      return this.RequestService.get('http://localhost:8080/api/auth/uniqueTelephoneAll/'+control.value)
+        .pipe(
+          map((result) => (result==true) ?  null : {exist:!result})
+        );
+      
+    };
+  }
   getErrorMessageEmail(field: string,funct:string):string{
     let message;
     if(funct=='register'){
@@ -175,6 +193,25 @@ export class RegisterUserComponent implements OnInit {
     }else if(funct=='edit'){
       if(this.editUser.get(field).hasError('pattern')){
         message="El email no es valido"
+      }
+    }
+    return message
+  }
+  getErrorMessageNumber(field: string,funct:string):string{
+    let message;
+    if(funct=='register'){
+      if(this.registerUser?.get(field).errors.required){
+        message="Campo celular es requerido"
+      }else if(this.registerUser?.get(field).hasError('pattern')){
+        message="El numero de celular no es valido"
+      }else if(this.registerUser?.get(field).hasError('exist')){
+        message="este numero ya esta registrado"
+      }
+    }else if(funct=='edit'){
+      if(this.editUser.get(field).hasError('pattern')){
+        message="El numero no es valido"
+      }else if(this.editUser?.get(field).hasError('exist')){
+        message="este numero ya esta registrado"
       }
     }
     return message
