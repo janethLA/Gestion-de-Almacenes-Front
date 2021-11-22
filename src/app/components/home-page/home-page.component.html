@@ -159,7 +159,7 @@
 
     <h3 style="text-align: start;padding-top: 15px;">Lista de productos  </h3>
     <h1>{{categorySelected?.categoryName}}</h1>
-    <mat-grid-list [cols]="5" rowHeight="300px" gutterSize="10px">
+    <mat-grid-list [cols]="colSize" rowHeight="300px" gutterSize="10px">
         
         <mat-grid-tile *ngFor="let product of productsReceived" >
             <app-product-card [idProduct]="product?.idProduct" [productName]="product?.productName"[description]="product?.description" [image]="product?.image" 

@@ -41,17 +41,18 @@ export class HomeAdminComponent implements OnInit {
   idUser:any;
   userName:any;
   privilegios:any;
-  displayedColumns: string[] = ['index', 'name', 'email','telephone','actions'];
+  displayedColumns: string[] = ['index', 'name', 'email','role','telephone','actions'];
   dataSource =  new MatTableDataSource<User>([]);
   columnas=[
     {titulo:"NOMBRE" ,name: "name"},
     {titulo:"CORREO" ,name: "email"},
+    {titulo:"ROL" ,name: "role"},
     {titulo:"TELEFONO" ,name: "telephone"},
 
   ];
   roles:Role[]=[];
 
-  displayedColumnsRole: string[] = ['index', 'roleName','description','privileges','edit'];
+  displayedColumnsRole: string[] = ['index', 'roleName','description','privileges'];
   dataSourceRole =  new MatTableDataSource<Role>([]);
   columnasRole=[
     {titulo:"NOMBRE ROL" ,name: "roleName"},
@@ -100,6 +101,7 @@ export class HomeAdminComponent implements OnInit {
   }
   openRegisterUser(){
     this.dialog.open(RegisterUserComponent,{
+      width: '50%',
       data:{
         unitList:this.units,
         roleList:this.roles,
@@ -110,6 +112,7 @@ export class HomeAdminComponent implements OnInit {
   }
   openEditUser(user){
     this.dialog.open(RegisterUserComponent,{
+      width: '50%',
       data:{
         unitList:this.units,
         roleList:this.roles,

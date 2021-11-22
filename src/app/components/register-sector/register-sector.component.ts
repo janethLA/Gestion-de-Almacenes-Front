@@ -21,7 +21,7 @@ export class RegisterSectorComponent implements OnInit {
   private isValidSector:any=/^[a-zA-Z0-9]+$/;
   registerSector= this.formBuilder.group({
     sectorName:['',{
-      validators:[Validators.pattern(this.isValidSector)], 
+      validators:[Validators.required], 
       asyncValidators:[this.sectorCheck()],
         updateOn: 'blur'
     }],

@@ -1,6 +1,8 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatGridList } from '@angular/material/grid-list';
 import { ActivatedRoute } from '@angular/router';
 import { Loader } from '@googlemaps/js-api-loader';
 import { fromEvent, Observable } from 'rxjs';
@@ -15,7 +17,15 @@ import { DgNewUserComponent } from '../dialogs/dg-new-user/dg-new-user.component
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
-
+  @ViewChild('grid') grid: MatGridList;
+ public colSize=5;
+  gridByBreakpoint = {
+    xl: 8,
+    lg: 6,
+    md: 4,
+    sm: 2,
+    xs: 1
+  }
  user:any;
  order:any;
  cart:any;
@@ -57,6 +67,7 @@ export class HomePageComponent implements OnInit {
     private formBuilder:FormBuilder,
     public dialog: MatDialog,
     private route: ActivatedRoute,
+    private breakpointObserver:BreakpointObserver
   ) { }
 
   ngOnInit(): void {
@@ -68,6 +79,23 @@ export class HomePageComponent implements OnInit {
     this.verifyOrdersPending();
     this.loadDataWarehouse();
   }
+  /* ngAfterContentInit() {
+    this.observableMedia.asObservable().subscribe((change: MediaChange) => {
+      this.grid.cols = this.gridByBreakpoint[change.mqAlias];
+    });
+  } */
+ngAfterContentInit(){
+  console.log(Breakpoints)
+  this.breakpointObserver.observe([
+    Breakpoints.XSmall
+  ]).subscribe(result=>{
+    if(result.matches){
+      this.colSize=2
+    }else{
+      this.colSize=5
+    }
+  })
+}
   loadChanges() {
     this.route.queryParams
       .subscribe((params: any) => {

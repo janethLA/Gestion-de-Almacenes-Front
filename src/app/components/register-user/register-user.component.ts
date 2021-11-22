@@ -24,11 +24,12 @@ export class RegisterUserComponent implements OnInit {
     user:any;
   private isValidEmail:any=/\S+@\S+\.\S/;
   private isValidUserName:any=/^[a-zA-Z0-9]+$/;
+  private isValidNumber="([6-7]{1})([0-9]{7})"
   unitSelected="1"
   registerUser= this.formBuilder.group({
     name:['',[Validators.required]],
     username:['',{
-      validators:[Validators.pattern(this.isValidUserName)], 
+      validators:[Validators.required], 
       asyncValidators:[this.usernameCheck()],
         updateOn: 'blur'
     }],
@@ -36,7 +37,7 @@ export class RegisterUserComponent implements OnInit {
     email:['',[Validators.required,Validators.pattern(this.isValidEmail)]],
     idRole:['',[Validators.required]],
     idSector:['',[Validators.required]],
-    telephone:['',[Validators.required]]
+    telephone:['',[Validators.required,Validators.pattern(this.isValidNumber)]]
     
     /* username:['',{
       validators:[Validators.required,Validators.pattern(this.isValidUserName)], 
@@ -50,7 +51,7 @@ export class RegisterUserComponent implements OnInit {
     password:['',[]],
     email:['',[Validators.pattern(this.isValidEmail)]],
     username:['',{
-      validators:[Validators.pattern(this.isValidUserName)], 
+      validators:[Validators.required], 
       asyncValidators:[this.usernameCheck()],
         updateOn: 'blur'
     }],

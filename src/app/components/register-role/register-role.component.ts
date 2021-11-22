@@ -19,7 +19,7 @@ export class RegisterRoleComponent implements OnInit {
   private isValidRole:any=/^[a-zA-Z0-9]+$/;
   registerRole= this.formBuilder.group({
     roleName:['',{
-      validators:[Validators.pattern(this.isValidRole)], 
+      validators:[Validators.required], 
       asyncValidators:[this.roleCheck()],
         updateOn: 'blur'
     }],
