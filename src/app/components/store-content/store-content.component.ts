@@ -120,13 +120,22 @@ loadDataUser(){
 }
 loadPermits(){
   console.log(this.permits)
+  var img:boolean;
+  var price:boolean;
+  var market:boolean;
   this.permits?.map(p=>{
     if(p.authority=="ROLE_ACTUALIZAR_IMAGEN" ){
-      this.edit=true;
+      img=true;
     }if(p.authority=="ROLE_ACTUALIZAR_PRECIOS"){
-      this.edit=true;
+      price=true;
     } 
     if(p.authority=="ROLE_ADMINISTRAR_ALMACENES"){
+      market=true
+     
+    }
+    if((img && price)||(img && price && market)){
+      this.edit=true
+    }else{
       this.edit=false;
     }
   })

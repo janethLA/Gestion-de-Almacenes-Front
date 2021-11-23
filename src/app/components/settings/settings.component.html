@@ -67,4 +67,12 @@
             <a mat-button (click)="openUpdateKey()" ><span>Actualizar Llave</span></a>
         </li>
     </div>
+    <div class="personal-data">
+        <mat-icon style="font-size: 45px;">qr_code_scanner</mat-icon>
+        <h1>QR whatsapp</h1>
+        <div>
+            <qr-code [value]="'www.positronx.io'"></qr-code>
+        </div>
+    </div>
+    
 </div>

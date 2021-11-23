@@ -88,6 +88,7 @@ import { DgUpdateBusinessComponent } from './components/dialogs/settings/dg-upda
 import { DgUpdateDistanceComponent } from './components/dialogs/settings/dg-update-distance/dg-update-distance.component';
 import { DgUpdateKeymapComponent } from './components/dialogs/settings/dg-update-keymap/dg-update-keymap.component';
 import { DgChangeSubstateComponent } from './components/dialogs/dg-change-substate/dg-change-substate.component';
+import { QRCodeModule } from 'angular2-qrcode';
 @NgModule({
   declarations: [
     AppComponent,
@@ -174,7 +175,8 @@ import { DgChangeSubstateComponent } from './components/dialogs/dg-change-substa
     MatDatepickerModule,
     MatNativeDateModule,
     MatStepperModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    QRCodeModule
     
   ],
   providers: [RequestService,CookieService,interceptorProvider],
