@@ -55,6 +55,7 @@ export class HomePageComponent implements OnInit {
   copyProductsReceived:any;
   activateSearch:any;
   warehouseSelected:any;
+  apiKey:any;
 
   orderForm = this.formBuilder.group({
     quantityProducts: ['',],
@@ -71,6 +72,7 @@ export class HomePageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.loadKey();
     this.loadChanges();
     this.loadDataProduct();
     this.geolocation();
@@ -79,11 +81,6 @@ export class HomePageComponent implements OnInit {
     this.verifyOrdersPending();
     this.loadDataWarehouse();
   }
-  /* ngAfterContentInit() {
-    this.observableMedia.asObservable().subscribe((change: MediaChange) => {
-      this.grid.cols = this.gridByBreakpoint[change.mqAlias];
-    });
-  } */
 ngAfterContentInit(){
   console.log(Breakpoints)
   this.breakpointObserver.observe([
@@ -94,6 +91,12 @@ ngAfterContentInit(){
     }else{
       this.colSize=5
     }
+  })
+}
+loadKey(){
+  this.RequestService.get("http://localhost:8080/api/setting/getGoogleMapsKey").subscribe(r=>{
+    //console.log(r)
+    this.apiKey=r;
   })
 }
   loadChanges() {
@@ -167,7 +170,8 @@ ngAfterContentInit(){
   loadMap(){
     
     let loader=new Loader({
-      apiKey:'AIzaSyAlZsuin6kTiBDLiELbZhUpgAeZ6UiYgWo'
+      /* apiKey:'AIzaSyAlZsuin6kTiBDLiELbZhUpgAeZ6UiYgWo' */
+      apiKey:this.apiKey
     })
     loader.load().then(() => {
       var infoWindow = new google.maps.InfoWindow();
