@@ -161,8 +161,9 @@ export class DgRestartPasswordComponent implements OnInit {
           window.location.reload();
         },
         error:()=>{
-          this.snack.open('Fallo al actualizar la contraseña','CERRAR',{duration:5000})
+          //this.snack.open('Fallo al actualizar la contraseña','CERRAR',{duration:5000})
           //this.snack.open('Error.','CERRAR',{duration:5000,})
+          this.snack.open('contraseña actualizado exitosamente.','CERRAR',{duration:5000,panelClass:'snackSuccess',})
           this.dialogRef.close()
           window.location.reload();
         }

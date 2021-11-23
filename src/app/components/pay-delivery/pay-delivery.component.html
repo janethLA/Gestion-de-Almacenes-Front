@@ -35,11 +35,11 @@
                 <!-- Checkbox Column -->
                 <ng-container matColumnDef="select">
                   <th mat-header-cell *matHeaderCellDef>
-                    <mat-checkbox (change)="$event ? masterToggle() : null"
+                    <!-- <mat-checkbox (change)="$event ? masterToggle() : null"
                                   [checked]="selection.hasValue() && isAllSelected()"
                                   [indeterminate]="selection.hasValue() && !isAllSelected()"
                                   [aria-label]="checkboxLabel()">
-                    </mat-checkbox>
+                    </mat-checkbox> -->
                   </th>
                   <td mat-cell *matCellDef="let row">
                     <mat-checkbox (click)="$event.stopPropagation()"
@@ -117,17 +117,17 @@
     </mat-tab>
     <!-- Cobros Delivery -->
     <mat-tab label=" Cobros Delivery">
-      <form class="filters"[formGroup]="searchForm">
+      <form class="filters"[formGroup]="searchFormCollect">
         <a mat-button class="button-pay" (click)="openAddReceipt('collect')">
             <mat-icon>paid</mat-icon>
-            <span>Pagar</span>
+            <span>Cobrar</span>
           
       </a>
       <mat-form-field appearance="fill" class="date-picker">
         <mat-label>Ingresa un rango de fechas</mat-label>
         <mat-date-range-input  [rangePicker]="picker2">
-          <input matStartDate  formControlName="dateOfOrderStart" placeholder="Start date" (dateInput)="applyFilter()">
-          <input matEndDate   formControlName="dateOfOrderEnd"  placeholder="End date" (dateInput)="applyFilter()">
+          <input matStartDate  formControlName="dateOfOrderStartCollect" placeholder="Start date" (dateInput)="applyFilterCollect()">
+          <input matEndDate   formControlName="dateOfOrderEndCollect"  placeholder="End date" (dateInput)="applyFilterCollect()">
         </mat-date-range-input>
         <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
         <mat-date-range-picker #picker2></mat-date-range-picker>
@@ -135,7 +135,7 @@
       </mat-form-field>
       <mat-form-field appearance="standard" class="field-filter">
         <mat-label>Delivery</mat-label>
-        <input matInput  placeholder="Filtrar por delivery" formControlName="delivery"#input (keyup)="applyFilter()">
+        <input matInput  placeholder="Filtrar por delivery" formControlName="delivery"#input (keyup)="applyFilterCollect()">
       </mat-form-field>
       
         
@@ -148,11 +148,11 @@
                 <!-- Checkbox Column -->
                 <ng-container matColumnDef="select">
                   <th mat-header-cell *matHeaderCellDef>
-                    <mat-checkbox (change)="$event ? masterToggle() : null"
+                    <!-- <mat-checkbox (change)="$event ? masterToggle() : null"
                                   [checked]="selection.hasValue() && isAllSelected()"
                                   [indeterminate]="selection.hasValue() && !isAllSelected()"
                                   [aria-label]="checkboxLabel()">
-                    </mat-checkbox>
+                    </mat-checkbox> -->
                   </th>
                   <td mat-cell *matCellDef="let row">
                     <mat-checkbox (click)="$event.stopPropagation()"
@@ -194,7 +194,7 @@
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="shippingCost">
                   <th mat-header-cell *matHeaderCellDef> Costo de Envio </th>
-                  <td mat-cell *matCellDef="let row"> {{row.shippingCostCost}} </td>
+                  <td mat-cell *matCellDef="let row"> {{row.shippingCost}} </td>
                   <td mat-footer-cell *matFooterCellDef="let row">{{getTotalCostCollect('shippingCost') +" Bs."}} </td>
                 </ng-container>
                 <ng-container matColumnDef="totalPrice">
@@ -213,9 +213,9 @@
                     <td mat-cell *matCellDef="let row " style="text-align: center; " > 
     
                        
-                        <a mat-button class="button-pay"(click)="openAddReceipt('delivery')" *ngIf="row.paymentStatusToDelivery === 'Por pagar'">
+                        <a mat-button class="button-pay"(click)="openAddReceipt('collect')" *ngIf="row.substateOfOrder === 'pagado al delivery'">
                             <mat-icon>paid</mat-icon>
-                            <span>Pagar</span>
+                            <span>Cobrar</span>
                           
                       </a>
     
@@ -245,8 +245,8 @@
       <mat-form-field appearance="fill" class="date-picker">
         <mat-label>Ingresa un rango de fechas</mat-label>
         <mat-date-range-input  [rangePicker]="picker1">
-          <input matStartDate  formControlName="dateOfOrderStartBuyer" placeholder="Start date" (dateInput)="applyFilter()">
-          <input matEndDate   formControlName="dateOfOrderEndBuyer"  placeholder="End date" (dateInput)="applyFilter()">
+          <input matStartDate  formControlName="dateOfOrderStartBuyer" placeholder="Start date" (dateInput)="applyFilterBuyer()">
+          <input matEndDate   formControlName="dateOfOrderEndBuyer"  placeholder="End date" (dateInput)="applyFilterBuyer()">
         </mat-date-range-input>
         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
         <mat-date-range-picker #picker1></mat-date-range-picker>
@@ -254,7 +254,7 @@
       </mat-form-field>
       <mat-form-field appearance="standard" class="field-filter">
         <mat-label>Comprador</mat-label>
-        <input matInput  placeholder="Filtrar por comprador" formControlName="buyer"#input (keyup)="applyFilter()">
+        <input matInput  placeholder="Filtrar por comprador" formControlName="buyer"#input (keyup)="applyFilterBuyer()">
       </mat-form-field>
       
         
@@ -267,11 +267,11 @@
                 <!-- Checkbox Column -->
                 <ng-container matColumnDef="select">
                   <th mat-header-cell *matHeaderCellDef>
-                    <mat-checkbox (change)="$event ? masterToggle() : null"
+                    <!-- <mat-checkbox (change)="$event ? masterToggle() : null"
                                   [checked]="selection.hasValue() && isAllSelected()"
                                   [indeterminate]="selection.hasValue() && !isAllSelected()"
                                   [aria-label]="checkboxLabel()">
-                    </mat-checkbox>
+                    </mat-checkbox> -->
                   </th>
                   <td mat-cell *matCellDef="let row">
                     <mat-checkbox (click)="$event.stopPropagation()"

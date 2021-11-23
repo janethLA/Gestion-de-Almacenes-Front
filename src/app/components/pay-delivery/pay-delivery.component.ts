@@ -38,6 +38,9 @@ export class PayDeliveryComponent implements OnInit {
   public totalShippingCostCollect=0;
   public totalPriceCollect=0;
   public totalBuyerCost=0;
+  public findDataDelivery:boolean;
+  public findDataCollect:boolean;
+  public findDataBuyer:boolean;
   
   constructor(
     private RequestService:RequestService,
@@ -69,7 +72,7 @@ export class PayDeliveryComponent implements OnInit {
       this.dataSourceBuyer = new MatTableDataSource(this.allOrdersBuyer);
       this.dataSourceBuyer.paginator = this.paginator;
     this.dataSourceBuyer.sort = this.sort;
-    //this.dataSourceBuyer.filterPredicate = this.getFilterPredicate();
+    this.dataSourceBuyer.filterPredicate = this.getFilterPredicateBuyer();
     })
   }
   loadCollectData(){
@@ -80,7 +83,7 @@ export class PayDeliveryComponent implements OnInit {
       this.dataSourceCollect = new MatTableDataSource(this.allCollectsDelivery);
       this.dataSourceCollect.paginator = this.paginator;
     this.dataSourceCollect.sort = this.sort;
-    //this.dataSourceBuyer.filterPredicate = this.getFilterPredicate();
+    this.dataSourceCollect.filterPredicate = this.getFilterPredicateCollect();
     })
   }
   searchFormInit() {
@@ -145,7 +148,8 @@ export class PayDeliveryComponent implements OnInit {
       matchFilter.push(customFilterAS);
 
       if(matchFilter.every(Boolean)){
-        this.totalShippingCost+=row.shippingCost;
+        this.totalShippingCost+=row.deliveryCost;
+        this.findDataDelivery=true;
       }
       // return true if all values in array is true
       // else return false
@@ -155,6 +159,7 @@ export class PayDeliveryComponent implements OnInit {
 
   applyFilter() {
     this.totalShippingCost=0;
+    this.findDataDelivery=false
     const date = this.searchForm.get('dateOfOrderStart').value;
     const as = this.searchForm.get('status').value;
     const ds = this.searchForm.get('delivery').value;
@@ -165,6 +170,135 @@ export class PayDeliveryComponent implements OnInit {
     // create string of our searching values and split if by '$'
     const filterValue = this.dateOfOrder + '$' + this.status + '$' + this.delivery;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+  applyFilterCollect() {
+    this.totalShippingCostCollect=0;
+    this.totalPriceCollect=0;
+    this.findDataCollect=false;
+    const date = this.searchFormCollect.get('dateOfOrderStartCollect').value;
+    const as = this.searchFormCollect.get('status').value;
+    const ds = this.searchFormCollect.get('delivery').value;
+    this.dateOfOrder = (date === null || date === '') ? '' : date.toISOString().split('T')[0];
+    this.status = as === null ? '' : as;
+    this.delivery = ds === null ? '' : ds;
+
+    // create string of our searching values and split if by '$'
+    const filterValue = this.dateOfOrder + '$' + this.status + '$' + this.delivery;
+    this.dataSourceCollect.filter = filterValue.trim().toLowerCase();
+  }
+  applyFilterBuyer() {
+    this.totalBuyerCost=0;
+    this.findDataBuyer=false;
+    const date = this.searchFormBuyer.get('dateOfOrderStartBuyer').value;
+    const as = this.searchFormBuyer.get('status').value;
+    const ds = this.searchFormBuyer.get('buyer').value;
+    this.dateOfOrder = (date === null || date === '') ? '' : date.toISOString().split('T')[0];
+    this.status = as === null ? '' : as;
+    this.delivery = ds === null ? '' : ds;
+
+    // create string of our searching values and split if by '$'
+    const filterValue = this.dateOfOrder + '$' + this.status + '$' + this.delivery;
+    this.dataSourceBuyer.filter = filterValue.trim().toLowerCase();
+  }
+  getFilterPredicateCollect() {
+    
+    return (row: any, filters: string) => {
+      // split string per '$' to array
+      const filterArray = filters.split('$');
+      const dateOfOrderStart = filterArray[0];
+      const dateEnd=this.searchFormCollect.get('dateOfOrderEndCollect').value;
+      const dateOfOrderEnd = (dateEnd === null || dateEnd === '') ? '' : dateEnd.toISOString().split('T')[0];
+      const status = filterArray[1];
+      const delivery = filterArray[2];
+      const matchFilter = [];
+
+      // Fetch data from row
+      let columnDateOfOrder = row.dateOfOrderAssigned;
+      const columnStatus = row.statusOfOrder;
+      const columnDelivery = row.deliveryName;
+      //var parts =columnDateOfOrder.split('-');
+      //columnDateOfOrder = new Date(parts[0], parts[1] - 1, parts[2]); 
+      // verify fetching data by our searching values
+      var customFilterDD;
+      if(dateOfOrderEnd=== ''){
+        customFilterDD = columnDateOfOrder?.includes(dateOfOrderStart);
+        
+      }else{
+        
+        if(columnDateOfOrder>= dateOfOrderStart && columnDateOfOrder<= dateOfOrderEnd){
+          customFilterDD=true;
+        }else{
+          customFilterDD=false;
+        }
+      }
+      
+      const customFilterDS = columnStatus?.toLowerCase().includes(status);
+      const customFilterAS = columnDelivery?.toLowerCase().includes(delivery);
+
+      // push boolean values into array
+      matchFilter.push(customFilterDD);
+      matchFilter.push(customFilterDS);
+      matchFilter.push(customFilterAS);
+
+      if(matchFilter.every(Boolean)){
+        this.totalShippingCostCollect+=row.shippingCost;
+        this.totalPriceCollect+=row.totalPrice;
+        this.findDataCollect=true;
+      }
+      // return true if all values in array is true
+      // else return false
+      return matchFilter.every(Boolean);
+    };
+  }
+  getFilterPredicateBuyer() {
+    
+    return (row: any, filters: string) => {
+      // split string per '$' to array
+     
+      const filterArray = filters.split('$');
+      const dateOfOrderStart = filterArray[0];
+      const dateEnd=this.searchFormBuyer.get('dateOfOrderEndBuyer').value;
+      const dateOfOrderEnd = (dateEnd === null || dateEnd === '') ? '' : dateEnd.toISOString().split('T')[0];
+      const status = filterArray[1];
+      const delivery = filterArray[2];
+      const matchFilter = [];
+
+      // Fetch data from row
+      let columnDateOfOrder = row.dateOfOrderAssigned;
+      const columnStatus = row.status;
+      const columnDelivery = row.buyerName;
+      //var parts =columnDateOfOrder.split('-');
+      //columnDateOfOrder = new Date(parts[0], parts[1] - 1, parts[2]); 
+      // verify fetching data by our searching values
+      var customFilterDD;
+      if(dateOfOrderEnd=== ''){
+        customFilterDD = columnDateOfOrder?.includes(dateOfOrderStart);
+        
+      }else{
+        
+        if(columnDateOfOrder>= dateOfOrderStart && columnDateOfOrder<= dateOfOrderEnd){
+          customFilterDD=true;
+        }else{
+          customFilterDD=false;
+        }
+      }
+      
+      const customFilterDS = columnStatus?.toLowerCase().includes(status);
+      const customFilterAS = columnDelivery?.toLowerCase().includes(delivery);
+
+      // push boolean values into array
+      matchFilter.push(customFilterDD);
+      matchFilter.push(customFilterDS);
+      matchFilter.push(customFilterAS);
+
+      if(matchFilter.every(Boolean)){
+        this.totalBuyerCost+=row.buyerCost;
+        this.findDataBuyer=true;
+      }
+      // return true if all values in array is true
+      // else return false
+      return matchFilter.every(Boolean);
+    };
   }
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -192,16 +326,34 @@ export class PayDeliveryComponent implements OnInit {
   }
 
   getTotalCost() {
-    if(this.totalShippingCost==0){
-      return this.dataSource?.data.map(t => t.deliveryCost).reduce((acc, value) => acc + value, 0);
-    }else{
-      return this.totalShippingCost;
-    }
+    
+      if(this.totalShippingCost==0 ){
+        if(this.findDataDelivery==undefined ){
+          return this.dataSource?.data.map(t => t.deliveryCost).reduce((acc, value) => acc + value, 0);
+        }else if(this.findDataDelivery==false){
+          return this.totalShippingCost=0
+        }else if(this.findDataDelivery){
+          return this.totalShippingCost
+        }
+        
+      }else{
+        return this.totalShippingCost;
+      }
+   
+    
     
   }
   getTotalCostBuyer() {
+    
     if(this.totalBuyerCost==0){
-      return this.dataSourceBuyer?.data.map(t => t.buyerCost).reduce((acc, value) => acc + value, 0);
+      if(this.findDataBuyer==undefined ){
+        return this.dataSourceBuyer?.data.map(t => t.buyerCost).reduce((acc, value) => acc + value, 0);
+      }else if(this.findDataBuyer==false){
+        return this.totalBuyerCost=0
+      }else if(this.findDataBuyer){
+        return this.totalBuyerCost
+      }
+      
     }else{
       return this.totalBuyerCost;
     }
@@ -209,7 +361,22 @@ export class PayDeliveryComponent implements OnInit {
   }
   getTotalCostCollect(field:string) {
     if(this.totalShippingCostCollect==0 && this.totalPriceCollect==0){
-      return this.dataSourceCollect?.data.map(t => t[field]).reduce((acc, value) => acc + value, 0);
+      if(this.findDataCollect==undefined ){
+        return this.dataSourceCollect?.data.map(t => t[field]).reduce((acc, value) => acc + value, 0);
+      }else if(this.findDataCollect==false){
+        if(field=='shippingCost'){
+          return this.totalShippingCostCollect=0
+        }else{
+          return this.totalPriceCollect=0;
+        }
+      }else if(this.findDataCollect){
+        if(field=='shippingCost'){
+          return this.totalShippingCostCollect
+        }else{
+          return this.totalPriceCollect;
+        }
+      }
+      
     }else{
       if(field=='shippingCost'){
         return this.totalShippingCostCollect

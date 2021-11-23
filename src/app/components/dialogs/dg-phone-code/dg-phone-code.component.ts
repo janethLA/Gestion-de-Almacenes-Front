@@ -37,6 +37,7 @@ export class DgPhoneCodeComponent implements OnInit {
     if(code.value==this.data.code){
       this.dialogRef.close()
       this.restartFinalUser();
+      this.sendMessage()
       this.loginFinalUSer();
      // this.openDialogConfirmPedido();
       console.log("logeado")
@@ -87,6 +88,13 @@ export class DgPhoneCodeComponent implements OnInit {
         //this.snack.open('Fallo al registrar el usuario','CERRAR',{duration:5000});
         
       } 
+    })
+  }
+  sendMessage(){
+    var message={message:"*Credenciales Sistema de Almacenes*, tu username es:"+this.user.userName+", contraseña: "+this.user.password,number:"591"+this.data.telephone}
+    console.log(message)
+    this.RequestService.post("http://localhost:9000/send",message).subscribe(r=>{
+      console.log(r)
     })
   }
  

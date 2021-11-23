@@ -16,7 +16,7 @@
   </div>
   <div style="text-align: center;" *ngIf="data.name=='collect'">
            
-    <li style="text-align: center;display: inline;width: 80%;" *ngFor="let pay of dataPays"><p style="font-weight: bold;">{{pay.shippingCost +"Bs." +" a "+pay.deliveryName}}</p></li>
+    <li style="text-align: center;display: inline;width: 80%;" *ngFor="let pay of dataPays"><p style="font-weight: bold;">{{pay.totalPrice+pay.shippingCost +"Bs." +" de "+pay.deliveryName}}</p></li>
 </div>
     <div class="field">
         <mat-form-field  appearance="outline" style="width: 100%;">

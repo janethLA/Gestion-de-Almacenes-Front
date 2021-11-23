@@ -9,7 +9,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 })
 export class AppComponent {
   title = 'Gestion-de-Almacenes-Front';
-  @ViewChild('sideNav') sidenav:MatSidenav;
+  @ViewChild('sideNav') sidenav!:MatSidenav;
 
   constructor(private observer:BreakpointObserver){
      
@@ -20,8 +20,8 @@ export class AppComponent {
         this.sidenav.mode='over';
         this.sidenav.close();
       }else{
-        this.sidenav.mode='side';
-        this.sidenav.open();
+       /*  this.sidenav.mode='side';
+        this.sidenav.toggle();   */
       }
   })
   }

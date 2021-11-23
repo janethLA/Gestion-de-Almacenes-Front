@@ -29,6 +29,7 @@ export class DgAssignDeliveryComponent implements OnInit {
   noPaymentSelected:boolean=true;
   paymentSelected:any;
   user:any;
+  disabledOptions:boolean=false;
   shippingForm= this.formBuilder.group({
     shippingCost:['',[]],
     deliveryCost:['',[Validators.required]],
@@ -83,6 +84,7 @@ export class DgAssignDeliveryComponent implements OnInit {
         }));
         this.noDeliverySelected=false;
         this.buyerSelected=[{idUser:this.data.assign.idUserOfBuyer}];
+        this.disabledOptions=true;
         this.loadDataAssign();
       }
     })
@@ -113,6 +115,7 @@ export class DgAssignDeliveryComponent implements OnInit {
         }));
         this.noPaymentSelected=false;
         this.paymentSelected=[{idPayment:this.data.assign.idPayment}]
+        
       }
     })
   }

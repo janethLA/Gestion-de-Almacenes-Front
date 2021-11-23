@@ -1,3 +1,4 @@
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { not } from '@angular/compiler/src/output/output_ast';
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -19,14 +20,18 @@ export class NavbarComponent implements OnInit {
   constructor(
     public cookieService:CookieService,
     private router:Router,
+    private observer:BreakpointObserver
   ) { }
 
   ngOnInit(): void {
     
       this.getDataUser();
+    
+    
+    
+  }
+  ngAfterViewInit(){
     this.verifyUser()
-    
-    
   }
   
   logout(){
@@ -59,11 +64,19 @@ export class NavbarComponent implements OnInit {
   }
   verifyUser():any{
     if(this.notLogedUser || this.permits[0]?.authority=="ROLE_FINAL_USER"){
-      return this.inputSideNav.close();
+      this.inputSideNav.close();
       
     }else{
-      return this.inputSideNav.toggle()
-    }
+      this.observer.observe(['(max-width:800px)']).subscribe(res=>{
+        if(res.matches){
+          /* this.inputSideNav.mode='over';
+          this.inputSideNav.close(); */
+        }else{
+          this.inputSideNav.mode='side';
+          this.inputSideNav.toggle();  
+        }
+    })
+  }
     
   }
 }

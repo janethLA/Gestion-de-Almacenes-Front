@@ -44,13 +44,14 @@ export class DgAddReceiptComponent implements OnInit {
       })
     }else if(this.data.name=='buyer'){
       this.RequestService.put("http://localhost:8080/api/orderAssigned/payBuyer/"+this.dataPays[0].idBuyer+"/"+this.addReceipt.get('receipt').value,listPays).subscribe({
-        next:()=>{
+        next:(r)=>{
           window.location.reload()
-        },error:()=>{
-          window.location.reload()
+        },error:(r)=>{
+          console.log(r)
+         window.location.reload()
         }
       })
-    }else{
+    }else if(this.data.name=='collect'){
       this.RequestService.put("http://localhost:8080/api/orderAssigned/collectDelivery/"+this.dataPays[0].idDelivery+"/"+this.addReceipt.get('receipt').value,listPays).subscribe({
         next:()=>{
           window.location.reload()

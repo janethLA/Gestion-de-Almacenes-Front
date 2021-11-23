@@ -72,7 +72,7 @@
           <mat-dialog-content style="padding-bottom: 5px; max-height: 400px;">
               <mat-selection-list #buyers (selectionChange)="getBuyer(buyers.selectedOptions.selected)"[multiple]="false">
                   <div class="company-card" *ngFor="let buyer of allBuyers" >
-                      <mat-list-option style="height: 75px; " class="mat-primary" [value]="buyer" [selected]="buyer.seleccionado" >
+                      <mat-list-option style="height: 75px; " class="mat-primary" [value]="buyer" [selected]="buyer.seleccionado" [disabled]="disabledOptions">
                           <div>
                               <h2>{{buyer?.name}}</h2>
                               <p>{{buyer?.sector}}</p>
@@ -107,15 +107,15 @@
                     <mat-form-field class="example-full-width" appearance="outline" >
                         <mat-label>Costo de Delivery</mat-label>
                         
-                        <input type="number" matInput placeholder="Ingrese el costo para el delivery" formControlName="deliveryCost">
+                        <input type="number" matInput placeholder="Ingrese el costo para el delivery" formControlName="deliveryCost" [attr.disabled]="disabledOptions">
                         <span matPrefix>Bs. &nbsp;</span>
                         <mat-error>costo de delivery es requerido</mat-error>
                     </mat-form-field>
                 
-                    <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-form-field class="example-full-width" appearance="outline" >
                         <mat-label>Costo del Comprador</mat-label>
                         
-                        <input type="number" matInput placeholder="Ingrese el costo para el comprador" formControlName="buyerCost">
+                        <input type="number" matInput placeholder="Ingrese el costo para el comprador" formControlName="buyerCost" [attr.disabled]="disabledOptions">
                         <span matPrefix>Bs. &nbsp;</span>
                         <mat-error>costo de comprador es requerido</mat-error>
                     </mat-form-field>
@@ -148,9 +148,9 @@
       <p>Selecciona una cuenta como forma de Pago.</p>
       <div class="search__list">
         <mat-dialog-content style="padding-bottom: 5px; max-height: 400px;">
-            <mat-selection-list #payments (selectionChange)="getPayment(payments.selectedOptions.selected)"[multiple]="false">
+            <mat-selection-list #payments (selectionChange)="getPayment(payments.selectedOptions.selected)"[multiple]="false" >
                 <div class="company-card" *ngFor="let payment of allPayments" >
-                    <mat-list-option style="height: 120px; " class="mat-primary" [value]="payment" [selected]="payment.seleccionado">
+                    <mat-list-option style="height: 120px; " class="mat-primary" [value]="payment" [selected]="payment.seleccionado" [disabled]="disabledOptions">
                         <div style="display: flex;">
                             <div class="image">
                                 <img [src]='"data:image/jpg;base64,"+payment?.image' alt="photo of qr" >
