@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit,Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit,Output, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DgUpdateImageComponent } from '../dialogs/dg-update-image/dg-update-image.component';
@@ -33,9 +33,10 @@ export class ProductCardComponent implements OnInit {
   ngOnInit(): void {
     this.image="data:image/jpg;base64,"+this.image;
     this.newPrice.setValue('price')
-    
   }
-  
+  ngOnChanges(changes: SimpleChanges) {
+    this.edit = changes.edit.currentValue;
+  }
 makeProduct(){
   this.product={idProduct:this.idProduct,productName:this.productName,description:this.description,
   image:this.image,measurement:this.measurement,price:this.price,expirationDate: this.expirationDate,categoryName:this.categoryName,warehouseName:this.warehouseName}

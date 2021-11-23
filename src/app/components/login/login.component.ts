@@ -33,8 +33,8 @@ public errorLogin:boolean;
   ) { }
   hide=true;
   ngOnInit(): void {
-    localStorage.clear()
-    this.cookieService.deleteAll();
+    /* localStorage.clear()
+    this.cookieService.deleteAll(); */
   }
   
   onLogin(login,formDirective: FormGroupDirective){

@@ -119,10 +119,14 @@ loadDataUser(){
  
 }
 loadPermits(){
+  console.log(this.permits)
   this.permits?.map(p=>{
-    if(p.authority=="ROLE_ACTUALIZAR_IMAGEN" && p.authority=="ROLE_ACTUALIZAR_PRECIOS"){
+    if(p.authority=="ROLE_ACTUALIZAR_IMAGEN" ){
       this.edit=true;
-    }else if(p.authority=="ROLE_ADMINISTRAR_ALMACENES"){
+    }if(p.authority=="ROLE_ACTUALIZAR_PRECIOS"){
+      this.edit=true;
+    } 
+    if(p.authority=="ROLE_ADMINISTRAR_ALMACENES"){
       this.edit=false;
     }
   })

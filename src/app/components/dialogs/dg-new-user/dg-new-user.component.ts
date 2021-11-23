@@ -113,7 +113,7 @@ export class DgNewUserComponent implements OnInit {
   getErrorMessageNumber(field: string,funct:string):string{
     let message;
     if(funct=='register'){
-      if(this.createUser?.get(field).errors.required){
+      if(this.createUser?.get(field).errors?.required){
         message="Campo celular es requerido"
       }else if(this.createUser?.get(field).hasError('pattern')){
         message="El numero de celular no es valido"

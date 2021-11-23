@@ -37,8 +37,8 @@ export class DgPhoneCodeComponent implements OnInit {
     if(code.value==this.data.code){
       this.dialogRef.close()
       this.restartFinalUser();
-      this.sendMessage()
-      this.loginFinalUSer();
+      
+      //this.loginFinalUSer();
      // this.openDialogConfirmPedido();
       console.log("logeado")
     }else{
@@ -84,7 +84,10 @@ export class DgPhoneCodeComponent implements OnInit {
        //window.location.reload();
       
       },
-      error:()=>{
+      error:(r)=>{
+        this.sendMessage();
+        this.loginFinalUSer();
+        
         //this.snack.open('Fallo al registrar el usuario','CERRAR',{duration:5000});
         
       } 
@@ -112,7 +115,7 @@ export class DgPhoneCodeComponent implements OnInit {
   }
   loginFinalUSer(){
     var login={username:this.user.userName,password:this.user.password}
-    //console.log(login)
+    console.log(login)
     this.RequestService.post('http://localhost:8080/api/auth/authenticate',login)
     .subscribe( {
       next:(respuesta:any)=>{

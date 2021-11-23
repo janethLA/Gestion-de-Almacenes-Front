@@ -11,11 +11,13 @@ import { RequestService } from 'src/app/services/request.service';
 export class DgUpdateBusinessComponent implements OnInit {
   public activateSpinner:boolean;
   dataBusiness:any;
+  private isValidEmail:any=/\S+@\S+\.\S/;
+  private isValidNumber="([4-6-7]{1})([0-9]{7})"
   updateBusiness=this.formBuilder.group({
     
     nameForReport:['',[Validators.required]],
-    telephoneForReport:['',[Validators.required]],
-    emailForReport:['',[Validators.required]],
+    telephoneForReport:['',[Validators.required,Validators.pattern(this.isValidNumber)]],
+    emailForReport:['',[Validators.required,Validators.pattern(this.isValidEmail)]],
     addresForReport:['',[Validators.required]],
   })
   constructor(
