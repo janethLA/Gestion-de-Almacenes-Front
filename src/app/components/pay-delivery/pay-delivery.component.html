@@ -46,7 +46,8 @@
                                   (change)="$event ? selection.toggle(row) : null"
                                   [checked]="selection.isSelected(row)"
                                   [aria-label]="checkboxLabel(row)"
-                                  [indeterminate]="row.paymentStatusToDelivery === 'Pagado'">
+                                  [indeterminate]="row.paymentStatusToDelivery === 'Pagado'"
+                                  [disabled]="row.paymentStatusToDelivery === 'Pagado'">
                     </mat-checkbox>
                   </td>
                   <td mat-footer-cell *matFooterCellDef="let row">  </td>
@@ -159,7 +160,8 @@
                                   (change)="$event ? selection.toggle(row) : null"
                                   [checked]="selection.isSelected(row)"
                                   [aria-label]="checkboxLabel(row)"
-                                  [indeterminate]="row.paymentStatusToDelivery === 'Pagado'">
+                                  [indeterminate]="row.substateOfOrder === 'cobrado'"
+                                  [disabled]="row.substateOfOrder === 'cobrado'">
                     </mat-checkbox>
                   </td>
                   <td mat-footer-cell *matFooterCellDef="let row">  </td>
@@ -225,7 +227,7 @@
           
                 <tr mat-header-row *matHeaderRowDef="displayedColumnsCollect"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumnsCollect;"
-                    (click)="selection.toggle(row)" [ngClass]="{'change-color':row.paymentStatusToDelivery === 'Pagado'}">
+                    (click)="selection.toggle(row)" [ngClass]="{'change-color':row.substateOfOrder === 'cobrado'}">
                 </tr>
                 <tr mat-footer-row *matFooterRowDef="displayedColumnsCollect" class="example-first-footer-row"></tr>
               </table>
@@ -278,7 +280,8 @@
                                   (change)="$event ? selection.toggle(row) : null"
                                   [checked]="selection.isSelected(row)"
                                   [aria-label]="checkboxLabel(row)"
-                                  [indeterminate]="row.paymentStatusToBuyer === 'Pagado'">
+                                  [indeterminate]="row.paymentStatusToBuyer === 'Pagado'"
+                                  [disabled]="row.paymentStatusToBuyer === 'Pagado'">
                     </mat-checkbox>
                   </td>
                   <td mat-footer-cell *matFooterCellDef="let row">  </td>

@@ -37,7 +37,7 @@ export class ReportOfOrdersComponent implements AfterViewInit {
   public dateOfOrder = '';
   totalShippingCost=0;
   totalPrice=0;
-  
+  findData:boolean;
   constructor(
     private RequestService:RequestService,
     private datePipe: DatePipe
@@ -125,6 +125,7 @@ export class ReportOfOrdersComponent implements AfterViewInit {
       if(matchFilter.every(Boolean)){
         this.totalShippingCost+=row.shippingCost;
         this.totalPrice+=row.totalPrice;
+        this.findData=true;
       }
       // return true if all values in array is true
       // else return false
@@ -135,6 +136,7 @@ export class ReportOfOrdersComponent implements AfterViewInit {
   applyFilter() {
     this.totalShippingCost=0;
     this.totalPrice=0;
+    this.findData=false;
     const date = this.searchForm.get('dateOfOrderStart').value;
     const as = this.searchForm.get('status').value;
     const ds = this.searchForm.get('delivery').value;
@@ -146,9 +148,37 @@ export class ReportOfOrdersComponent implements AfterViewInit {
     const filterValue = this.dateOfOrder + '$' + this.status + '$' + this.delivery;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-  getTotalCost(field:string) {
+  /* getTotalCost(field:string) {
     if(this.totalShippingCost==0 && this.totalPrice==0){
       return this.dataSource?.data.map(t => t[field]).reduce((acc, value) => acc + value, 0);
+    }else{
+      if(field=='shippingCost'){
+        return this.totalShippingCost
+      }else{
+        return this.totalPrice;
+      }
+      
+    }
+    
+  } */
+  getTotalCost(field:string) {
+    if(this.totalShippingCost==0 && this.totalPrice==0){
+      if(this.findData==undefined ){
+        return this.dataSource?.data.map(t => t[field]).reduce((acc, value) => acc + value, 0);
+      }else if(this.findData==false){
+        if(field=='shippingCost'){
+          return this.totalShippingCost=0
+        }else{
+          return this.totalPrice=0;
+        }
+      }else if(this.findData){
+        if(field=='shippingCost'){
+          return this.totalShippingCost
+        }else{
+          return this.totalPrice;
+        }
+      }
+      
     }else{
       if(field=='shippingCost'){
         return this.totalShippingCost

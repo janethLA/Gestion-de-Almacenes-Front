@@ -7,6 +7,7 @@ import { RequestService } from 'src/app/services/request.service';
 import {SelectionModel} from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
 import { DgAddReceiptComponent } from '../dialogs/dg-add-receipt/dg-add-receipt.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-pay-delivery',
   templateUrl: './pay-delivery.component.html',
@@ -45,6 +46,7 @@ export class PayDeliveryComponent implements OnInit {
   constructor(
     private RequestService:RequestService,
     private dialog:MatDialog,
+    private snack:MatSnackBar,
   ) { }
 
   ngOnInit(): void {
@@ -388,10 +390,15 @@ export class PayDeliveryComponent implements OnInit {
     
   }
   openAddReceipt(name:string){
-    this.dialog.open(DgAddReceiptComponent,{
+    if(this.selection.selected.length==0){
+      this.snack.open('Seleccione al menos un pedido de la tabla.','CERRAR',{duration:5000,panelClass:'error',})
+    }else{
+      this.dialog.open(DgAddReceiptComponent,{
         width: '60%',
         data: { dataSelected:this.selection.selected,name:name}
         });
     } 
+    }
+    
     
 }

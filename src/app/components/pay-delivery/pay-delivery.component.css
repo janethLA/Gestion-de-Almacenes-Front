@@ -79,3 +79,6 @@ h3{
   .change-color{
     background-color: rgb(189, 250, 119);
   }
+  ::ng-deep .error {
+    background-color: #dd4141;
+  }

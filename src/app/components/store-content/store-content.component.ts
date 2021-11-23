@@ -20,6 +20,9 @@ export class StoreContentComponent implements OnInit {
   categorySelected:any={categoryName:"Todos los productos"}
   productsReceived:any[]=[];
   copyProductsReceived:any;
+  user:any;
+  permits:any;
+    edit:Boolean;
   constructor(
     private RequestService:RequestService,
     private rutaActiva: ActivatedRoute,
@@ -28,6 +31,7 @@ export class StoreContentComponent implements OnInit {
 
   ngOnInit(): void {
     this.idStore= this.rutaActiva.snapshot.params.id
+    this.loadDataUser();
     this.loadDataStore();
     this.loadCategories();
     //this.loadDataProduct();
@@ -108,4 +112,20 @@ export class StoreContentComponent implements OnInit {
     })
   
 }
+loadDataUser(){
+  this.user=JSON.parse(localStorage.getItem("user"))
+  this.permits=JSON.parse(localStorage.getItem("permits"))
+  this.loadPermits()
+ 
+}
+loadPermits(){
+  this.permits?.map(p=>{
+    if(p.authority=="ROLE_ACTUALIZAR_IMAGEN" && p.authority=="ROLE_ACTUALIZAR_PRECIOS"){
+      this.edit=true;
+    }else if(p.authority=="ROLE_ADMINISTRAR_ALMACENES"){
+      this.edit=false;
+    }
+  })
+}
+
 }

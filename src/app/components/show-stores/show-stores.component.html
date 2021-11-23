@@ -8,14 +8,20 @@
         <span>Nuevo Almacen </span>
         
     </a>
-    <mat-grid-list [cols]="2" rowHeight="300px" gutterSize="10px">
+
+    <div style="display: flex;  flex-wrap: wrap; padding: 5px;text-align: center;margin-left: 15px; ">
+        <app-store-card *ngFor="let warehouse of warehousesReceived"style="margin:15px"  [id]="warehouse.idMarket" [name]="warehouse.warehouseName" [address]="warehouse.address" 
+            [latitude]="warehouse.latitude" [longitude]="warehouse.longitude"[image]='"data:image/jpg;base64,"+warehouse.warehouseImage' ></app-store-card>
+        
+    </div>
+    <!-- <mat-grid-list [cols]="2" rowHeight="300px" gutterSize="10px">
         
         <mat-grid-tile *ngFor="let warehouse of warehousesReceived" >
             <app-store-card [id]="warehouse.idMarket" [name]="warehouse.warehouseName" [address]="warehouse.address" 
             [latitude]="warehouse.latitude" [longitude]="warehouse.longitude"[image]='"data:image/jpg;base64,"+warehouse.warehouseImage' ></app-store-card>
         </mat-grid-tile>
 
-    </mat-grid-list>
+    </mat-grid-list> -->
 </div>
   
                 

@@ -75,7 +75,7 @@
 <mat-divider></mat-divider>
 <div style="display: flex;  flex-wrap: wrap; padding: 5px; ">
     <app-product-card *ngFor="let product of productsReceived"style="margin-right:10px;margin-bottom:10px" [idProduct]="product.idProduct" [productName]="product.productName"[description]="product.description" [image]="product.image" 
-        [measurement]="product.measurement"[quantity]="product.quantity" [price]="product.price[product.price.length-1].price"[edit]="true" ></app-product-card>
+        [measurement]="product.measurement"[quantity]="product.quantity" [price]="product.price[product.price.length-1].price"[edit]="edit" ></app-product-card>
         
 </div>
 <!-- <mat-grid-list [cols]="5" rowHeight="300px" gutterSize="10px">
