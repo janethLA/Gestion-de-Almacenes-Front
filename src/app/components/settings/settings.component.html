@@ -10,7 +10,7 @@
         <h1>Datos de la empresa</h1>
         
     </div>
-    <div style="padding: 20px; margin-left: 45px;">
+    <div style="padding: 20px; margin-left: 45px; max-width:100% ;">
         <li class="data">Nombre:
             <span class="subdata">{{dataConfiguration?.nameForReport}}</span>
         </li>
@@ -24,7 +24,7 @@
             <span class="subdata">{{dataConfiguration?.addresForReport}}</span>
         </li>
     </div>
-    <div style="display: flex;padding: 20px;">
+    <div style="display: flex;padding: 20px;max-width:100% ">
         <li>
             <a mat-button (click)="openUpdateBusiness()"><span>Actualizar Datos de Empresa</span></a>
         </li><!-- 
@@ -73,9 +73,15 @@
         
     </div>
     <div style="padding: 20px; margin-left: 45px; width: 50%;height: 50%;"*ngIf="qrData!=undefined">
-        <qr-code [value]="qrData?.qr"></qr-code>
+        <qr-code  size="200" [value]="qrData?.qr"></qr-code>
     </div>
-    <div style="padding: 20px; margin-left: 45px;"*ngIf="sesionInit">
+    <div style="padding: 20px; margin-left: 5px;width: 100%;"*ngIf="loading && qrData==undefined">
+        <li class="data">Sesion de whatsapp:
+            <span class="subdata">Cargando...(Verifique que su teléfono tenga conexión)</span>
+        </li>
+        
+    </div>
+    <div style="padding: 20px; margin-left: 5px;width: 100%;"*ngIf="sesionInit">
         <li class="data">Sesion de whatsapp:
             <span class="subdata">iniciada</span>
         </li>

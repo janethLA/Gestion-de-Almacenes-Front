@@ -15,6 +15,7 @@ export class SettingsComponent implements OnInit {
   dataConfiguration:any;
   qrData:any;
   sesionInit:boolean;
+  loading:boolean;
   mySubscription: Subscription
   constructor(
     private RequestService:RequestService,
@@ -24,7 +25,7 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
     this.loadDataConfigurations();
     this.loadDataQr()
-    this.mySubscription= interval(10000).subscribe((x =>{
+    this.mySubscription= interval(5000).subscribe((x =>{
       this.loadDataQr();
   }));
 
@@ -32,19 +33,28 @@ export class SettingsComponent implements OnInit {
 
   loadDataConfigurations(){
     this.RequestService.get("http://localhost:8080/api/setting/getSetting").subscribe(r=>{
-    console.log(r)
+    //console.log(r)
     this.dataConfiguration=r
     })
   }
   loadDataQr(){
     this.RequestService.getQr("http://localhost:9000/qr").subscribe(r=>{
-      console.log(r)
-      if(Object.entries(r).length != 0){
+     // console.log(r)
+     if(Object.entries(r).length == 0){
+      this.loading=true;
+    }else if(r.qr=="Sesion iniciada"){
+        this.sesionInit=true;
+        this.loading=false;
+        this.mySubscription.unsubscribe()
+      }else{
+        this.qrData=r
+      }
+      /* if(Object.entries(r).length == 0){
         this.qrData=r
       }else{
         this.sesionInit=true;
         this.mySubscription.unsubscribe()
-      }
+      } */
       
     })
   }
