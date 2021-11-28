@@ -89,6 +89,8 @@ import { DgUpdateDistanceComponent } from './components/dialogs/settings/dg-upda
 import { DgUpdateKeymapComponent } from './components/dialogs/settings/dg-update-keymap/dg-update-keymap.component';
 import { DgChangeSubstateComponent } from './components/dialogs/dg-change-substate/dg-change-substate.component';
 import { QRCodeModule } from 'angular2-qrcode';
+import { DgUpdatePermitsComponent } from './components/dialogs/dg-update-permits/dg-update-permits.component';
+import { BuyerPageComponent } from './components/buyer-page/buyer-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -139,6 +141,8 @@ import { QRCodeModule } from 'angular2-qrcode';
     DgUpdateDistanceComponent,
     DgUpdateKeymapComponent,
     DgChangeSubstateComponent,
+    DgUpdatePermitsComponent,
+    BuyerPageComponent,
   ],
   imports: [
     BrowserModule,

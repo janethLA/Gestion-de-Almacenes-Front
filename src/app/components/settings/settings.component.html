@@ -70,9 +70,15 @@
     <div class="personal-data">
         <mat-icon style="font-size: 45px;">qr_code_scanner</mat-icon>
         <h1>QR whatsapp</h1>
-        <div>
-            <qr-code [value]="'www.positronx.io'"></qr-code>
-        </div>
+        
     </div>
-    
+    <div style="padding: 20px; margin-left: 45px; width: 50%;height: 50%;"*ngIf="qrData!=undefined">
+        <qr-code [value]="qrData?.qr"></qr-code>
+    </div>
+    <div style="padding: 20px; margin-left: 45px;"*ngIf="sesionInit">
+        <li class="data">Sesion de whatsapp:
+            <span class="subdata">iniciada</span>
+        </li>
+        
+    </div>
 </div>

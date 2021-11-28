@@ -1,0 +1,23 @@
+<div class="position-button">
+    <button mat-icon-button mat-dialog-close style="top: 0;right: 0;"><mat-icon>cancel</mat-icon></button>
+</div>
+
+<div class="popup" >
+    <h1>Editar Permisos</h1>
+    <p>Selecciona los permisos que se aumentaran a este rol:</p>
+    <mat-selection-list >
+        <mat-list-option *ngFor="let priv of privileges" [value]="priv" selected disabled>
+            {{priv.privilege}}
+        </mat-list-option>
+    </mat-selection-list>
+    <mat-selection-list #privs (selectionChange)="onGroupsChange(privs.selectedOptions.selected)">
+        <mat-list-option *ngFor="let privilege of privilegesList" [value]="privilege.privilege">
+            {{privilege.privilege}}
+        </mat-list-option>
+    </mat-selection-list>
+    <div class="links">
+      <a mat-button class="btn-confirm" (click)="updatePrivileges()">
+        <span > Actualizar</span>
+      </a>
+    </div>
+  </div>

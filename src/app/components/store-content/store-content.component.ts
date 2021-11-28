@@ -133,9 +133,9 @@ loadPermits(){
       market=true
      
     }
-    if((img && price)||(img && price && market)){
+    if((img && price)){
       this.edit=true
-    }else{
+    }else if(market){
       this.edit=false;
     }
   })

@@ -40,6 +40,7 @@ export class DgRestartPasswordComponent implements OnInit {
     confirmPassword:['',[Validators.required,Validators.minLength(6),this.confirmCheckUser()]],
   })
   ngOnInit(): void {
+    console.log(this.data)
   }
   existUser:string;
   
@@ -157,17 +158,27 @@ export class DgRestartPasswordComponent implements OnInit {
       .subscribe({
         next:()=>{
           this.snack.open('contraseña actualizado exitosamente.','CERRAR',{duration:5000,panelClass:'snackSuccess',})
+          this.sendMessage()
           this.dialogRef.close()
           window.location.reload();
+          
         },
         error:()=>{
           //this.snack.open('Fallo al actualizar la contraseña','CERRAR',{duration:5000})
           //this.snack.open('Error.','CERRAR',{duration:5000,})
           this.snack.open('contraseña actualizado exitosamente.','CERRAR',{duration:5000,panelClass:'snackSuccess',})
+          this.sendMessage()
           this.dialogRef.close()
           window.location.reload();
         }
       });
     
   }
+  sendMessage(){
+    var message={message:"*Recuperación de contraseña*, tu username es:"+"hola"+", contraseña: "+this.changePasswordUser.get('password').value,number:"591"+this.data.telephone}
+    console.log(message)
+    this.RequestService.post("http://localhost:9000/send",message).subscribe(r=>{
+      console.log(r)
+    })
+  } 
 }

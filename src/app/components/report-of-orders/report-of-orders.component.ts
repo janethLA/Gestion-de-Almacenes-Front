@@ -98,7 +98,7 @@ export class ReportOfOrdersComponent implements AfterViewInit {
       // Fetch data from row
       let columnDateOfOrder = row.dateOfOrder;
       const columnStatus = row.status;
-      const columnDelivery = row.delivery;
+      const columnDelivery = row.delivery === null ? '' : row.delivery;
       //var parts =columnDateOfOrder.split('-');
       //columnDateOfOrder = new Date(parts[0], parts[1] - 1, parts[2]); 
       // verify fetching data by our searching values

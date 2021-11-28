@@ -82,6 +82,7 @@ export class DgUpdateUserComponent implements OnInit {
         }else{
           
         this.activateSpinner=false;
+        this.sendMessage()
         this.snack.open('Usuario actualizado exitosamente.','CERRAR',{duration:5000,panelClass:'snackSuccess',})
         //window.location.reload()
         }
@@ -166,6 +167,13 @@ export class DgUpdateUserComponent implements OnInit {
           width: '50%',
           data: { idFinalUser:respuesta.idFinalUser,code:respuesta.code,password:respuesta.password,identifier:2,telephone:telephone}
           });
-      }    
-
+      } 
+         
+      sendMessage(){
+        var message={message:"*Actualizacion de Credenciales Sistema de Almacenes*, tu username es:"+this.editUser.get('userName').value+", contraseña: "+this.editUser.get('password').value,number:"591"+this.user.telephone}
+        console.log(message)
+        this.RequestService.post("http://localhost:9000/send",message).subscribe(r=>{
+          console.log(r)
+        })
+      }
 }

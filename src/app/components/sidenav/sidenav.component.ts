@@ -10,6 +10,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class SidenavComponent implements OnInit {
   open=false;
   openDelivery=false;
+  openBuyer=false;
   user:any;
   permits:any;
   ROLE_ADMINISTRAR_USUARIOS:boolean;

@@ -26,6 +26,7 @@ export class ProductCardComponent implements OnInit {
   makeDecisions=true;
   editMonto=false;
   newPrice=new FormControl();
+  add:boolean;
   constructor(
     private dialog:MatDialog
   ) { }
@@ -53,6 +54,7 @@ dataURItoBlob(dataURI) {
    return blob;
 }
 addCart(){
+  this.add=true;
   this.makeProduct();
   this.addProductEvent.emit(this.product)
   

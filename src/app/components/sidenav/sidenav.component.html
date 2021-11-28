@@ -38,6 +38,7 @@
         <mat-icon>delivery_dining</mat-icon>
         <span>Delivery</span>
     </a>
+    
     <div *ngIf="openDelivery" style="margin-left: 10px;">
         <a mat-button class="sub-menu-button" routerLink="/home/reports/delivery">
             <mat-icon>summarize</mat-icon>
@@ -46,6 +47,17 @@
         <a mat-button class="sub-menu-button" routerLink="/home/delivery">
             <mat-icon>delivery_dining</mat-icon>
             <span>Pedidos Delivery</span>
+        </a>
+    </div>
+    <a mat-button class="menu-button" (click)="openBuyer=!openBuyer"  *ngIf="ROLE_ACTUALIZAR_PRECIOS || ROLE_ACTUALIZAR_IMAGEN">
+        <mat-icon>shopping_bag</mat-icon>
+        <span>Comprador</span>
+    </a>
+    
+    <div *ngIf="openBuyer" style="margin-left: 10px;">
+        <a mat-button class="sub-menu-button" routerLink="/home/buyer" >
+            <mat-icon>format_list_numbered</mat-icon>
+            <span>Pedidos Comprador</span>
         </a>
     </div>
     <a mat-button class="menu-button" routerLink="/home/payments" *ngIf="ROLE_ADMINISTRAR_PEDIDOS">

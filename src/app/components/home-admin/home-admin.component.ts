@@ -8,6 +8,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { DgPrivelegesComponent } from 'src/app/components/dg-priveleges/dg-priveleges.component';
 import { RegisterSectorComponent } from '../register-sector/register-sector.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DgUpdatePermitsComponent } from '../dialogs/dg-update-permits/dg-update-permits.component';
 
 
 export interface User{
@@ -52,7 +53,7 @@ export class HomeAdminComponent implements OnInit {
   ];
   roles:Role[]=[];
 
-  displayedColumnsRole: string[] = ['index', 'roleName','description','privileges'];
+  displayedColumnsRole: string[] = ['index', 'roleName','description','privileges','edit'];
   dataSourceRole =  new MatTableDataSource<Role>([]);
   columnasRole=[
     {titulo:"NOMBRE ROL" ,name: "roleName"},
@@ -139,6 +140,15 @@ export class HomeAdminComponent implements OnInit {
     this.dialog.open(DgPrivelegesComponent,{
       data:{
         privileges:priv
+      }
+    })
+  }
+  editPermits(privilege,idRole){
+    this.dialog.open(DgUpdatePermitsComponent,{
+      width: '50%',
+      height:'100%',
+      data:{
+        privileges:privilege,idRole:idRole
       }
     })
   }

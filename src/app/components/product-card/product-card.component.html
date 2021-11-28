@@ -17,6 +17,7 @@
       
     </mat-card-content>
     <mat-card-actions style="padding: 15px;">
-      <button mat-button class="button" (click)="addCart()">Añadir al Carrito</button>
+      <button mat-button class="button"*ngIf="add==undefined" (click)="addCart()">Añadir al Carrito</button>
+      <button mat-button class="button" *ngIf="add" disabled>Añadido</button>
     </mat-card-actions>
   </mat-card>

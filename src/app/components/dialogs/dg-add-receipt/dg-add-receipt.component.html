@@ -27,8 +27,8 @@
     </div>
     <div class="links">
       <a mat-button class="btn-confirm"[disabled]="addReceipt.invalid"(click)="sendReceipt()">
-        <span *ngIf="activateSpinner==undefined"> Guardar</span>
-        <span *ngIf="activateSpinner"> Guardadando</span>
+        <span *ngIf="activateSpinner==undefined"> Confirmar Pago</span>
+        <span *ngIf="activateSpinner"> Guardando</span>
         <span *ngIf="activateSpinner==false">Recibo guardado</span>
         <mat-icon><mat-spinner *ngIf="activateSpinner" [diameter]="30"></mat-spinner></mat-icon>
         <mat-icon *ngIf="activateSpinner==false">done</mat-icon>

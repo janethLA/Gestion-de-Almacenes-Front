@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { BuyerPageComponent } from './components/buyer-page/buyer-page.component';
 import { DeliveryPageComponent } from './components/delivery-page/delivery-page.component';
 import { HomeAdminComponent } from './components/home-admin/home-admin.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
@@ -33,6 +34,7 @@ const routes: Routes = [
   {path:'home/reports',component:ReportOfOrdersComponent,canActivate:[UserGuard]},
   {path:'home/reports/delivery',component:ReportOfDeliveryComponent,canActivate:[UserGuard]},
   {path:'home/delivery',component:DeliveryPageComponent,canActivate:[UserGuard]},
+  {path:'home/buyer',component:BuyerPageComponent,canActivate:[UserGuard]},
   {path:'home/payments',component:PaymentsContentComponent,canActivate:[UserGuard]},
   {path:'home/update/warehouses',component:UpdateWarehouseComponent,canActivate:[UserGuard]},
   {path:'home/pay-delivery',component:PayDeliveryComponent,canActivate:[UserGuard]},

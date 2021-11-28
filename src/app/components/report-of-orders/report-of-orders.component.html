@@ -21,11 +21,20 @@
   <mat-label>Delivery</mat-label>
   <input matInput  placeholder="Filtrar por delivery" formControlName="delivery"#input (keyup)="applyFilter()">
 </mat-form-field>
-<mat-form-field appearance="standard" class="field-filter">
+<!-- <mat-form-field appearance="standard" class="field-filter">
   <mat-label>Estado </mat-label>
   <input matInput  placeholder="Filtrar por estado" formControlName="status"#input (keyup)="applyFilter()">
+</mat-form-field> -->
+<mat-form-field appearance="outline" class="field-filter">
+  <mat-label>Filtrar por estado</mat-label>
+  <mat-select disableRipple formControlName="status" (selectionChange)="applyFilter()">
+      <mat-option value="">Todos</mat-option>
+      <mat-option value="Pendiente">Pendiente</mat-option>
+      <mat-option value="En curso">En curso</mat-option>
+      <mat-option value="Enviando">Enviando</mat-option>
+      <mat-option value="Finalizado">Finalizado</mat-option>
+    </mat-select>
 </mat-form-field>
-  
   
   
 </form>

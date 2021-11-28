@@ -80,7 +80,7 @@ export class ReportOfDeliveryComponent implements OnInit {
       // Fetch data from row
       let columnDateOfOrder = row.dateOfOrderAssigned;
       const columnStatus = row.statusOfOrderAssigned;
-      const columnDelivery = row.delivery;
+      const columnDelivery = row.delivery === null ? '' : row.delivery;;
       //var parts =columnDateOfOrder.split('-');
       //columnDateOfOrder = new Date(parts[0], parts[1] - 1, parts[2]); 
       // verify fetching data by our searching values

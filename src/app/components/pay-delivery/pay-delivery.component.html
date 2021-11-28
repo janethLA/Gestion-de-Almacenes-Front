@@ -7,7 +7,7 @@
       <form class="filters"[formGroup]="searchForm">
         <a mat-button class="button-pay" (click)="openAddReceipt('delivery')">
             <mat-icon>paid</mat-icon>
-            <span>Pagar</span>
+            <span>Pagar Varios</span>
           
       </a>
       <mat-form-field appearance="fill" class="date-picker">
@@ -121,7 +121,7 @@
       <form class="filters"[formGroup]="searchFormCollect">
         <a mat-button class="button-pay" (click)="openAddReceipt('collect')">
             <mat-icon>paid</mat-icon>
-            <span>Cobrar</span>
+            <span>Cobrar Varios</span>
           
       </a>
       <mat-form-field appearance="fill" class="date-picker">
@@ -217,7 +217,7 @@
                        
                         <a mat-button class="button-pay"(click)="openAddReceipt('collect')" *ngIf="row.substateOfOrder === 'pagado al delivery'">
                             <mat-icon>paid</mat-icon>
-                            <span>Cobrar</span>
+                            <span>Cobrar individual</span>
                           
                       </a>
     
@@ -241,7 +241,7 @@
       <form class="filters"[formGroup]="searchFormBuyer">
         <a mat-button class="button-pay" (click)="openAddReceipt('buyer')">
             <mat-icon>paid</mat-icon>
-            <span>Pagar</span>
+            <span>Pagar Varios</span>
           
       </a>
       <mat-form-field appearance="fill" class="date-picker">
