@@ -53,8 +53,13 @@ export class DgUpdatePermitsComponent implements OnInit {
   }
   updatePrivileges(){
     this.RequestService.put('http://localhost:8080/api/role/addPrivileges/'+this.idRole,this.selectedPrivilege).subscribe(
-      r=>{
-        console.log(r)
+      {next:()=>{
+
+      },error:()=>{
+        this.snack.open('privilegios actualizados.','CERRAR',{duration:5000,panelClass:'snackSuccess',})
+       window.location.reload();
+      }
+       
       }
     )
   }
