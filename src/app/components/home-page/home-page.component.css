@@ -214,7 +214,134 @@ p{
     padding-top: 5px;
     
 }
-img{
+.img{
     max-width: 100%;
     max-height: 120px;
 }
+#container{
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 20px;
+    height: 575px;
+    }
+    #bg-container{
+    width: 50%;
+    z-index:0;
+    }
+    #bg-container img{
+    width: 100%;
+    height: 40%;
+    margin-top: 30%;
+    margin-left: 10%;
+    
+    }
+    #content-container{
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index:1;
+    }
+    #content-container h1{
+    color: #002b5c;
+    font-weight: 900;
+    font-size: 60px;
+    line-height: 0.9em;
+    margin-bottom: 30px;
+    }
+    #content-container h4{
+        color:#757272;
+        font-weight: 900;
+        font-size: 30px;
+        line-height: 0.9em;
+        margin-bottom: 30px;
+        }
+    #content-container p{
+    line-height: 1.8em;
+    font-weight: 500;
+    }
+    #content-container button{
+    border: none;
+    outline: none;
+    color: #FFF;
+    background-color: #002b5c;
+    padding: 16px 0px;
+    border-radius: 40px;
+    font-size: 16px;
+    width: 160px;
+    margin-top: 30px;
+    cursor: pointer;
+    }
+    #content-container button:hover{
+    opacity: 0.9;
+    }
+    .absolute{
+        background:#002b5c ;
+        clip-path: polygon(92% 84%, 99% 92%, 92% 100%, 0% 100%, 6% 93%, 0 84%);
+        width: 100%;
+        height: 350px;
+
+    }
+    @media screen and (max-width:500px) {
+        #container{
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            padding-top: 20px;
+            height: 575px;
+            }
+            #bg-container{
+            width: 50%;
+            z-index:0;
+            }
+            #bg-container img{
+            width: 100%;
+            height: 40%;
+            margin-top: 65%;
+            margin-left: 10%;
+            
+            }
+            #content-container{
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            z-index:1;
+            }
+            #content-container h1{
+            color: #002b5c;
+            font-weight: 900;
+            font-size: 40px;
+            line-height: 0.9em;
+            margin-bottom: 30px;
+            }
+            #content-container h4{
+                color:#757272;
+                font-weight: 900;
+                font-size: 18px;
+                line-height: 0.9em;
+                margin-bottom: 30px;
+                }
+            #content-container p{
+            line-height: 1.8em;
+            font-weight: 500;
+            }
+            #content-container button{
+            border: none;
+            outline: none;
+            color: #FFF;
+            background-color: #002b5c;
+            padding: 16px 0px;
+            border-radius: 40px;
+            font-size: 12px;
+            width: 160px;
+            margin-top: 30px;
+            cursor: pointer;
+            }
+            #content-container button:hover{
+            opacity: 0.9;
+            }
+    }

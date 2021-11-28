@@ -1,4 +1,4 @@
-<div style="min-height: calc(100vh - 98px); position: relative;">
+<div style="min-height: calc(100vh - 98px); position: relative;" *ngIf="ROLE_FINAL_USER||notLogedUser; else otherUser">
     <div style="text-align: start;margin-left: 20px;">
         <mat-icon style="color: #002b5c; font-size: 50px;">store</mat-icon>
     </div>
@@ -77,7 +77,7 @@
           <div class="info">
             <div class="header">
               <div class="image">
-                <img mat-card-image [src]='"data:image/jpg;base64,"+warehouseSelected?.warehouseImage' alt="Photo of a almacen">
+                <img class="img"mat-card-image [src]='"data:image/jpg;base64,"+warehouseSelected?.warehouseImage' alt="Photo of a almacen">
               </div>
                 <h1>{{warehouseSelected?.warehouseName}}</h1>
                 <div class="second">
@@ -108,7 +108,7 @@
           <div class="info">
             <div class="header">
               <div class="image">
-                <img mat-card-image [src]='"data:image/jpg;base64,"+warehouseSelected?.warehouseImage' alt="Photo of a almacen">
+                <img class="img" mat-card-image [src]='"data:image/jpg;base64,"+warehouseSelected?.warehouseImage' alt="Photo of a almacen">
               </div>
                 <h1>{{warehouseSelected?.warehouseName}}</h1>
                 <div class="second">
@@ -173,4 +173,19 @@
         </mat-grid-tile>
 
     </mat-grid-list> -->
+    
 </div>
+<ng-template #otherUser>
+  <div id="container">
+    <div id="content-container">
+       <h1>¡Bienvenid@!</h1>
+       <h4>Sistema de Gestión de Almacenes</h4>
+       <p>Bienvenido a la sección de administradores.</p>
+       <button>Inicio</button>
+    </div>
+    <div id="bg-container">
+       <img src="./../../../assets/store.png"> 
+    </div>
+ </div>
+ 
+</ng-template>

@@ -27,6 +27,8 @@ export class HomePageComponent implements OnInit {
     xs: 1
   }
  user:any;
+ permits:any;
+ ROLE_FINAL_USER:Boolean;
  order:any;
  cart:any;
  notLogedUser:boolean;
@@ -81,18 +83,7 @@ export class HomePageComponent implements OnInit {
     this.verifyOrdersPending();
     this.loadDataWarehouse();
   }
-ngAfterContentInit(){
-  console.log(Breakpoints)
-  this.breakpointObserver.observe([
-    Breakpoints.XSmall
-  ]).subscribe(result=>{
-    if(result.matches){
-      this.colSize=2
-    }else{
-      this.colSize=5
-    }
-  })
-}
+
 loadKey(){
   this.RequestService.get("http://localhost:8080/api/setting/getGoogleMapsKey").subscribe(r=>{
     //console.log(r)
@@ -102,7 +93,7 @@ loadKey(){
   loadChanges() {
     this.route.queryParams
       .subscribe((params: any) => {
-        console.log(params)
+        //console.log(params)
         params == true?this.loadNav():"";
     });
   }
@@ -118,15 +109,14 @@ loadKey(){
     })
   }
   geolocation(){
-    console.log(navigator.geolocation)
+    
     if(!navigator.geolocation){
-      console.log("location is not supported")
+      //console.log("location is not supported")
       this.searchInput.setValue("");
     }else{
       navigator.geolocation.getCurrentPosition((position)=>{
         this.latitudeUser=position.coords.latitude;
         this.longitudeUser=position.coords.longitude;
-        console.log(this.latitudeUser)
         
       })
     }
@@ -135,9 +125,9 @@ loadKey(){
   loadDataProduct(){
     this.RequestService.get('http://localhost:8080/api/product/allProducts/')
     .subscribe(r=>{
-      console.log(r);
+      //console.log(r);
       this.productsReceived = r;
-      console.log(this.productsReceived)
+      //console.log(this.productsReceived)
     })
   }
   getProducts(){
@@ -151,8 +141,8 @@ loadKey(){
       this.formDataSearch=formD;
     //console.log(this.nameProduct,this.latitudeUser,this.longitudeUser)
     if(this.nameProduct!=null|| this.nameProduct!=""){
-      console.log(this.formDataSearch.get("latitude"))
-      console.log(this.formDataSearch.get("longitude"))
+      //console.log(this.formDataSearch.get("latitude"))
+      //console.log(this.formDataSearch.get("longitude"))
       this.RequestService.get2('http://localhost:8080/api/market/productSearch/',this.formDataSearch).subscribe(r=>{
       this.onMap=true;
      // this.warehousesReceived=r;
@@ -208,7 +198,7 @@ loadKey(){
     });
   }
   addProduct(newProduct:any){
-    console.log(newProduct)
+    //console.log(newProduct)
     this.productsCart?.push(newProduct);
     this.hidden=false;
     
@@ -326,11 +316,11 @@ loadKey(){
     this.searchInput.setValue("");
     var coords = {};
       coords={latitude:this.latitudeUser,longitude:this.longitudeUser}
-      console.log(coords)
+      //console.log(coords)
       this.RequestService.post('http://localhost:8080/api/market/warehouseSearch/',coords).subscribe(r=>{
         this.onMap=true;
         this.warehousesReceived=r;
-        console.log(this.warehousesReceived)
+       // console.log(this.warehousesReceived)
          this.loadMap();
       
       }) 
@@ -343,7 +333,7 @@ loadKey(){
         
         this.onMap=true;
        this.warehousesReceived=r;
-       console.log(this.warehousesReceived)
+       //console.log(this.warehousesReceived)
         this.loadMap();
         
         }) 
@@ -386,10 +376,16 @@ loadKey(){
     this.order=JSON.parse(localStorage.getItem("order"))
     this.cart=JSON.parse(localStorage.getItem("productsCart"))
     this.user=JSON.parse(localStorage.getItem("user"))
+    this.permits=JSON.parse(localStorage.getItem("permits"))
     if(this.user==undefined || this.user==null){
       this.notLogedUser=true;
     }else{
       this.notLogedUser=false;
+      this.permits.map(permit=>{
+        if(permit.authority=="ROLE_FINAL_USER"){
+          this.ROLE_FINAL_USER=true;
+        }
+      })
     }
   }
   verifyOrdersPending(){
@@ -405,12 +401,12 @@ loadKey(){
     this.nameProduct=this.searchInputProduct.value
     const formD = new FormData();
        formD.append("productName",this.nameProduct)
-     console.log("formData",formD.get("productName"));
+     //console.log("formData",formD.get("productName"));
       this.formDataSearch=formD;
     //console.log(this.formDataSearch)
     if(this.nameProduct!=null|| this.nameProduct!=""){
       this.RequestService.post('http://localhost:8080/api/product/productSearch/'+this.warehouseSelected.idMarket,this.formDataSearch).subscribe(r=>{
-      console.log(r)
+      //console.log(r)
      this.viewProducts(r[0])
       
       //this.sortBusiness();
