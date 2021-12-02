@@ -10,6 +10,11 @@
             {{priv.privilege}}
         </mat-list-option>
     </mat-selection-list>
+    <mat-selection-list #privsBuyer *ngIf="permitsBuyer.length!=0" (selectionChange)="onPermitsChange(privsBuyer.selectedOptions.selected)">
+        <mat-list-option [value]="permitsBuyer">
+            actualizar imagen y actualizar precios
+        </mat-list-option>
+    </mat-selection-list>
     <mat-selection-list #privs (selectionChange)="onGroupsChange(privs.selectedOptions.selected)">
         <mat-list-option *ngFor="let privilege of privilegesList" [value]="privilege.privilege">
             {{privilege.privilege}}

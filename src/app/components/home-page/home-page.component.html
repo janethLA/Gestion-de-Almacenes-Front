@@ -42,7 +42,7 @@
              <button color="primary" mat-raised-button (click)="getMarketsByZone()">BUSCAR</button>
           </div> 
         <a mat-button class="btn-catalog">
-            <span>{{getTotalPrice()}} Bs.</span>
+            <span>{{total}} Bs.</span>
             <mat-icon>local_grocery_store</mat-icon>
             <mat-icon [matBadge]="quantityBadgeRequest()" matBadgeColor="warn" [matBadgeHidden]="hidden" (click)="toggleBadgeVisibility()" >visibility</mat-icon>
         </a>
@@ -59,7 +59,7 @@
       </mat-grid-list>
       <div class="total">
         <p>Monto Total:</p>
-        <span class="priceTotal">{{getTotalPrice()}} Bs.</span>
+        <span class="priceTotal">{{total}} Bs.</span>
       </div>
       <div class="links">
         <a mat-button class="btn-confirm" (click)="openDialogConfirm()">

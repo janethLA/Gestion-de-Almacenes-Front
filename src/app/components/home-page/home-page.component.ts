@@ -3,6 +3,7 @@ import { Component, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatGridList } from '@angular/material/grid-list';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Loader } from '@googlemaps/js-api-loader';
 import { fromEvent, Observable } from 'rxjs';
@@ -70,7 +71,7 @@ export class HomePageComponent implements OnInit {
     private formBuilder:FormBuilder,
     public dialog: MatDialog,
     private route: ActivatedRoute,
-    private breakpointObserver:BreakpointObserver
+    private snack:MatSnackBar,
   ) { }
 
   ngOnInit(): void {
@@ -199,25 +200,50 @@ loadKey(){
   }
   addProduct(newProduct:any){
     //console.log(newProduct)
-    this.productsCart?.push(newProduct);
-    this.hidden=false;
+    var exist=false;
+    if(this.productsCart.length==0){
+      this.productsCart?.push(newProduct);
+      this.hidden=false;
+    }else{
+      this.productsCart.map(product=>{
+        console.log(exist)
+        if(product.idProduct==newProduct.idProduct){
+          exist=true;
+          this.snack.open('El producto ya esta añadido al carrito','CERRAR',{duration:5000,panelClass:'snackWarning',})
+    
+        }
+      })
+      if(exist==false){
+        this.productsCart?.push(newProduct);
+      }
+    }
+    
     
   }
   deleteProduct(idItem:any){
-    this.productsCart?.splice(
-      this.findProduct(idItem),1
-    )
-      
-  }
-  findProduct(idItem:number):number{
-    this.productsCart.map((item)=>{
-      if(item.idProduct==idItem){
-        //console.log(this.productsCart.indexOf(item))
-        return this.productsCart.indexOf(item)
+    this.productsCart?.map(p=>{
+      if(p.idProduct==idItem){
+        var index=this.productsCart.findIndex((item)=>{
+          return item.idProduct===idItem
+        })
+        this.productsCart.splice(index,1)
       }
     })
-    return
+    console.log(this.productsCart)
+    this.orderDetails.map((order)=>{
+      
+      if(order.idProduct==idItem){
+        var index=this.orderDetails.findIndex((item)=>{
+          return item.idProduct===idItem
+        })
+          
+        this.orderDetails.splice(index,1)
+        this.getTotalPrice()
+      }
+    })
+    console.log(this.orderDetails)
   }
+
   quantityBadgeRequest():number{
     return this.productsCart.length;
   }
@@ -227,23 +253,29 @@ loadKey(){
     
   }
   receiveSubtotal(orderDetail){
-    //console.log(orderDetail)
+    console.log(orderDetail)
+    console.log(this.orderDetails)
     if(this.orderDetails.length==0){
       this.orderDetails.push(orderDetail)
+      this.getTotalPrice()
     }else{
+      var bandera=false;
       this.orderDetails.map((order)=>{
-      
         if(order.idProduct==orderDetail.idProduct){
           var index=this.orderDetails.findIndex((item)=>{
             return item.idProduct===orderDetail.idProduct
           })
-            
-          this.orderDetails.splice(index,1)
+          this.orderDetails.splice(index,1);
           this.orderDetails.push(orderDetail)
-        }else{
-          this.orderDetails.push(orderDetail)
+          this.getTotalPrice()
+          bandera=true;
         }
       })
+      if(bandera==false){
+        console.log("entra!!")
+        this.orderDetails.push(orderDetail)
+        this.getTotalPrice()
+      }
     }
     this.orderForm.get('quantityProducts').setValue(this.orderDetails.length)
     this.orderForm.get('totalPrice').setValue(this.total)
@@ -257,19 +289,24 @@ loadKey(){
     return this.total;
   }
   openDialogConfirm() {
-    localStorage.setItem("order",JSON.stringify(this.orderForm.value));
-    localStorage.setItem("productsCart",JSON.stringify(this.productsCart));
-    if(this.notLogedUser){
-      this.dialog.open(DgNewUserComponent,{
-        width: '70%',
-        data: { nro:"this.nro" }
-        });
+    if(this.productsCart.length!=0){
+      localStorage.setItem("order",JSON.stringify(this.orderForm.value));
+      localStorage.setItem("productsCart",JSON.stringify(this.productsCart));
+      if(this.notLogedUser){
+        this.dialog.open(DgNewUserComponent,{
+          width: '70%',
+          data: { nro:"this.nro" }
+          });
+      }else{
+        this.dialog.open(DgConfirmPedidoComponent,{
+          width: '60%',
+          data: {products:this.productsCart,total:this.total,order:this.orderForm.value,user:this.user }
+          });
+      }
     }else{
-      this.dialog.open(DgConfirmPedidoComponent,{
-        width: '60%',
-        data: {products:this.productsCart,total:this.total,order:this.orderForm.value,user:this.user }
-        });
+      this.snack.open('No se puede Confirmar pedido, agregue productos al carrito','CERRAR',{duration:5000,panelClass:'snackError',})
     }
+    
     
   }
 

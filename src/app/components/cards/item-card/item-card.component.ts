@@ -55,6 +55,8 @@ export class ItemCardComponent implements OnInit {
     }
     
     this.orderDetail.get('idProduct').setValue(this.idProduct)
+    this.getSubtotal(this.price)
+    this.sendSubtotalEvent.emit(this.orderDetail.value);
     //console.log(this.image)
   }
   deleteItem(){
@@ -66,8 +68,11 @@ export class ItemCardComponent implements OnInit {
    var subtotal=0
    subtotal=price*this.orderDetail.get('units').value
    this.orderDetail.get('subtotal').setValue(subtotal)
-   this.sendSubtotalEvent.emit(this.orderDetail.value);
     return subtotal
+  }
+  doSomething($event){
+    this.getSubtotal(this.price)
+   this.sendSubtotalEvent.emit(this.orderDetail.value);
   }
 
 }

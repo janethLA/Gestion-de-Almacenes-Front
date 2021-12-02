@@ -14,7 +14,7 @@
         <div class="priceAndQuantity">
           <mat-form-field appearance="outline" class="quantity" >
             
-            <mat-select  required formControlName="units" [disabled]="disabledQuantity">
+            <mat-select  required formControlName="units" [disabled]="disabledQuantity" (selectionChange)="doSomething($event)">
                 <mat-option *ngFor="let unit of unities"[value]="unit.value" >
                     {{unit.name}}
                   </mat-option>
@@ -27,7 +27,4 @@
       </div>
       
     </mat-card-content>
-    <!-- <mat-card-actions style="padding: 15px;">
-      <button mat-button class="button" >Añadir al Carrito</button>
-    </mat-card-actions> -->
   </mat-card>

@@ -44,7 +44,7 @@ export class OrderCardComponent implements OnInit {
   @Input() complete:boolean;
   @Input() completed:boolean;
   @Input() enablePayment:boolean;
-  @Input() finalUserPendiente:boolean;
+  @Input() finalUser:boolean;
   @Input() assignData:any;
   productsCart:any[]=[];
   image:any;

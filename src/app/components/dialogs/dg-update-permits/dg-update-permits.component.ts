@@ -22,20 +22,21 @@ export class DgUpdatePermitsComponent implements OnInit {
     privileges=this.data.privileges
     idRole=this.data.idRole
     privilegesList:any;
-    selectedPrivilege:any;
+    selectedPrivilege:any[]=[];
+    permitsBuyer:any[]=[];
+    selectedPermitBuyer:any[]=[];
+    allSelectedPrivilege:any[]=[];
   ngOnInit(): void {
     console.log(this.privileges)
     this.loadPrivileges()
   }
-  print(ob: MatCheckboxChange){
-    console.log(ob)
-  }
   loadPrivileges(){
     this.RequestService.get('http://localhost:8080/api/privilege/allPrivileges').subscribe(r=>{
       this.privilegesList=r;
-      console.log(this.privilegesList);
       this.privileges.map(p=>{
+        
         this.privilegesList.map(item=>{
+          
           if(p.privilege==item.privilege){
             this.privilegesList.splice(
               this.privilegesList.indexOf(item) ,1
@@ -43,24 +44,44 @@ export class DgUpdatePermitsComponent implements OnInit {
           }
         })
       })
-      console.log(this.privilegesList)
+      this.privilegesList.map(priv=>{
+        if(priv.privilege=="actualizar imagen"||priv.privilege=="actualizar precios"){
+          this.permitsBuyer.push(priv.privilege)
+        }
+       
+      })
+      if(this.permitsBuyer.length!=0){
+        this.permitsBuyer.map(p=>{
+          this.privilegesList.splice(
+            this.privilegesList.indexOf(p) ,1
+          )
+        })
+      }
       
     })
   }
   onGroupsChange(options: MatListOption[]) {
     this.selectedPrivilege=options.map(o=> o.value);
-    console.log(this.selectedPrivilege)
+  }
+  onPermitsChange(options: MatListOption[]) {
+    if(options[0]){
+      this.selectedPermitBuyer=options[0].value;
+    }else{
+      this.selectedPermitBuyer=[]
+    }
   }
   updatePrivileges(){
-    this.RequestService.put('http://localhost:8080/api/role/addPrivileges/'+this.idRole,this.selectedPrivilege).subscribe(
+      this.allSelectedPrivilege=[...this.selectedPrivilege,...this.selectedPermitBuyer]
+   
+     this.RequestService.put('http://localhost:8080/api/role/addPrivileges/'+this.idRole,this.allSelectedPrivilege).subscribe(
       {next:()=>{
 
       },error:()=>{
         this.snack.open('privilegios actualizados.','CERRAR',{duration:5000,panelClass:'snackSuccess',})
-       window.location.reload();
+        window.location.reload();
       }
        
       }
-    )
+    ) 
   }
 }

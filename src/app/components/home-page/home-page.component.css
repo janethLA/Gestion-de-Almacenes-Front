@@ -79,7 +79,7 @@
     font-size:14px;
     line-height:21px;
     text-align:left;
-    margin-left: 10px;
+    margin-left: 15px;
     margin: 15px;
 }
 .priceTotal{
@@ -284,6 +284,13 @@ p{
         height: 350px;
 
     }
+    ::ng-deep .snackError {
+        background-color: #d12931;
+      }
+      ::ng-deep .snackWarning {
+        background-color: #F4512C;
+      }
+      
     @media screen and (max-width:500px) {
         #container{
             overflow: hidden;
