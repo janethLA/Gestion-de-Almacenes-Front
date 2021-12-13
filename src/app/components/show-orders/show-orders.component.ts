@@ -34,7 +34,6 @@ export class ShowOrdersComponent implements OnInit {
   loadOrders(){
     this.RequestService.get('http://localhost:8080/api/order/allOrdersManaged/'+this.user.idUser)
      .subscribe(r=>{
-       console.log(r);
        this.ordersReceived = r;
        this.ordersReceivedCopy=this.ordersReceived
        this.ordersReceived.sort(function (a, b) {
@@ -64,7 +63,6 @@ export class ShowOrdersComponent implements OnInit {
   loadOrdersAssigned(){
     this.RequestService.get("http://localhost:8080/api/orderAssigned/allAssignedOrdersManaged/"+this.user.idUser).subscribe(r=>{
       this.ordersAssigned=r;
-      console.log(this.ordersAssigned)
       this.ordersReject=this.ordersAssigned.filter(o=>o.status=="Rechazado")
       this.ordersReject=this.ordersReject.filter(o=>o.reassigned==0)
       

@@ -72,11 +72,9 @@ export class RegisterUserComponent implements OnInit {
   rolesDisp:any[]=[];
   destroy:boolean;
   ngOnInit(): void {
-   console.log(this.data)
     this.transform=this.data.transform;
     this.roles=this.data.roleList;
     this.units=this.data.unitList;
-    console.log(this.data)
     this.registerUser.controls['password'].setValue(this.passwordGenerate);
 
     if(this.transform=='edit'){
@@ -90,7 +88,6 @@ export class RegisterUserComponent implements OnInit {
       this.editUser.controls['telephone'].setValue(this.user?.telephone);
       this.editUser.controls['idSector'].setValue(this.user?.idSector);
       this.editUser.controls['idRole'].setValue(this.user?.idRole);
-      console.log(this.editUser)
 
     }
     //this.filterUnit();
@@ -129,14 +126,12 @@ export class RegisterUserComponent implements OnInit {
   
   
   saveUser(user,formDirective: FormGroupDirective){
-    console.log("Esta es a unidadRegistrar",user);
     
     this.RequestService.post('http://localhost:8080/api/user/createUser', user)
     .subscribe({
       next:()=>{
         this.snack.open('Usuario registrada exitosamente.','CERRAR',{duration:5000,panelClass:'snackSuccess',})
         window.location.reload();
-        console.log("LOG >>=",user);
     
       },
       error:()=>{
@@ -164,7 +159,6 @@ export class RegisterUserComponent implements OnInit {
   usernameCheck(): AsyncValidatorFn{
 
     return (control: AbstractControl) => {
-      console.log(control.value)
       return this.RequestService.get('http://localhost:8080/api/user/uniqueUserName/'+control.value)
         .pipe(
           map((result) => (result==true) ?  null : {exist:!result})
@@ -175,7 +169,6 @@ export class RegisterUserComponent implements OnInit {
   telephoneCheck(): AsyncValidatorFn{
 
     return (control: AbstractControl) => {
-      console.log(control.value)
       return this.RequestService.get('http://localhost:8080/api/auth/uniqueTelephoneAll/'+control.value)
         .pipe(
           map((result) => (result==true) ?  null : {exist:!result})

@@ -40,17 +40,13 @@ export class RegisterRoleComponent implements OnInit {
 
   }
   printType(e){
-    console.log(e,this.typeUnit);
   }
   print(e){
-    console.log(e);
-    console.log('formControl asasdas',this.privilegeSelected);
+    
   }
   loadPrivileges(){
     this.RequestService.get('http://localhost:8080/api/privilege/allPrivileges').subscribe(r=>{
       this.privilegesList=r;
-      console.log(this.privilegesList);
-      //this.filterPrivileges();
     })
   }
 
@@ -62,30 +58,24 @@ export class RegisterRoleComponent implements OnInit {
         this.privilegesRAF.push(this.privilegesList[priv]);
       } 
     }
-    console.log('RAF __>',this.privilegesRAF);
-    console.log('RUG __>',this.privilegesRUG)
   }
   ss(role,formDirective: FormGroupDirective){
-    console.log("ROLE REGISTRADO >>>>>>>>>>",role)
   }
   saveRole(role,formDirective: FormGroupDirective){
     this.RequestService.post('http://localhost:8080/api/role/createRole',role).subscribe({
       next:()=>{
         this.snack.open('Rol registrada exitosamente.','CERRAR',{duration:5000,panelClass:'snackSuccess',})
         window.location.reload();
-        console.log('exito registrar role');
     
       },
       error:()=>{
         this.snack.open('Fallo al registrar el Rol','CERRAR',{duration:5000});
-        console.log('error registrar role');
       }
     })
   }
   roleCheck(): AsyncValidatorFn{
 
     return (control: AbstractControl) => {
-      console.log(control.value)
       return this.RequestService.get('http://localhost:8080/api/role/uniqueRoleName/'+control.value)
         .pipe(
           map((result) => (result==true) ?  null : {exist:!result})

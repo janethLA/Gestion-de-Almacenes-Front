@@ -70,7 +70,6 @@ export class HomeAdminComponent implements OnInit {
   loadUnits(){
     this.RequestService.get('http://localhost:8080/api/sector/allSector').subscribe(r=>{
       this.units=r;
-      console.log("Sectores ",this.units)
     })
   }
   loadUsers(){
@@ -78,7 +77,6 @@ export class HomeAdminComponent implements OnInit {
       this.usersResponse=r;
       this.users=this.usersResponse;
       this.dataSource.data=this.users;
-      console.log("USERS ",this.users)
     })
   }
 
@@ -87,7 +85,6 @@ export class HomeAdminComponent implements OnInit {
       this.rolesResponse=r;
       this.roles=this.rolesResponse;
       this.dataSourceRole.data=this.roles;
-      console.log("ROLES ",this.roles)
     })
   }
 
@@ -124,7 +121,6 @@ export class HomeAdminComponent implements OnInit {
   }
 
   deleteUser(idUser){
-    console.log(idUser)
     this.RequestService.delete('http://localhost:8080/api/user/deleteUser/'+idUser)
     .subscribe({
       error:()=>{

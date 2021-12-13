@@ -36,7 +36,7 @@ export class DgForgetPasswordComponent implements OnInit {
     var telephone=this.changePassword.get('telephone').value
     this.activateSpinner=true;
     this.RequestService.get("http://localhost:8080/api/auth/recoverByPhone/"+telephone).subscribe(r=>{
-      console.log(r)
+      
       this.activateSpinner=false;
       
       this.openDialogCodeValidate(r,telephone);
@@ -46,9 +46,9 @@ export class DgForgetPasswordComponent implements OnInit {
   }
   sendMessage(code,telephone){
     var message={message:"*Verifica tu número*, tu codigo de verificacion es:"+code,number:"591"+telephone}
-    console.log(message)
+    
     this.RequestService.post("http://localhost:9000/send",message).subscribe(r=>{
-      console.log(r)
+     
     })
   }
   openDialogCodeValidate(respuesta,telephone) {
@@ -62,7 +62,7 @@ export class DgForgetPasswordComponent implements OnInit {
   telephoneCheck(): AsyncValidatorFn{
 
     return (control: AbstractControl) => {
-      console.log(control.value)
+      
       return this.RequestService.get('http://localhost:8080/api/auth/uniqueTelephoneAll/'+control.value)
         .pipe(
           map((result) => (result==true) ?  {exist:result} :null )

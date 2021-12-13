@@ -34,7 +34,6 @@ export class BuyerPageComponent implements OnInit {
     this.RequestService.get("http://localhost:8080/api/orderAssigned/assignedOrdersForBuyer/"+this.user.idUser).subscribe(
       r=>{
         this.allOrders=r;
-        console.log(this.allOrders)
         /* this.ordersAccepted=this.allOrders.filter(o=>o.status=="Aceptado")
         this.ordersPending=this.allOrders.filter(o=>o.status=="Pendiente")
         this.ordersReject=this.allOrders.filter(o=>o.status=="Rechazado")

@@ -31,7 +31,7 @@ export class DgPhoneCodeComponent implements OnInit {
   userName:any
   identifier=this.data.identifier
   ngOnInit(): void {
-   console.log(this.data)
+   
   }
   verifyCode(code){
     if(code.value==this.data.code){
@@ -40,7 +40,7 @@ export class DgPhoneCodeComponent implements OnInit {
       
       //this.loginFinalUSer();
      // this.openDialogConfirmPedido();
-      console.log("logeado")
+      
     }else{
       if(this.intents>0){
         this.intents--;
@@ -49,7 +49,6 @@ export class DgPhoneCodeComponent implements OnInit {
       }else{
        this.dialogRef.close()
        window.location.reload()
-        console.log("no entra")
       }
       
     }
@@ -66,7 +65,6 @@ export class DgPhoneCodeComponent implements OnInit {
       }else{
        this.dialogRef.close()
        window.location.reload()
-        console.log("no entra")
       }
       
     }
@@ -78,7 +76,7 @@ export class DgPhoneCodeComponent implements OnInit {
      var user={idFinalUser:this.data.idFinalUser, code:this.data.code}
     this.RequestService.put('http://localhost:8080/api/finalUser/codeVerification',user).subscribe({
        next:(respuesta:any)=>{
-        console.log(respuesta)
+        
         //this.snack.open('Usuario creado exitosamente.','CERRAR',{duration:5000,panelClass:'snackSuccess',})
         
        //window.location.reload();
@@ -95,9 +93,9 @@ export class DgPhoneCodeComponent implements OnInit {
   }
   sendMessage(){
     var message={message:"*Credenciales Sistema de Almacenes*, tu username es:"+this.user.userName+", contraseña: "+this.user.password,number:"591"+this.data.telephone}
-    console.log(message)
+   
     this.RequestService.post("http://localhost:9000/send",message).subscribe(r=>{
-      console.log(r)
+      
     })
   }
  
@@ -115,11 +113,10 @@ export class DgPhoneCodeComponent implements OnInit {
   }
   loginFinalUSer(){
     var login={username:this.user.userName,password:this.user.password}
-    console.log(login)
+    
     this.RequestService.post('http://localhost:8080/api/auth/authenticate',login)
     .subscribe( {
       next:(respuesta:any)=>{
-        console.log(respuesta)
         const dateNow = new Date();
         dateNow.setMinutes(dateNow.getMinutes() + 60);
         this.cookieService.set('token',respuesta.jwt,dateNow)
@@ -145,7 +142,6 @@ export class DgPhoneCodeComponent implements OnInit {
   restartEmail(code){
     if(code.value==this.data.code){
       var send={idFinalUser:this.data.idFinalUser,code:this.data.code,telephone:this.data.telephone}
-      console.log(send)
       this.RequestService.put("http://localhost:8080/api/finalUser/updateTelephone",send).subscribe({
       next:()=>{
         this.dialogRef.close()

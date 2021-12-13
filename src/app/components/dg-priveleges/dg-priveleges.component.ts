@@ -13,7 +13,6 @@ export class DgPrivelegesComponent implements OnInit {
     privileges:any;
     ngOnInit(): void {
       this.privileges=this.data.privileges;
-      console.log(this.privileges);
     }
   
 

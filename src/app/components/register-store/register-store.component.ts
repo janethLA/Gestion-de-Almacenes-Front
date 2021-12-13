@@ -67,7 +67,6 @@ export class RegisterStoreComponent implements OnInit {
       this.marker.addListener("dragend", ($event)=>{
         latitude=$event.latLng.lat();
         longitude=$event.latLng.lng();
-        console.log(latitude)
         this.addCoordenadas(latitude,longitude)
       });
     }); 

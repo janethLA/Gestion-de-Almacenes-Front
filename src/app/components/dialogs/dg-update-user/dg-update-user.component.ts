@@ -48,10 +48,7 @@ export class DgUpdateUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.user=this.data.user;
-      //this.fiterRoleType();
-      console.log(this.user)
       this.editUser.controls['finalUserName'].setValue(this.user?.finalUserName);
-      //this.editUser.controls['password'].setValue(this.user?.password);
       this.editUser.controls['userName'].setValue(this.user?.userName);
       this.editUser.controls['telephone'].setValue(this.user?.telephone);
       this.editUser.controls['password'].setValue(this.user?.password);
@@ -72,11 +69,10 @@ export class DgUpdateUserComponent implements OnInit {
     if(update.finalUserName==this.user.finalUserName){
       update.finalUserName=""
     }
-    console.log(update)
+    
     this.RequestService.put('http://localhost:8080/api/finalUser/updateDataUser/'+this.user?.idFinalUser, update)
     .subscribe({
       next:(r:any)=>{
-        console.log(r)
         if(r.code!=''){
           this.openDialogCode(r,update.telephone)
         }else{
@@ -99,7 +95,6 @@ export class DgUpdateUserComponent implements OnInit {
   usernameCheck(): AsyncValidatorFn{
 
     return (control: AbstractControl) => {
-      console.log(control.value)
       return this.RequestService.get('http://localhost:8080/api/finalUser/uniqueUserName/'+control.value)
         .pipe(
           map((result) => (result==true) ?  null : ((control.value==this.user.userName)?null:{exist:!result}))
@@ -110,7 +105,6 @@ export class DgUpdateUserComponent implements OnInit {
   telephoneCheck(): AsyncValidatorFn{
 
     return (control: AbstractControl) => {
-      console.log(control.value)
       return this.RequestService.get('http://localhost:8080/api/auth/uniqueTelephoneAll/'+control.value)
         .pipe(
           map((result) => (result==true) ?  null : ((control.value==this.user.telephone)?null:{exist:!result}))
@@ -121,7 +115,6 @@ export class DgUpdateUserComponent implements OnInit {
   emailCheck(): AsyncValidatorFn{
 
     return (control: AbstractControl) => {
-      console.log(control.value)
       if(control.value!=""){
         return this.RequestService.get('http://localhost:8080/api/auth/uniqueEmailAll/'+control.value)
         .pipe(
@@ -171,7 +164,7 @@ export class DgUpdateUserComponent implements OnInit {
          
       sendMessage(){
         var message={message:"*Actualizacion de Credenciales Sistema de Almacenes*, tu username es:"+this.editUser.get('userName').value+", contraseña: "+this.editUser.get('password').value,number:"591"+this.user.telephone}
-        console.log(message)
+      
         this.RequestService.post("http://localhost:9000/send",message).subscribe(r=>{
           console.log(r)
         })

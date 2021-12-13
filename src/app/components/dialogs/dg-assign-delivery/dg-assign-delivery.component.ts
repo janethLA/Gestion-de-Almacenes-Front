@@ -68,7 +68,6 @@ export class DgAssignDeliveryComponent implements OnInit {
     .subscribe(r=>{
       this.allDeliveries=r
       this.allDeliveriesCopy=this.allDeliveries
-      console.log(this.allDeliveries)
     })
   }
   loadBuyers(){
@@ -91,14 +90,12 @@ export class DgAssignDeliveryComponent implements OnInit {
   }
   getDelivery(options: MatListOption[]) {
     this.deliverySelected=options.map(o=> o.value);
-    console.log(this.deliverySelected)
     if(options!=[]){
       this.noDeliverySelected=false;
     }
   }
   getBuyer(options: MatListOption[]) {
     this.buyerSelected=options.map(o=> o.value);
-    console.log(this.buyerSelected)
     if(options!=[]){
       this.noDeliverySelected=false;
     }
@@ -107,7 +104,6 @@ export class DgAssignDeliveryComponent implements OnInit {
     this.RequestService.get('http://localhost:8080/api/payment/allPayments')
     .subscribe(r=>{
       this.allPayments=r
-      console.log(this.allPayments)
       if(this.data.assign!= undefined){
         this.allPayments = this.allPayments.map((payment) => ({
           ...payment,
@@ -121,7 +117,6 @@ export class DgAssignDeliveryComponent implements OnInit {
   }
   getPayment(options: MatListOption[]) {
     this.paymentSelected=options.map(o=> o.value);
-    console.log(this.paymentSelected)
     if(options!=[]){
       this.noPaymentSelected=false;
     }
@@ -136,7 +131,7 @@ export class DgAssignDeliveryComponent implements OnInit {
     var assign={idUser:this.deliverySelected[0].idUser,idOrder:this.data.idOrder,shippingCost:this.shippingForm.get('shippingCost').value,
                 idUserCallCenter:this.user.idUser,idPayment:this.paymentSelected[0].idPayment, idUserOfBuyer:this.buyerSelected[0].idUser,
                 deliveryCost:this.shippingForm.get('deliveryCost').value,buyerCost:this.shippingForm.get('buyerCost').value}
-    console.log(assign)
+    
    this.RequestService.post('http://localhost:8080/api/orderAssigned/assignOrder',assign)
     .subscribe({
       next:()=>{
@@ -149,7 +144,7 @@ export class DgAssignDeliveryComponent implements OnInit {
   getAllSectors(){
     this.RequestService.get('http://localhost:8080/api/sector/allSector').subscribe(r=>{
       this.options=r;
-      console.log(this.options)
+      
       this.filteredOptions = this.searchInput.valueChanges
     .pipe(
       startWith(''),
@@ -168,7 +163,7 @@ export class DgAssignDeliveryComponent implements OnInit {
         return d
       }
     })
-    console.log(this.allDeliveries)
+    
   }
   openShippingCost(){
     this.dialog.open(DgShippingCostComponent,{

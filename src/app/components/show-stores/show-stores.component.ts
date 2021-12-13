@@ -21,7 +21,6 @@ export class ShowStoresComponent implements OnInit {
   loadDataWarehouse(){
      this.RequestService.get('http://localhost:8080/api/market/allWarehouse/')
      .subscribe(r=>{
-       console.log(r);
        this.warehousesReceived = r;
      })
    }

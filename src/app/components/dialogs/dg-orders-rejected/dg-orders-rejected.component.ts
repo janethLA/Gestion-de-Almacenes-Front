@@ -19,13 +19,12 @@ export class DgOrdersRejectedComponent implements OnInit {
     this.loadOrdersReject();
   }
   loadOrdersReject(){
-    console.log(this.ordersReject)
 
   }
   reassignOrder(order){
     this.RequestService.put("http://localhost:8080/api/order/reassignOrder/"+order.idOrder,"").subscribe({
       next:()=>{
-        console.log("reasignado")
+        
       },error:()=>{
         window.location.reload()
       }

@@ -316,7 +316,6 @@ export class PayDeliveryComponent implements OnInit {
     }
 
     this.selection.select(...this.dataSource.data);
-    console.log(this.selection)
   }
 
   /** The label for the checkbox on the passed row */

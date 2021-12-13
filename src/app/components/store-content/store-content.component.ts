@@ -42,7 +42,6 @@ export class StoreContentComponent implements OnInit {
   loadDataProduct(){
     this.RequestService.get('http://localhost:8080/api/product/allProducts/')
     .subscribe(r=>{
-      console.log(r);
       //this.productsReceived = r;
       this.copyProductsReceived=this.productsReceived;
     })
@@ -57,8 +56,6 @@ export class StoreContentComponent implements OnInit {
           })
        
       })
-      console.log(this.allCategories)
-      console.log(this.productsReceived)
     })
   }
   loadDataStore(){
@@ -70,7 +67,6 @@ export class StoreContentComponent implements OnInit {
           this.warehouseActual=Ware;
         }
       })
-      console.log(this.warehouseActual)
     })
   }
   addCategory(){
@@ -119,7 +115,6 @@ loadDataUser(){
  
 }
 loadPermits(){
-  console.log(this.permits)
   var img:boolean;
   var price:boolean;
   var market:boolean;

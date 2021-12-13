@@ -65,7 +65,6 @@ export class ReportOfOrdersComponent implements AfterViewInit {
     this.RequestService.get('http://localhost:8080/api/report/reportOfOrders ')
     .subscribe(r=>{
       this.allOrders = r;
-      console.log(this.allOrders)
       this.dataSource = new MatTableDataSource(this.allOrders);
       this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

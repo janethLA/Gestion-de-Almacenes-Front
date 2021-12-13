@@ -55,7 +55,6 @@ export class DgNewUserComponent implements OnInit {
     this.RequestService.post('http://localhost:8080/api/finalUser/createFinalUser',user).subscribe({
       
        next:(respuesta:any)=>{
-        console.log(respuesta)
         this.activateSpinner=false;
         this.code=respuesta.code;
         this.sendMessage(this.code)
@@ -74,9 +73,9 @@ export class DgNewUserComponent implements OnInit {
   }
   sendMessage(code){
     var message={message:"*Verifica tu número*, tu codigo de verificacion es:"+code,number:"591"+this.finalUser.telephone}
-    console.log(message)
+    
     this.RequestService.post("http://localhost:9000/send",message).subscribe(r=>{
-      console.log(r)
+     
     })
   }
   generateUserName(nameUser){
@@ -126,7 +125,7 @@ export class DgNewUserComponent implements OnInit {
   emailCheck(): AsyncValidatorFn{
 
     return (control: AbstractControl) => {
-      console.log(control.value)
+      
       return this.RequestService.get('http://localhost:8080/api/finalUser/uniqueEmail/'+control.value)
         .pipe(
           map((result) => (result==true) ?  null : {exist:!result})
@@ -137,7 +136,7 @@ export class DgNewUserComponent implements OnInit {
   telephoneCheck(): AsyncValidatorFn{
 
     return (control: AbstractControl) => {
-      console.log(control.value)
+      
       return this.RequestService.get('http://localhost:8080/api/auth/uniqueTelephoneAll/'+control.value)
         .pipe(
           map((result) => (result==true) ?  null : {exist:!result})
@@ -174,31 +173,4 @@ export class DgNewUserComponent implements OnInit {
       });
     }
 
-    /* sendSMS(){
-      // getting ready
-      const twilioNumber = '+16627676661';
-      const accountSid = 'ACa89c84148e594b27b0e35f07303a843f';
-      const authToken = '97c6bfe39c2434be989cf90a3eb999cd';
-
-      const client = new Twilio(accountSid, authToken);
-
-      
-          const phoneNumbers = [ '+59165735953']    
-
-          phoneNumbers.map(phoneNumber => {
-              console.log(phoneNumber);
-              
-              
-              const textContent = {
-                  body: `Tu codigo de verificacion es `+this.code+` username es`,
-                  to: phoneNumber,
-                  from: twilioNumber
-              }
-          
-              client.messages.create(textContent)
-              .then((message) => console.log(message.to))
-          })
-      
-
-  }
- */}
+    }

@@ -43,7 +43,6 @@ public errorLogin:boolean;
     this.RequestService.post('http://localhost:8080/api/auth/authenticate',login)
     .subscribe( {
       next:(respuesta:any)=>{
-        console.log(respuesta)
         formDirective.resetForm();
         const dateNow = new Date();
         dateNow.setMinutes(dateNow.getMinutes() + 60);
@@ -57,7 +56,6 @@ public errorLogin:boolean;
         
   
         this.userName=respuesta.userName;
-        console.log(this.user)
         this.user={idUser:this.idUser,userName:this.userName,}
         this.saveDataUser(respuesta.roles);
         //this.sendRoute(respuesta.identifier)

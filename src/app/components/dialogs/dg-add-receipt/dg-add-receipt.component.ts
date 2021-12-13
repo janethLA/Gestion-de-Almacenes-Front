@@ -25,7 +25,6 @@ export class DgAddReceiptComponent implements OnInit {
     
   ngOnInit(): void {
     this.dataPays=this.data.dataSelected
-    console.log(this.dataPays)
   }
   
   sendReceipt(){
@@ -33,7 +32,6 @@ export class DgAddReceiptComponent implements OnInit {
     this.dataPays.map(data=>{
       listPays.push(data.idOrder)
     })
-    console.log(this.dataPays)
     if(this.data.name=='delivery'){
       this.RequestService.put("http://localhost:8080/api/orderAssigned/payDelivery/"+this.dataPays[0].idDelivery+"/"+this.addReceipt.get('receipt').value,listPays).subscribe({
         next:()=>{
@@ -47,7 +45,6 @@ export class DgAddReceiptComponent implements OnInit {
         next:(r)=>{
           window.location.reload()
         },error:(r)=>{
-          console.log(r)
          window.location.reload()
         }
       })

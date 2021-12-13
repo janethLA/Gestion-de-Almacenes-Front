@@ -28,7 +28,6 @@ export class DgUpdateBusinessComponent implements OnInit {
     
   ngOnInit(): void {
     this.dataBusiness=this.data
-    console.log(this.dataBusiness)
     this.updateBusiness.get('nameForReport').setValue(this.dataBusiness.nameForReport);
     this.updateBusiness.get('telephoneForReport').setValue(this.dataBusiness.telephoneForReport);
     this.updateBusiness.get('emailForReport').setValue(this.dataBusiness.emailForReport);

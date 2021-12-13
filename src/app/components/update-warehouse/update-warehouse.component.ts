@@ -21,7 +21,6 @@ export class UpdateWarehouseComponent implements OnInit {
     this.RequestService.get('http://localhost:8080/api/market/allWarehouse/')
     .subscribe(r=>{
       this.allWarehouses = r;
-      console.log(this.allWarehouses)
     })
   }
   getAllSectors(){

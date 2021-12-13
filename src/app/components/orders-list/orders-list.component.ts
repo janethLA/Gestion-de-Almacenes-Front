@@ -25,7 +25,6 @@ export class OrdersListComponent implements OnInit {
   loadOrders(){
     this.RequestService.get('http://localhost:8080/api/order/ordersByUser/'+this.user.idUser)
      .subscribe(r=>{
-       console.log(r);
        this.ordersReceived = r;
        
      })

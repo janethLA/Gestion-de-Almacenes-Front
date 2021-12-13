@@ -99,7 +99,6 @@ export class OrderCardComponent implements OnInit {
     
       this.productsCart.push(prod)
     })
-    console.log(this.productsCart)
   }
   openAssign(){
     if(this.reassigned==true){
@@ -124,7 +123,7 @@ export class OrderCardComponent implements OnInit {
   acceptOrder(){
     this.RequestService.put("http://localhost:8080/api/orderAssigned/assignedOrderAccepted/"+this.idOrderAssigned,"").subscribe({
       next:()=>{
-        console.log("aceptado con exito")
+       // console.log("aceptado con exito")
       },error:()=>{
         window.location.reload()
       }
@@ -133,7 +132,7 @@ export class OrderCardComponent implements OnInit {
   rejectOrder(){
     this.RequestService.put("http://localhost:8080/api/orderAssigned/assignedOrderRejected/"+this.idOrderAssigned,"").subscribe({
       next:()=>{
-        console.log("rechazado con exito")
+       // console.log("rechazado con exito")
       },error:()=>{
         window.location.reload()
       }
@@ -142,7 +141,6 @@ export class OrderCardComponent implements OnInit {
   cancelOrder(){
     this.RequestService.put("http://localhost:8080/api/order/orderCanceled/"+this.idOrder,{}).subscribe({
       next:()=>{
-        console.log("cancelado con exito")
       },error:()=>{
         window.location.reload()
       }
@@ -153,7 +151,6 @@ export class OrderCardComponent implements OnInit {
     if(this.substate!= 'por pagar'){
       this.RequestService.put("http://localhost:8080/api/orderAssigned/orderCompleted/"+this.idOrderAssigned,"").subscribe({
       next:()=>{
-        console.log("completado con exito")
       },error:()=>{
         this.complete=false
         this.orderCompleted=true;
@@ -169,7 +166,6 @@ export class OrderCardComponent implements OnInit {
   orderSent(){
     this.RequestService.put("http://localhost:8080/api/order/orderSent/"+this.idOrder,{}).subscribe({
       next:()=>{
-        console.log("enviando con exito")
       },error:()=>{
         window.location.reload()
       }
@@ -178,7 +174,6 @@ export class OrderCardComponent implements OnInit {
   orderReassign(){
     this.RequestService.put("http://localhost:8080/api/order/reassignOrderInProgress/"+this.idOrder,{}).subscribe({
       next:()=>{
-        console.log("reasignado con exito")
       },error:()=>{
         window.location.reload()
       }
@@ -187,7 +182,6 @@ export class OrderCardComponent implements OnInit {
   cancelOrderInProgress(){
     this.RequestService.put("http://localhost:8080/api/order/cancelOrderInProgressAndSent/"+this.idOrder,{}).subscribe({
       next:()=>{
-        console.log("cancelado con exito")
       },error:()=>{
         window.location.reload()
       }
@@ -197,7 +191,6 @@ export class OrderCardComponent implements OnInit {
     if(this.substate!= 'por pagar'){
     this.RequestService.put("http://localhost:8080/api/order/finalizeOrder/"+this.idOrder,{}).subscribe({
       next:()=>{
-        console.log("finalizado con exito")
       },error:()=>{
         window.location.reload()
       }

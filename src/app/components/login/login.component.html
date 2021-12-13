@@ -1,8 +1,8 @@
 
 <form class="main" [formGroup]="loginForm" #formDirective="ngForm" (ngSubmit)="onLogin(loginForm.value,formDirective)">
 
-
-        <mat-card class="mat-elevation-z5">
+    <div style="width: 30%;">
+        <mat-card class="mat-elevation-z5" style="width: 100%; height: auto;">
             <mat-card-title style="text-align: center; padding-top: 25px; padding-bottom: 25px;"> 
                 Iniciar Sesion
             </mat-card-title>
@@ -38,6 +38,8 @@
                 </div>
             </mat-card-content>
         </mat-card>
+    </div>
+        
 
 
     </form>

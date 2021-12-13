@@ -37,15 +37,7 @@ export class ProductFormComponent implements OnInit {
     expirationDate:['',[]],
     
   });
-  measurements:any/* =[
-    {value:"Kilogramo",name:"Kilogramo(Kg)"},
-    {value:"Gramo",name:"Gramo(g)"},
-    {value:"Metro",name:"Metro(m)"},
-    {value:"Litro",name:"Litro(l)"},
-    {value:"Mililitro",name:"Mililitro(ml)"},
-    {value:"Unidad",name:"Unidad(u)"},
-    {value:"Docena",name:"Docena"},
-    ] */
+  measurements:any
   ngOnInit(): void {
     this.allCategories=this.data.allCategories;
     this.loadMeasurements();
@@ -54,7 +46,6 @@ export class ProductFormComponent implements OnInit {
   loadMeasurements(){
     this.RequestService.get('http://localhost:8080/api/product/allMeasurement/')
     .subscribe(r=>{
-      console.log(r);
       this.measurements = r;
       this.filteredOptions = this.productForm.get("measurement").valueChanges
     .pipe(

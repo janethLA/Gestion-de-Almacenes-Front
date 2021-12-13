@@ -23,8 +23,7 @@ export class DgConfirmPedidoComponent implements OnInit {
   user=this.data.user;
 
   ngOnInit(): void {
-    this.getDataStorage()
-    console.log(this.order)
+    this.getDataStorage();
     this.addQuantities();
   }
   getDataStorage(){
@@ -42,14 +41,11 @@ export class DgConfirmPedidoComponent implements OnInit {
         }
       })
     })
-    console.log(this.productsCart)
   }
   saveOrder(){
-    console.log(this.user)
     this.RequestService.post('http://localhost:8080/api/order/createOrder/'+this.user.idUser,this.order).subscribe({
       
       next:(respuesta:any)=>{
-       console.log(respuesta)
        this.snack.open('Pedido creado exitosamente.','CERRAR',{duration:5000,panelClass:'snackSuccess',})
        this.dialogRef.close();
        localStorage.removeItem("order")

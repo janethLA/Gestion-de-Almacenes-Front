@@ -27,7 +27,6 @@ export class DgUpdatePermitsComponent implements OnInit {
     selectedPermitBuyer:any[]=[];
     allSelectedPrivilege:any[]=[];
   ngOnInit(): void {
-    console.log(this.privileges)
     this.loadPrivileges()
   }
   loadPrivileges(){

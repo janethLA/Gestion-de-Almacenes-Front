@@ -13,7 +13,6 @@ export class DgViewPaymentComponent implements OnInit {
   ) { }
     payment=this.data
   ngOnInit(): void {
-    console.log(this.payment)
   }
 
 }

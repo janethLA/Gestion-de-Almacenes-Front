@@ -20,7 +20,6 @@ export class PaymentsContentComponent implements OnInit {
   }
   loadPayments(){
     this.RequestService.get("http://localhost:8080/api/payment/allPayments").subscribe(r=>{
-      console.log(r)
       this.allPayments=r;
     })
   }

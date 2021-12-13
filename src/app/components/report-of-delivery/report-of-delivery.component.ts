@@ -47,7 +47,6 @@ export class ReportOfDeliveryComponent implements OnInit {
     this.RequestService.get('http://localhost:8080/api/orderAssigned/allOrdersCompletedForReport/'+this.user.idUser)
     .subscribe(r=>{
       this.allOrders = r;
-      console.log(this.allOrders)
       this.dataSource = new MatTableDataSource(this.allOrders);
       this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

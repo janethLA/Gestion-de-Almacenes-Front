@@ -30,17 +30,14 @@ export class RegisterSectorComponent implements OnInit {
   ngOnInit(): void {
   }
   saveSector(sector,formDirective: FormGroupDirective){
-    console.log("Esta es el sector a Registrar",sector);
     
     this.RequestService.post('http://localhost:8080/api/sector/createSector', sector)
     .subscribe({
       next:()=>{
-        console.log('Sector creado exitosamente!!');
         this.snack.open('Sector registrado exitosamente.','CERRAR',{duration:5000,panelClass:'snackSuccess',})
         window.location.reload();
       },
       error:()=>{
-        console.log('Ocurrio un error, no se creo la cotizacon.');
         this.snack.open('Fallo al registrar el Sector','CERRAR',{duration:5000})
       }
     });
@@ -49,7 +46,6 @@ export class RegisterSectorComponent implements OnInit {
   sectorCheck(): AsyncValidatorFn{
 
     return (control: AbstractControl) => {
-      console.log(control.value)
       return this.RequestService.get('http://localhost:8080/api/sector/uniqueSectorName/'+control.value)
         .pipe(
           map((result) => (result==true) ?  null : {exist:!result})

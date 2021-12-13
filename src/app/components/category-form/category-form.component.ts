@@ -52,7 +52,6 @@ export class CategoryFormComponent implements OnInit {
   categoryCheck(): AsyncValidatorFn{
 
     return (control: AbstractControl) => {
-      console.log(control.value)
       const formData = new FormData();
       //formData.append("idWarehouse", this.idStore);
       return this.RequestService.get2('http://localhost:8080/api/category/uniqueCategoryName/'+control.value,formData)

@@ -60,7 +60,6 @@ export class ItemCardComponent implements OnInit {
     //console.log(this.image)
   }
   deleteItem(){
-    console.log(this.idProduct)
     this.deleteProductEvent.emit(this.idProduct)
     
   }
